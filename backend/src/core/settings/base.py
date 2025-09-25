@@ -21,9 +21,16 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
 ]
 
-THIRD_PARTY_APPS = []
+THIRD_PARTY_APPS = [
+    'rest_framework',
+    'django_filters',
+    'django_extensions',
+]
 
-PERSONAL_APPS = []
+PERSONAL_APPS = [
+    'authenticationApp',
+    'medicalApp',
+]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PERSONAL_APPS
 
