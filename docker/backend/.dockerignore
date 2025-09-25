@@ -1,0 +1,7 @@
+# TESTS
+.pytest*cache
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+\_.cover

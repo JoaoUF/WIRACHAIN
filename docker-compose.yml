@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  db:
+    container_name: wirachain_postgres
+    image: postgres:14.1-alpine
+    restart: unless-stopped
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./backend/src/environments/.env.development
+    ports:
+      - "5432:5432"
+
+  web:
+    container_name: wirachain_django
+    build:
+      context: .
+      dockerfile: ./docker/backend/Dockerfile
+      args:
+        - ENV_TYPE=development
+    entrypoint: /app/docker/backend/server-entrypoint.sh
+    restart: unless-stopped
+    volumes:
+      - static_volume:/app/backend/src/mediafields
+    env_file:
+      - ./backend/src/environments/.env.development
+    environment:
+      - ENV_TYPE=development
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+volumes:
+  static_volume: {}
+  postgres_data: {}
