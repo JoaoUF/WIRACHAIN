@@ -4,12 +4,12 @@ from dotenv import load_dotenv
 load_dotenv(dotenv_path=os.path.join(ENV_DIR, ".env.development"))
 
 # DJANGO
-ROOT_URLCONF = 'core.urls'
-WSGI_APPLICATION = 'core.wsgi.development.application'
+ROOT_URLCONF = "core.urls"
+WSGI_APPLICATION = "core.wsgi.development.application"
 DEBUG = True
 PRODUCTION = False
 SECRET_KEY = os.environ.get("SECRET_KEY")
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ") # type: ignore
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")  # type: ignore
 
 # DATABASE
 DATABASES = {
