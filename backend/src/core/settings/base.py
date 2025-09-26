@@ -26,11 +26,12 @@ THIRD_PARTY_APPS = [
     "django_filters",
     "django_extensions",
     "phonenumber_field",
+    "drf_spectacular",
 ]
 
 PERSONAL_APPS = [
-    "authenticationApp",
-    "medicalApp",
+    "authenticationApp.apps.AuthenticationappConfig",
+    "medicalApp.apps.MedicalappConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PERSONAL_APPS
@@ -95,3 +96,22 @@ USE_I18N = True
 USE_TZ = True
 STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# DJANGO OPTIONS
+AUTH_USER_MODEL = "authenticationApp.CustomUser"
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# DJANGO REST FRAMEWORK
+REST_FRAMEWORK = {
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+# DRF-SPECTACULAR
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Wirachain API",
+    "DESCRIPTION": "This a tesis proyect for medical records in clinics.",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+}
