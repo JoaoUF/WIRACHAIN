@@ -27,6 +27,12 @@ do
     sleep 2
 done
 
+until python $MANAGE_PY loaddata groups.json
+do
+    echo "Loading groups initial data using $MANAGE_PY ..."
+    sleep 2
+done
+
 # python $MANAGE_PY collectstatic --noinput
 echo "Starting Django development server with settings..."
 exec python $MANAGE_PY runserver 0.0.0.0:8000

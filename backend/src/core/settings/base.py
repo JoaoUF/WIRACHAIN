@@ -25,6 +25,7 @@ THIRD_PARTY_APPS = [
     'rest_framework',
     'django_filters',
     'django_extensions',
+    'phonenumber_field',
 ]
 
 PERSONAL_APPS = [
@@ -50,6 +51,9 @@ THIRD_PARTY_MIDDLEWARE = []
 PERSONAL_MIDDLEWARE = []
 
 MIDDLEWARE = DJANGO_MIDDLEWARE + THIRD_PARTY_MIDDLEWARE + PERSONAL_MIDDLEWARE
+
+# FIXTURES
+FIXTURE_DIRS = os.path.join(BASE_DIR, 'fixtures')
 
 # TEMPLATES
 TEMPLATES = [
