@@ -37,7 +37,7 @@ class CustomUser(AbstractUser, PermissionsMixin, ActivatorModel, TimeStampedMode
     document_type = models.CharField(
         max_length=2, choices=DocumentType.choices, default=DocumentType.NATIONAL_ID
     )
-    document_value = models.CharField(max_length=20)
+    document_value = models.CharField(max_length=20, unique=True)
 
     is_verified = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)

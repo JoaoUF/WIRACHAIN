@@ -3,4 +3,5 @@ from authenticationApp.views.CustomUserView import (
     ClinicUserListViewSet,
     DoctorUserListViewSet,
     PatientUserListViewSet,
+    CustomUserViewSet,
 )

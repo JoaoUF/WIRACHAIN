@@ -29,7 +29,13 @@ done
 
 until python $MANAGE_PY loaddata groups.json
 do
-    echo "Loading groups initial data using $MANAGE_PY ..."
+    echo "Loading groups fixture with $MANAGE_PY ..."
+    sleep 2
+done
+
+until python $MANAGE_PY loaddata admin.json
+do
+    echo "Loading admin fixture with $MANAGE_PY ..."
     sleep 2
 done
 

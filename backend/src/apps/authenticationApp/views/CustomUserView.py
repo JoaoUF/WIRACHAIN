@@ -6,6 +6,25 @@ from ..permissions import IsAdmin, IsClinic, IsDoctor, IsPatient
 from ..filters import CustomUserFilter
 
 
+class CustomUserViewSet(viewsets.ModelViewSet):
+    """
+    Full CRUD API for CustomUser:
+      - POST /users/     : Create
+      - GET /users/      : List
+      - GET /users/{id}/ : Retrieve
+      - PUT /users/{id}/ : Update all fields
+      - PATCH /users/{id}/ : Partial update
+      - DELETE /users/{id}/ : Delete
+    Supports django-filter for query filtering.
+    """
+
+    queryset = CustomUser.objects.all()
+    serializer_class = CustomUserSerializer
+    # permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = CustomUserFilter
+
+
 class AdminUserListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     queryset = CustomUser.objects.filter(groups__name="admin")
     serializer_class = CustomUserSerializer
