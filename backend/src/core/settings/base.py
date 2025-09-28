@@ -30,8 +30,8 @@ THIRD_PARTY_APPS = [
 ]
 
 PERSONAL_APPS = [
-    "authenticationApp.apps.AuthenticationappConfig",
-    "medicalApp.apps.MedicalappConfig",
+    "apps.authenticationApp",
+    "apps.medicalApp",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PERSONAL_APPS
@@ -54,7 +54,7 @@ PERSONAL_MIDDLEWARE = []
 MIDDLEWARE = DJANGO_MIDDLEWARE + THIRD_PARTY_MIDDLEWARE + PERSONAL_MIDDLEWARE
 
 # FIXTURES
-FIXTURE_DIRS = os.path.join(BASE_DIR, "fixtures")
+# FIXTURE_DIRS = os.path.join(BASE_DIR, "fixtures")
 
 # TEMPLATES
 TEMPLATES = [
@@ -94,7 +94,6 @@ LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
-STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # DJANGO OPTIONS

@@ -1,1 +1,1 @@
-from .CustomUser import CustomUser
+from authenticationApp.models.CustomUser import CustomUser

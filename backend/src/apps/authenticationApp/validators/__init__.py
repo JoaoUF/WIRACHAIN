@@ -1,1 +1,1 @@
-from .ValidatorAge import validate_age_minimum
+from authenticationApp.validators.ValidatorAge import validate_age_minimum

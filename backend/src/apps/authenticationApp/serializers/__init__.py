@@ -1,1 +1,1 @@
-from .CustomUserSerializer import CustomUserSerializer
+from authenticationApp.serializers.CustomUserSerializer import CustomUserSerializer

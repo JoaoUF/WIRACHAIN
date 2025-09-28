@@ -1,4 +1,4 @@
-from .CustomUserView import (
+from authenticationApp.views.CustomUserView import (
     AdminUserListViewSet,
     ClinicUserListViewSet,
     DoctorUserListViewSet,

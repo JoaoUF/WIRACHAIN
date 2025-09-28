@@ -67,3 +67,6 @@ class CustomUser(AbstractUser, PermissionsMixin, ActivatorModel, TimeStampedMode
                     "document_value": f"Document value for type '{self.get_document_type_display()}' must be exactly {required_length} digits/characters."  # type: ignore
                 }
             )
+
+    class Meta:
+        app_label = "authenticationApp"

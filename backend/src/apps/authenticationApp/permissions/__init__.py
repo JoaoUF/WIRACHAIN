@@ -1,1 +1,6 @@
-from .permissions import IsAdmin, IsClinic, IsDoctor, IsPatient
+from authenticationApp.permissions.RolePermission import (
+    IsAdmin,
+    IsClinic,
+    IsDoctor,
+    IsPatient,
+)
