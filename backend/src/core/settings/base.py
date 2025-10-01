@@ -114,4 +114,5 @@ SPECTACULAR_SETTINGS = {
     "DESCRIPTION": "This a tesis proyect for medical records in clinics.",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
