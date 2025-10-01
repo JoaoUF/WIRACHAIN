@@ -3,28 +3,42 @@
         "model": "auth.group",
         "pk": 1,
         "fields": {
-            "name": "admin"
+            "name": "ADMIN"
         }
     },
     {
         "model": "auth.group",
         "pk": 2,
         "fields": {
-            "name": "clinic"
+            "name": "ENTERPRISE_BASIC"
         }
     },
     {
         "model": "auth.group",
         "pk": 3,
         "fields": {
-            "name": "doctor"
+            "name": "ENTERPRISE_PREMIUM"
         }
     },
     {
         "model": "auth.group",
         "pk": 4,
         "fields": {
-            "name": "patient"
+            "name": "ENTERPRISE_PROFESSISONAL"
+        }
+    },
+    {
+        "model": "auth.group",
+        "pk": 5,
+        "fields": {
+            "name": "DOCTOR"
+        }
+    },
+    {
+        "model": "auth.group",
+        "pk": 6,
+        "fields": {
+            "name": "PATIENT"
         }
     }
 ]

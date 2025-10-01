@@ -82,7 +82,7 @@
             "is_verified": true,
             "is_active": true,
             "is_staff": false,
-            "groups": [3],
+            "groups": [5],
             "user_permissions": []
         }
     },
@@ -111,7 +111,7 @@
             "is_verified": false,
             "is_active": true,
             "is_staff": false,
-            "groups": [4],
+            "groups": [6],
             "user_permissions": []
         }
     }

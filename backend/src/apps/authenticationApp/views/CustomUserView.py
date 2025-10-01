@@ -7,51 +7,41 @@ from ..filters import CustomUserFilter
 
 
 class CustomUserViewSet(viewsets.ModelViewSet):
-    """
-    Full CRUD API for CustomUser:
-      - POST /users/     : Create
-      - GET /users/      : List
-      - GET /users/{id}/ : Retrieve
-      - PUT /users/{id}/ : Update all fields
-      - PATCH /users/{id}/ : Partial update
-      - DELETE /users/{id}/ : Delete
-    Supports django-filter for query filtering.
-    """
-
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
     # permission_classes = [permissions.IsAuthenticated]
-    filter_backends = [DjangoFilterBackend]
     filterset_class = CustomUserFilter
 
 
 class AdminUserListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    queryset = CustomUser.objects.filter(groups__name="admin")
+    queryset = CustomUser.objects.filter(groups__name="ADMIN")
     serializer_class = CustomUserSerializer
     # permission_classes = [permissions.IsAuthenticated, IsAdmin]
-    filter_backends = [DjangoFilterBackend]
     filterset_class = CustomUserFilter
 
 
 class ClinicUserListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    queryset = CustomUser.objects.filter(groups__name="clinic")
+    queryset = CustomUser.objects.filter(
+        groups__name__in=[
+            "ENTERPRISE_BASIC",
+            "ENTERPRISE_PREMIUM",
+            "ENTERPRISE_PROFESSISONAL",
+        ]
+    ).distinct()
     serializer_class = CustomUserSerializer
     # permission_classes = [permissions.IsAuthenticated, IsClinic]
-    filter_backends = [DjangoFilterBackend]
     filterset_class = CustomUserFilter
 
 
 class DoctorUserListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    queryset = CustomUser.objects.filter(groups__name="doctor")
+    queryset = CustomUser.objects.filter(groups__name="DOCTOR")
     serializer_class = CustomUserSerializer
     # permission_classes = [permissions.IsAuthenticated, IsDoctor]
-    filter_backends = [DjangoFilterBackend]
     filterset_class = CustomUserFilter
 
 
 class PatientUserListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    queryset = CustomUser.objects.filter(groups__name="patient")
+    queryset = CustomUser.objects.filter(groups__name="PATIENT")
     serializer_class = CustomUserSerializer
     # permission_classes = [permissions.IsAuthenticated, IsPatient]
-    filter_backends = [DjangoFilterBackend]
     filterset_class = CustomUserFilter

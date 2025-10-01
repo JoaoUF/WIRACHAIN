@@ -7,6 +7,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = "__all__"
+        read_only_fields = ["created", "modified"]
 
     def validate(self, attrs):
         doc_type = attrs.get("document_type")

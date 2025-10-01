@@ -4,12 +4,12 @@ from django_extensions.db.models import (
 )
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from ....utils import Model
+from utils import Model
 
 
 class MedicalTest(Model, ActivatorModel, TimeStampedModel):
-    title = models.CharField(
-        _("title"),
+    name = models.CharField(
+        _("name"),
         max_length=255,
     )
     description = models.TextField(

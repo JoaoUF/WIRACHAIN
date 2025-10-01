@@ -1,4 +1,4 @@
-from ....utils import Model
+from utils import Model
 from django_extensions.db.models import (
     ActivatorModel,
     TimeStampedModel,
@@ -10,14 +10,9 @@ from cities_light.models import Country, Region, City
 
 
 class Clinic(Model, ActivatorModel, TimeStampedModel):
-    title = models.CharField(
-        _("title"),
+    name = models.CharField(
+        _("Name"),
         max_length=255,
-    )
-    description = models.TextField(
-        _("description"),
-        blank=True,
-        null=True,
     )
     email = models.EmailField(
         _("email address"),
@@ -29,7 +24,6 @@ class Clinic(Model, ActivatorModel, TimeStampedModel):
         null=True,
     )
     phone = PhoneNumberField()
-
     address = models.CharField(
         _("Street Address"),
         max_length=255,
@@ -51,6 +45,11 @@ class Clinic(Model, ActivatorModel, TimeStampedModel):
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
+    )
+    enterprise_user = models.ForeignKey(
+        "authenticationApp.CustomUser",
+        on_delete=models.CASCADE,
+        related_name="clinic_medical_specialities",
     )
 
     class Meta:
