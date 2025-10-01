@@ -1,0 +1,9 @@
+from medicalApp.admin.ClinicAdmin import ClinicAdmin
+from medicalApp.admin.ClinicDoctorAdmin import ClinicDoctorAdmin
+from medicalApp.admin.DoctorMedicalSpecialityAdmin import DoctorMedicalSpecialityAdmin
+from medicalApp.admin.EnterpriseMedicalSpecialityAdmin import (
+    EnterpriseMedicalSpecialityAdmin,
+)
+from medicalApp.admin.EnterpriseMedicalTestAdmin import EnterpriseMedicalTest
+from medicalApp.admin.MedicalSpecialityAdmin import MedicalSpecialityAdmin
+from medicalApp.admin.MedicalTestAdmin import MedicalTestAdmin
