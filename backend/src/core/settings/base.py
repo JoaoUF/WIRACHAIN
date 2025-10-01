@@ -27,6 +27,7 @@ THIRD_PARTY_APPS = [
     "django_extensions",
     "phonenumber_field",
     "drf_spectacular",
+    "cities_light",
 ]
 
 PERSONAL_APPS = [

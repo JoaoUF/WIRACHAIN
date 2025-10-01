@@ -1,0 +1,4 @@
+from medicalApp.models.MedicalSpeciality import MedicalSpeciality
+from medicalApp.models.MedicalTest import MedicalTest
+from medicalApp.models.ClinicMedicalTest import ClinicMedicalTest
+from medicalApp.models.ClinicMedicalSpeciality import ClinicMedicalSpeciality
