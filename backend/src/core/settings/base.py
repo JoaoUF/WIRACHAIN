@@ -116,3 +116,20 @@ SPECTACULAR_SETTINGS = {
     "SERVE_INCLUDE_SCHEMA": False,
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
+
+# DJANGO-CITIES-LIGHT
+CITIES_LIGHT_TRANSLATION_LANGUAGES = ["en"]
+CITIES_LIGHT_INCLUDE_COUNTRIES = ["PE"]
+CITIES_LIGHT_INCLUDE_CITY_TYPES = [
+    "PPL",
+    "PPLA",
+    "PPLA2",
+    "PPLA3",
+    "PPLA4",
+    "PPLC",
+    "PPLF",
+    "PPLG",
+    "PPLL",
+    "PPLR",
+    "PPLS",
+]
