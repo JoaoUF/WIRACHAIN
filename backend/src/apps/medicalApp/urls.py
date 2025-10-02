@@ -12,6 +12,7 @@ from .views import (
     CustomCountryModelViewSet,
     CustomRegionModelViewSet,
     CustomSubRegionModelViewSet,
+    ClinicScheduleView,
 )
 
 router = DefaultRouter()
@@ -20,6 +21,7 @@ router.register(r"diseases", DiseaseView, basename="disease")
 router.register(r"specialities", SpecialityView, basename="speciality")
 router.register(r"tests", TestView, basename="test")
 router.register(r"clinic-doctors", ClinicDoctorView, basename="clinicdoctor")
+router.register(r"clinic-schedule", ClinicScheduleView, basename="clinicschedule")
 router.register(
     r"doctor-specialities", DoctorSpecialityView, basename="doctorspeciality"
 )

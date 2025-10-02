@@ -12,3 +12,4 @@ from medicalApp.views.CitiesLightView import (
     CustomRegionModelViewSet,
     CustomSubRegionModelViewSet,
 )
+from medicalApp.views.ClinicScheduleView import ClinicScheduleView
