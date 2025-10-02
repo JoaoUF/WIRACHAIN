@@ -8,6 +8,10 @@ from .views import (
     SpecialityView,
     TestView,
     DiseaseView,
+    CustomCityModelViewSet,
+    CustomCountryModelViewSet,
+    CustomRegionModelViewSet,
+    CustomSubRegionModelViewSet,
 )
 
 router = DefaultRouter()
@@ -23,5 +27,15 @@ router.register(
     r"clinic-specialities", ClinicSpecialityView, basename="clinicspeciality"
 )
 router.register(r"clinic-tests", ClinicTestView, basename="clinictest")
+router.register(r"cities", CustomCityModelViewSet, basename="cities-light-api-city")
+router.register(
+    r"countries", CustomCountryModelViewSet, basename="cities-light-api-country"
+)
+router.register(
+    r"regions", CustomRegionModelViewSet, basename="cities-light-api-region"
+)
+router.register(
+    r"subregions", CustomSubRegionModelViewSet, basename="cities-light-api-subregion"
+)
 
 urlpatterns = router.urls

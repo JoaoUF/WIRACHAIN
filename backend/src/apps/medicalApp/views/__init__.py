@@ -6,3 +6,9 @@ from medicalApp.views.ClinicTestView import ClinicTestView
 from medicalApp.views.SpecialityView import SpecialityView
 from medicalApp.views.TestView import TestView
 from medicalApp.views.DiseaseView import DiseaseView
+from medicalApp.views.CitiesLightView import (
+    CustomCityModelViewSet,
+    CustomCountryModelViewSet,
+    CustomRegionModelViewSet,
+    CustomSubRegionModelViewSet,
+)
