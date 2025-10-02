@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from utils import Model
 
 
-class MedicalTest(Model, ActivatorModel, TimeStampedModel):
+class Test(Model, ActivatorModel, TimeStampedModel):
     name = models.CharField(
         _("name"),
         max_length=255,
@@ -17,8 +17,13 @@ class MedicalTest(Model, ActivatorModel, TimeStampedModel):
         blank=True,
         null=True,
     )
+    enterprise_user = models.ForeignKey(
+        "authenticationApp.CustomUser",
+        on_delete=models.CASCADE,
+        related_name="test",
+    )
 
     class Meta:
-        db_table = "MEDICAL_TEST"
-        verbose_name = _("Medical Test")
-        verbose_name_plural = _("Medical Tests")
+        db_table = "MED_TEST"
+        verbose_name = _("Test")
+        verbose_name_plural = _("Tests")

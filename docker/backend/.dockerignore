@@ -1,7 +1,23 @@
-# TESTS
-.pytest*cache
-htmlcov/
-.coverage
-.coverage.*
-coverage.xml
-\_.cover
+# VS CODE
+.vscode/* 
+!.vscode/settings.json 
+!.vscode/tasks.json 
+!.vscode/launch.json 
+!.vscode/extensions.json 
+.history
+
+# ENVIROMENT
+.env
+venv/
+.venv/
+
+# DJANGO 
+*.log
+*.pot
+*.pyc
+__pycache__
+db.sqlite3
+
+# PYTHON
+*.py[cod]
+*$py.class

@@ -1,12 +1,13 @@
 from django.contrib import admin
-from ..models import MedicalSpeciality
+from ..models import Disease
 
 
-@admin.register(MedicalSpeciality)
-class MedicalSpecialityAdmin(admin.ModelAdmin):
+@admin.register(Disease)
+class DiseaseAdmin(admin.ModelAdmin):
     list_display = [
         "name",
         "description",
+        "enterprise_user",
         "status",
         "activate_date",
         "deactivate_date",
@@ -14,6 +15,7 @@ class MedicalSpecialityAdmin(admin.ModelAdmin):
         "modified",
     ]
     list_filter = [
+        "enterprise_user",
         "status",
         "activate_date",
         "deactivate_date",
@@ -21,6 +23,9 @@ class MedicalSpecialityAdmin(admin.ModelAdmin):
         "modified",
     ]
     search_fields = [
+        "enterprise_user__email",
+        "enterprise_user__first_name",
+        "enterprise_user__last_name",
         "name",
         "description",
     ]

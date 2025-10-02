@@ -18,7 +18,7 @@ class ClinicDoctor(Model, TimeStampedModel):
     )
 
     class Meta:
-        db_table = "CLINIC_DOCTOR"
+        db_table = "MED_CLINIC_DOCTOR"
         unique_together = ("doctor_user", "clinic")
         verbose_name = _("Clinic Doctor")
         verbose_name_plural = _("Clinics Doctors")

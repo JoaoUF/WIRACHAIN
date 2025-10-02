@@ -53,6 +53,6 @@ class Clinic(Model, ActivatorModel, TimeStampedModel):
     )
 
     class Meta:
-        db_table = "CLINIC"
+        db_table = "MED_CLINIC"
         verbose_name = _("Clinic")
         verbose_name_plural = _("Clinics")

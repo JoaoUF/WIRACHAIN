@@ -1,9 +1,8 @@
 from medicalApp.admin.ClinicAdmin import ClinicAdmin
 from medicalApp.admin.ClinicDoctorAdmin import ClinicDoctorAdmin
-from medicalApp.admin.DoctorMedicalSpecialityAdmin import DoctorMedicalSpecialityAdmin
-from medicalApp.admin.EnterpriseMedicalSpecialityAdmin import (
-    EnterpriseMedicalSpecialityAdmin,
-)
-from medicalApp.admin.EnterpriseMedicalTestAdmin import EnterpriseMedicalTest
-from medicalApp.admin.MedicalSpecialityAdmin import MedicalSpecialityAdmin
-from medicalApp.admin.MedicalTestAdmin import MedicalTestAdmin
+from medicalApp.admin.DoctorSpecialityAdmin import DoctorSpecialityAdmin
+from medicalApp.admin.ClinicSpecialityAdmin import ClinicSpecialityAdmin
+from medicalApp.admin.ClinicTestAdmin import ClinicTestAdmin
+from medicalApp.admin.SpecialityAdmin import SpecialityAdmin
+from medicalApp.admin.TestAdmin import TestAdmin
+from medicalApp.admin.DiseaseAdmin import DiseaseAdmin

@@ -1,9 +1,8 @@
 from medicalApp.views.ClinicView import ClinicView
 from medicalApp.views.ClinicDoctorView import ClinicDoctorView
-from medicalApp.views.DoctorMedicalSpecialityView import DoctorMedicalSpecialityView
-from medicalApp.views.EnterpriseMedicalSpecialityView import (
-    EnterpriseMedicalSpecialityView,
-)
-from medicalApp.views.EnterpriseMedicalTestView import EnterpriseMedicalTestView
-from medicalApp.views.MedicalSpecialityView import MedicalSpecialityView
-from medicalApp.views.MedicalTestView import MedicalTestView
+from medicalApp.views.DoctorSpecialityView import DoctorSpecialityView
+from medicalApp.views.ClinicSpecialityView import ClinicSpecialityView
+from medicalApp.views.ClinicTestView import ClinicTestView
+from medicalApp.views.SpecialityView import SpecialityView
+from medicalApp.views.TestView import TestView
+from medicalApp.views.DiseaseView import DiseaseView

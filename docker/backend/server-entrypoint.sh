@@ -27,15 +27,15 @@ do
     sleep 2
 done
 
-until python $MANAGE_PY loaddata groups.json
+# until python $MANAGE_PY cities_light
+# do
+#     echo "Migrating data of cities to db $MANAGE_PY..."
+#     sleep 2
+# done
+
+until python $MANAGE_PY loaddata groups.json users.json
 do
     echo "Loading groups fixture with $MANAGE_PY ..."
-    sleep 2
-done
-
-until python $MANAGE_PY loaddata admin.json
-do
-    echo "Loading admin fixture with $MANAGE_PY ..."
     sleep 2
 done
 

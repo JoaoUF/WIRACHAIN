@@ -1,10 +1,15 @@
 from rest_framework import serializers
-from ..models import MedicalTest
+from authenticationApp.models import CustomUser
+from ..models import Test
 
 
-class MedicalTestSerializer(serializers.ModelSerializer):
+class TestSerializer(serializers.ModelSerializer):
+    enterprise_user = serializers.PrimaryKeyRelatedField(
+        queryset=CustomUser.objects.all()
+    )
+
     class Meta:
-        model = MedicalTest
+        model = Test
         fields = [
             "id",
             "name",
@@ -14,5 +19,6 @@ class MedicalTestSerializer(serializers.ModelSerializer):
             "status",
             "activate_date",
             "deactivate_date",
+            "enterprise_user",
         ]
         read_only_fields = ["created", "modified"]

@@ -15,5 +15,5 @@ from drf_spectacular.utils import extend_schema_view, extend_schema
 class ClinicDoctorView(viewsets.ModelViewSet):
     queryset = ClinicDoctor.objects.all()
     serializer_class = ClinicDoctorSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
     filterset_fields = ["doctor_user", "clinic"]

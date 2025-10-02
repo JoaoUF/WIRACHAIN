@@ -2,34 +2,26 @@ from rest_framework.routers import DefaultRouter
 from .views import (
     ClinicView,
     ClinicDoctorView,
-    DoctorMedicalSpecialityView,
-    EnterpriseMedicalSpecialityView,
-    EnterpriseMedicalTestView,
-    MedicalSpecialityView,
-    MedicalTestView,
+    DoctorSpecialityView,
+    ClinicSpecialityView,
+    ClinicTestView,
+    SpecialityView,
+    TestView,
+    DiseaseView,
 )
 
 router = DefaultRouter()
 router.register(r"clinics", ClinicView, basename="clinic")
+router.register(r"diseases", DiseaseView, basename="disease")
+router.register(r"specialities", SpecialityView, basename="speciality")
+router.register(r"tests", TestView, basename="test")
 router.register(r"clinic-doctors", ClinicDoctorView, basename="clinicdoctor")
 router.register(
-    r"doctor-medical-specialities",
-    DoctorMedicalSpecialityView,
-    basename="doctormedicalspeciality",
+    r"doctor-specialities", DoctorSpecialityView, basename="doctorspeciality"
 )
 router.register(
-    r"enterprise-medical-specialities",
-    EnterpriseMedicalSpecialityView,
-    basename="enterprisedmedicalspeciality",
+    r"clinic-specialities", ClinicSpecialityView, basename="clinicspeciality"
 )
-router.register(
-    r"enterprise-medical-tests",
-    EnterpriseMedicalTestView,
-    basename="enterprisedmedicaltest",
-)
-router.register(
-    r"medical-specialities", MedicalSpecialityView, basename="medicalspeciality"
-)
-router.register(r"medical-tests", MedicalTestView, basename="medicaltest")
+router.register(r"clinic-tests", ClinicTestView, basename="clinictest")
 
 urlpatterns = router.urls
