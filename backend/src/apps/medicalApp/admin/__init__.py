@@ -6,3 +6,4 @@ from medicalApp.admin.ClinicTestAdmin import ClinicTestAdmin
 from medicalApp.admin.SpecialityAdmin import SpecialityAdmin
 from medicalApp.admin.TestAdmin import TestAdmin
 from medicalApp.admin.DiseaseAdmin import DiseaseAdmin
+from medicalApp.admin.ClinicScheduleAdmin import ClinicScheduleAdmin
