@@ -33,10 +33,7 @@ class ClinicSerializer(serializers.ModelSerializer):
             "region",
             "country",
             "enterprise_user",
-            "created",
-            "modified",
             "status",
             "activate_date",
             "deactivate_date",
         ]
-        read_only_fields = ["created", "modified"]

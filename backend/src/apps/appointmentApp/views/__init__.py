@@ -1,0 +1,3 @@
+from appointmentApp.views.DoctorTurnView import DoctorTurnView
+from appointmentApp.views.DoctorScheduleView import DoctorScheduleView
+from appointmentApp.views.AppointmentView import AppointmentView

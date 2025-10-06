@@ -11,16 +11,12 @@ class DiseaseAdmin(admin.ModelAdmin):
         "status",
         "activate_date",
         "deactivate_date",
-        "created",
-        "modified",
     ]
     list_filter = [
         "enterprise_user",
         "status",
         "activate_date",
         "deactivate_date",
-        "created",
-        "modified",
     ]
     search_fields = [
         "enterprise_user__email",
@@ -29,10 +25,7 @@ class DiseaseAdmin(admin.ModelAdmin):
         "name",
         "description",
     ]
-    ordering = ["-created"]
     readonly_fields = [
-        "created",
-        "modified",
         "activate_date",
         "deactivate_date",
     ]

@@ -1,9 +1,10 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from .Clinic import Clinic
+from utils import Model
 
 
-class ClinicSchedule(models.Model):
+class ClinicSchedule(Model):
     class WeekDay(models.IntegerChoices):
         MONDAY = 1, _("Monday")
         TUESDAY = 2, _("Tuesday")

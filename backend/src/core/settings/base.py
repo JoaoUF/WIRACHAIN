@@ -28,11 +28,13 @@ THIRD_PARTY_APPS = [
     "phonenumber_field",
     "drf_spectacular",
     "cities_light",
+    "auditlog",
 ]
 
 PERSONAL_APPS = [
     "apps.authenticationApp",
     "apps.medicalApp",
+    "apps.appointmentApp",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PERSONAL_APPS
@@ -48,7 +50,9 @@ DJANGO_MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-THIRD_PARTY_MIDDLEWARE = []
+THIRD_PARTY_MIDDLEWARE = [
+    "auditlog.middleware.AuditlogMiddleware",
+]
 
 PERSONAL_MIDDLEWARE = []
 

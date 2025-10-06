@@ -5,6 +5,7 @@
 !.vscode/tasks.json 
 !.vscode/launch.json 
 !.vscode/extensions.json 
+!.vscode/numbered-bookmarks.json 
 .history
 
 # ENVIROMENT

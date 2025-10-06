@@ -1,4 +1,3 @@
-from django_extensions.db.models import TimeStampedModel
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from .Speciality import Speciality
@@ -6,7 +5,7 @@ from .Clinic import Clinic
 from utils import Model
 
 
-class ClinicSpeciality(Model, TimeStampedModel):
+class ClinicSpeciality(Model):
     clinic = models.ForeignKey(
         Clinic,
         on_delete=models.CASCADE,

@@ -17,5 +17,4 @@ class SpecialityView(viewsets.ModelViewSet):
     serializer_class = SpecialitySerializer
     # permission_classes = [permissions.IsAuthenticated]
     filterset_fields = ["name", "status", "activate_date", "deactivate_date"]
-    ordering = ["-created"]
     search_fields = ["name"]

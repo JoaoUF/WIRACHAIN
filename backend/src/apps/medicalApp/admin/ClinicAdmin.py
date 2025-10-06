@@ -16,8 +16,6 @@ class ClinicAdmin(admin.ModelAdmin):
         "status",
         "activate_date",
         "deactivate_date",
-        "created",
-        "modified",
     ]
     list_filter = [
         "city",
@@ -26,12 +24,9 @@ class ClinicAdmin(admin.ModelAdmin):
         "status",
         "activate_date",
         "deactivate_date",
-        "created",
-        "modified",
     ]
     search_fields = ["name", "email", "phone", "address", "enterprise_user__email"]
-    ordering = ["-created"]
-    readonly_fields = ["created", "modified", "activate_date", "deactivate_date"]
+    readonly_fields = ["activate_date", "deactivate_date"]
     autocomplete_fields = ["city", "region", "country", "enterprise_user"]
 
     fieldsets = (
@@ -39,5 +34,4 @@ class ClinicAdmin(admin.ModelAdmin):
         ("Location", {"fields": ("city", "region", "country")}),
         ("Enterprise", {"fields": ("enterprise_user",)}),
         ("Status", {"fields": ("status", "activate_date", "deactivate_date")}),
-        ("Timestamps", {"fields": ("created", "modified")}),
     )

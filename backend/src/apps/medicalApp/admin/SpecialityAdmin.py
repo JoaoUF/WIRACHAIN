@@ -11,8 +11,6 @@ class SpecialityAdmin(admin.ModelAdmin):
         "status",
         "activate_date",
         "deactivate_date",
-        "created",
-        "modified",
     )
     list_filter = (
         "status",
@@ -21,10 +19,7 @@ class SpecialityAdmin(admin.ModelAdmin):
         "enterprise_user",
     )
     search_fields = ("name", "description", "enterprise_user__email")
-    readonly_fields = ("created", "modified")
-    ordering = ["-created"]
     fieldsets = (
         (None, {"fields": ("name", "description", "enterprise_user")}),
         ("Status", {"fields": ("status", "activate_date", "deactivate_date")}),
-        ("Timestamps", {"fields": ("created", "modified")}),
     )

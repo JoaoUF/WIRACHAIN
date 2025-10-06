@@ -14,11 +14,8 @@ class DiseaseSerializer(serializers.ModelSerializer):
             "id",
             "name",
             "description",
-            "created",
-            "modified",
             "status",
             "activate_date",
             "deactivate_date",
             "enterprise_user",
         ]
-        read_only_fields = ["created", "modified"]

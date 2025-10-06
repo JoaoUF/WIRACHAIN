@@ -17,5 +17,4 @@ class ClinicView(viewsets.ModelViewSet):
     serializer_class = ClinicSerializer
     # permission_classes = [permissions.IsAuthenticated]
     filterset_fields = ["city", "country", "enterprise_user"]
-    ordering = ["-created"]
     search_fields = ["name"]

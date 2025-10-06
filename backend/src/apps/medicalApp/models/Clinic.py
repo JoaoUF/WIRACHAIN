@@ -1,15 +1,12 @@
 from utils import Model
-from django_extensions.db.models import (
-    ActivatorModel,
-    TimeStampedModel,
-)
+from django_extensions.db.models import ActivatorModel
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 from cities_light.models import Country, Region, City
 
 
-class Clinic(Model, ActivatorModel, TimeStampedModel):
+class Clinic(Model, ActivatorModel):
     name = models.CharField(
         _("Name"),
         max_length=255,

@@ -9,5 +9,4 @@ class DoctorSpecialitySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DoctorSpeciality
-        fields = ["id", "doctor_user", "speciality", "created", "modified"]
-        read_only_fields = ["created", "modified"]
+        fields = ["id", "doctor_user", "speciality"]

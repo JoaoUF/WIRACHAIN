@@ -7,14 +7,10 @@ class ClinicDoctorAdmin(admin.ModelAdmin):
     list_display = [
         "doctor_user",
         "clinic",
-        "created",
-        "modified",
     ]
     list_filter = [
         "clinic",
         "doctor_user",
-        "created",
-        "modified",
     ]
     search_fields = [
         "doctor_user__email",
@@ -23,14 +19,6 @@ class ClinicDoctorAdmin(admin.ModelAdmin):
         "clinic__name",
         "clinic__email",
     ]
-    ordering = ["-created"]
-    readonly_fields = [
-        "created",
-        "modified",
-    ]
     autocomplete_fields = ["doctor_user", "clinic"]
 
-    fieldsets = (
-        (None, {"fields": ("doctor_user", "clinic")}),
-        ("Timestamps", {"fields": ("created", "modified")}),
-    )
+    fieldsets = ((None, {"fields": ("doctor_user", "clinic")}),)

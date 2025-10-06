@@ -17,5 +17,4 @@ class DiseaseView(viewsets.ModelViewSet):
     serializer_class = DiseaseSerializer
     # permission_classes = [permissions.IsAuthenticated]
     filterset_fields = ["name", "status", "activate_date", "deactivate_date"]
-    ordering = ["-created"]
     search_fields = ["name"]

@@ -1,0 +1,3 @@
+from appointmentApp.admin.DoctorTurnAdmin import DoctorTurnAdmin
+from appointmentApp.admin.DoctorScheduleAdmin import DoctorScheduleAdmin
+from appointmentApp.admin.AppointmentAdmin import AppointmentAdmin

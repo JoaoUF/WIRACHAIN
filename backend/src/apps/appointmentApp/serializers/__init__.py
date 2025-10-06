@@ -1,0 +1,3 @@
+from appointmentApp.serializers.DoctorTurnSerializer import DoctorTurnSerializer
+from appointmentApp.serializers.DoctorScheduleSerializer import DoctorScheduleSerializer
+from appointmentApp.serializers.AppointmentSerializer import AppointmentSerializer

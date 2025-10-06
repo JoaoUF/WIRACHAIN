@@ -1,13 +1,10 @@
-from django_extensions.db.models import (
-    ActivatorModel,
-    TimeStampedModel,
-)
+from django_extensions.db.models import ActivatorModel
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from utils import Model
 
 
-class Disease(Model, ActivatorModel, TimeStampedModel):
+class Disease(Model, ActivatorModel):
     name = models.CharField(
         _("name"),
         max_length=255,

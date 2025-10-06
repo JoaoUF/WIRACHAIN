@@ -17,5 +17,4 @@ class TestView(viewsets.ModelViewSet):
     serializer_class = TestSerializer
     # permission_classes = [permissions.IsAuthenticated]
     filterset_fields = ["name", "status", "activate_date", "deactivate_date"]
-    ordering = ["-created"]
     search_fields = ["name"]
