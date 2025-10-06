@@ -104,6 +104,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # DJANGO OPTIONS
 AUTH_USER_MODEL = "authenticationApp.CustomUser"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+ROOT_URLCONF = "core.urls"
+DATABASE_ROUTERS = ["core.db_routers.ReplicaRouter"]
 
 # DJANGO REST FRAMEWORK
 REST_FRAMEWORK = {

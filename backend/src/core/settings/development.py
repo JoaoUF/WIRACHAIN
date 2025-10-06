@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 load_dotenv(dotenv_path=os.path.join(ENV_DIR, ".env.development"))
 
 # DJANGO
-ROOT_URLCONF = "core.urls"
 WSGI_APPLICATION = "core.wsgi.development.application"
 DEBUG = True
 PRODUCTION = False
@@ -19,8 +18,16 @@ DATABASES = {
         "USER": os.environ.get("POSTGRES_USER"),
         "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
         "HOST": os.environ.get("POSTGRES_HOST"),
-        "PORT": int(os.environ.get("POSTGRES_PORT", "5432")),  # type: ignore
-    }
+        "PORT": os.environ.get("POSTGRES_PORT"),
+    },
+    "replica": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.environ.get("POSTGRES_DB"),
+        "USER": os.environ.get("POSTGRES_USER"),
+        "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
+        "HOST": os.environ.get("POSTGRES_REPLICA_HOST"),
+        "PORT": os.environ.get("POSTGRES_REPLICA_PORT"),
+    },
 }
 
 # STATIC FILE

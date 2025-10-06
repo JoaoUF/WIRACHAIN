@@ -1,16 +1,47 @@
 version: "3.8"
 
 services:
-  db:
-    container_name: wirachain_postgres
+  postgres-master:
+    container_name: wirachain_master
     image: postgres:14.1-alpine
     restart: unless-stopped
+    command: ["postgres", "-c", "config_file=/etc/postgresql.conf"]
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+      - ./docker/backend/primary.conf:/etc/postgresql.conf
+      - ./docker/backend/pg_hba.conf:/etc/pg_hba.conf
     env_file:
       - ./backend/src/environments/.env.development
     ports:
       - "5432:5432"
+    networks:
+      - pg_net
+
+  postgres-first-replica:
+    container_name: wirachain_first_replica
+    image: postgres:14.1-alpine
+    user: "postgres"
+    restart: unless-stopped
+    volumes:
+      - postgres_replica_data:/var/lib/postgresql/data/
+    env_file:
+      - ./backend/src/environments/.env.development
+    ports:
+      - "5433:5432"
+    networks:
+      - pg_net
+    depends_on:
+      - postgres-master
+    command: [
+        "bash",
+        "-c",
+        "until pg_isready -h postgres-master -U $${POSTGRES_USER}; do sleep 5; done;
+        rm -rf /var/lib/postgresql/data/*;
+        PGPASSWORD=$${POSTGRES_PASSWORD} pg_basebackup -h postgres-master -D /var/lib/postgresql/data -U $${POSTGRES_USER} -Fp -Xs -P -R;
+        chown -R postgres:postgres /var/lib/postgresql/data;
+        chmod 700 /var/lib/postgresql/data;
+        exec postgres",
+      ]
 
   web:
     container_name: wirachain_django
@@ -30,8 +61,15 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - db
+      - postgres-master
+      - postgres-first-replica
+    networks:
+      - pg_net
 
 volumes:
   static_volume: {}
   postgres_data: {}
+  postgres_replica_data: {}
+
+networks:
+  pg_net:
