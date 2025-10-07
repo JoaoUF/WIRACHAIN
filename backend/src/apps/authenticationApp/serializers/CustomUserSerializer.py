@@ -3,11 +3,21 @@ from ..models import CustomUser
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
+    enterprise = serializers.PrimaryKeyRelatedField(
+        queryset=CustomUser.objects.filter(
+            groups__name__in=[
+                "ENTERPRISE_BASIC",
+                "ENTERPRISE_PREMIUM",
+                "ENTERPRISE_PROFESSISONAL",
+            ]
+        ),
+        required=False,
+        allow_null=True,
+    )
 
     class Meta:
         model = CustomUser
         fields = "__all__"
-        read_only_fields = ["created", "modified"]
 
     def validate(self, attrs):
         doc_type = attrs.get("document_type")
@@ -26,3 +36,13 @@ class CustomUserSerializer(serializers.ModelSerializer):
                 }
             )
         return attrs
+
+    def validate_enterprise(self, value):
+        if self.initial_data.get("groups") and "DOCTOR" in self.initial_data.get(  # type: ignore
+            "groups"
+        ):
+            if value is None:
+                raise serializers.ValidationError(
+                    "A doctor user must have an enterprise assigned."
+                )
+        return value

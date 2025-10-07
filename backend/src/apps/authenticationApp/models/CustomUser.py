@@ -9,7 +9,7 @@ from .CustomUserManager import CustomUserManager
 from ..validators import validate_age_minimum
 
 
-class CustomUser(AbstractUser, PermissionsMixin, ActivatorModel, TimeStampedModel):
+class CustomUser(AbstractUser, PermissionsMixin, ActivatorModel):
 
     class Gender(models.TextChoices):
         FEMALE = "FEMALE", _("Female")
@@ -39,6 +39,22 @@ class CustomUser(AbstractUser, PermissionsMixin, ActivatorModel, TimeStampedMode
     )
     document_value = models.CharField(max_length=20, unique=True)
 
+    enterprise = models.ForeignKey(
+        "self",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="doctors_created",
+        limit_choices_to={
+            "groups__name__in": [
+                "ENTERPRISE_BASIC",
+                "ENTERPRISE_PREMIUM",
+                "ENTERPRISE_PROFESSISONAL",
+            ]
+        },
+        help_text="The enterprise (user) that created this doctor account.",
+    )
+
     is_verified = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -50,6 +66,16 @@ class CustomUser(AbstractUser, PermissionsMixin, ActivatorModel, TimeStampedMode
 
     def clean(self):
         super().clean()
+        self._validate_enterprise_doctor_relationship()
+        self._validate_document_value_length()
+
+    def _validate_enterprise_doctor_relationship(self):
+        if self.groups.filter(name="DOCTOR").exists() and not self.enterprise:
+            raise ValidationError("A doctor must be associated with an enterprise.")
+        if not self.groups.filter(name="DOCTOR").exists() and self.enterprise:
+            raise ValidationError("Only doctors can be linked to an enterprise.")
+
+    def _validate_document_value_length(self):
         doc_type_lengths = {
             "01": 8,
             "04": 12,

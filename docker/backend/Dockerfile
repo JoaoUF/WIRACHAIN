@@ -20,4 +20,4 @@ ADD ./backend $APP_HOME/backend
 ADD ./docker $APP_HOME/docker
 
 RUN chmod +x /app/docker/backend/server-entrypoint.sh
-# RUN chmod +x /app/docker/backend/worker-entrypoint.sh
+RUN chmod +x /app/docker/backend/wait-for-dbs.sh

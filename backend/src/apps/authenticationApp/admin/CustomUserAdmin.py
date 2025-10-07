@@ -14,14 +14,13 @@ class CustomUserAdmin(BaseUserAdmin):
         "phone",
         "document_type",
         "document_value",
+        "enterprise",
         "is_verified",
         "is_active",
         "is_staff",
         "status",
         "activate_date",
         "deactivate_date",
-        "created",
-        "modified",
     ]
     list_filter = [
         "gender",
@@ -32,14 +31,11 @@ class CustomUserAdmin(BaseUserAdmin):
         "status",
         "activate_date",
         "deactivate_date",
-        "created",
-        "modified",
+        "enterprise",
     ]
-    ordering = ["-created"]
     search_fields = ["email", "first_name", "last_name", "phone", "document_value"]
+    ordering = ["email"]
     readonly_fields = [
-        "created",
-        "modified",
         "activate_date",
         "deactivate_date",
         "last_login",
@@ -58,6 +54,7 @@ class CustomUserAdmin(BaseUserAdmin):
                     "phone",
                     "document_type",
                     "document_value",
+                    "enterprise",
                 )
             },
         ),
@@ -75,7 +72,6 @@ class CustomUserAdmin(BaseUserAdmin):
             },
         ),
         ("Status", {"fields": ("status", "activate_date", "deactivate_date")}),
-        ("Important dates", {"fields": ("last_login", "created", "modified")}),
     )
     add_fieldsets = (
         (
@@ -94,6 +90,7 @@ class CustomUserAdmin(BaseUserAdmin):
                     "phone",
                     "document_type",
                     "document_value",
+                    "enterprise",
                     "is_verified",
                     "is_active",
                     "is_staff",
