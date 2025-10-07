@@ -1,0 +1,58 @@
+[
+    {
+        "name": "Diabetes Mellitus",
+        "description": "A group of diseases that result in too much sugar in the blood."
+    },
+    {"name": "Hypertension", "description": "High blood pressure."},
+    {
+        "name": "Asthma",
+        "description": "A respiratory condition marked by spasms in the bronchi."
+    },
+    {
+        "name": "Coronary Artery Disease",
+        "description": "Damage or disease in the heart's major blood vessels."
+    },
+    {
+        "name": "Chronic Kidney Disease",
+        "description": "Gradual loss of kidney function."
+    },
+    {
+        "name": "Chronic Obstructive Pulmonary Disease",
+        "description": "Group of lung diseases that block airflow."
+    },
+    {"name": "Tuberculosis", "description": "Infectious disease affecting the lungs."},
+    {"name": "Anemia", "description": "Lack of healthy red blood cells."},
+    {
+        "name": "Hepatitis B",
+        "description": "Serious liver infection caused by the hepatitis B virus."
+    },
+    {"name": "HIV/AIDS", "description": "Human immunodeficiency virus infection."},
+    {
+        "name": "Alzheimer's Disease",
+        "description": "Progressive disease that destroys memory."
+    },
+    {"name": "Osteoporosis", "description": "Bones become weak and brittle."},
+    {
+        "name": "Rheumatoid Arthritis",
+        "description": "Chronic inflammatory disorder affecting joints."
+    },
+    {
+        "name": "Parkinson's Disease",
+        "description": "A disorder of the central nervous system."
+    },
+    {
+        "name": "Epilepsy",
+        "description": "A disorder in which nerve cell activity is disturbed."
+    },
+    {
+        "name": "Migraine",
+        "description": "A headache of varying intensity, often accompanied by nausea."
+    },
+    {"name": "Influenza", "description": "Common viral infection that can be deadly."},
+    {"name": "Malaria", "description": "A disease caused by a plasmodium parasite."},
+    {
+        "name": "Cancer",
+        "description": "A disease in which abnormal cells divide uncontrollably."
+    },
+    {"name": "COVID-19", "description": "Infectious disease caused by coronavirus."}
+]

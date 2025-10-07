@@ -5,6 +5,7 @@ from ..models import Disease
 @admin.register(Disease)
 class DiseaseAdmin(admin.ModelAdmin):
     list_display = [
+        "id",
         "name",
         "description",
         "enterprise_user",
@@ -33,5 +34,4 @@ class DiseaseAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {"fields": ("name", "description")}),
         ("Activation", {"fields": ("status", "activate_date", "deactivate_date")}),
-        ("Timestamps", {"fields": ("created", "modified")}),
     )

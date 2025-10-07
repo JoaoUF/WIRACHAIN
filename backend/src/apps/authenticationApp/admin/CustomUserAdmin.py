@@ -21,6 +21,7 @@ class CustomUserAdmin(BaseUserAdmin):
         "status",
         "activate_date",
         "deactivate_date",
+        "group_names",
     ]
     list_filter = [
         "gender",
@@ -114,3 +115,8 @@ class CustomUserAdmin(BaseUserAdmin):
 
     def get_username_field(self):
         return "email"
+
+    def group_names(self, obj):
+        return ", ".join([g.name for g in obj.groups.all()])
+
+    group_names.short_description = "Groups"

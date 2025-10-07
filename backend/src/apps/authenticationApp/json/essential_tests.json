@@ -1,0 +1,22 @@
+[
+    {"name": "Blood Test", "description": "Basic blood analysis"},
+    {"name": "Urine Test", "description": "Urinalysis"},
+    {"name": "Glucose Test", "description": "Blood sugar level measurement"},
+    {"name": "Cholesterol Test", "description": "Measures cholesterol levels"},
+    {"name": "Electrolyte Panel", "description": "Assesses electrolyte balance"},
+    {"name": "Liver Function Test", "description": "Checks liver health"},
+    {"name": "Kidney Function Test", "description": "Checks kidney performance"},
+    {"name": "Thyroid Function Test", "description": "Evaluates thyroid hormones"},
+    {"name": "Complete Blood Count", "description": "Measures different blood cells"},
+    {"name": "Pregnancy Test", "description": "Detects pregnancy hormone"},
+    {"name": "HIV Test", "description": "Detects HIV infection"},
+    {"name": "COVID-19 PCR", "description": "Detects SARS-CoV-2 RNA"},
+    {"name": "Vitamin D Test", "description": "Measures vitamin D levels"},
+    {"name": "Allergy Test", "description": "Identifies allergen sensitivities"},
+    {"name": "Stool Test", "description": "Analyzes stool for disorders"},
+    {"name": "Pap Smear", "description": "Cervical cancer screening"},
+    {"name": "Prostate Specific Antigen", "description": "Prostate cancer screening"},
+    {"name": "Coagulation Test", "description": "Assesses blood clotting"},
+    {"name": "X-Ray", "description": "Imaging test for bones/organs"},
+    {"name": "ECG", "description": "Records electrical heart activity"}
+]

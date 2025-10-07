@@ -1,0 +1,25 @@
+[
+    {"name": "Cardiology", "description": "Heart and blood vessel specialist"},
+    {"name": "Neurology", "description": "Nervous system and brain specialist"},
+    {"name": "Endocrinology", "description": "Hormone and gland specialist"},
+    {"name": "Gastroenterology", "description": "Digestive system specialist"},
+    {"name": "Pulmonology", "description": "Lung and respiratory system specialist"},
+    {"name": "Nephrology", "description": "Kidney specialist"},
+    {"name": "Dermatology", "description": "Skin specialist"},
+    {"name": "Oncology", "description": "Cancer specialist"},
+    {"name": "Hematology", "description": "Blood disorder specialist"},
+    {"name": "Ophthalmology", "description": "Eye specialist"},
+    {"name": "Orthopedics", "description": "Bone and joint specialist"},
+    {"name": "Pediatrics", "description": "Child specialist"},
+    {"name": "Geriatrics", "description": "Elderly specialist"},
+    {"name": "Obstetrics and Gynecology", "description": "Women's health specialist"},
+    {"name": "Psychiatry", "description": "Mental health specialist"},
+    {"name": "Rheumatology", "description": "Joint and autoimmune disorder specialist"},
+    {"name": "Immunology", "description": "Immune system specialist"},
+    {
+        "name": "Urology",
+        "description": "Urinary tract and male reproductive specialist"
+    },
+    {"name": "Surgery", "description": "Surgical specialist"},
+    {"name": "General Practice", "description": "Primary care physician"}
+]
