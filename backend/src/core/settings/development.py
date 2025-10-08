@@ -5,6 +5,7 @@ load_dotenv(dotenv_path=os.path.join(ENV_DIR, ".env.development"))
 
 # DJANGO
 WSGI_APPLICATION = "core.wsgi.development.application"
+ASGI_APPLICATION = "core.asgi.development.application"
 DEBUG = True
 PRODUCTION = False
 SECRET_KEY = os.environ.get("SECRET_KEY")

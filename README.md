@@ -1,6 +1,5 @@
 TO-DO LIST:
 
-- [] black formatter
 - [] api pagination, cache
 - [] others libraries?
 
@@ -8,6 +7,21 @@ AUDIT REFERENCES:
 
 - https://medium.com/@mariliabontempo/django-audit-logging-the-best-libraries-for-tracking-model-changes-with-postgresql-2c7396564e97
 - https://medium.com/@mahdikheireddine7/tracking-changes-in-django-with-django-auditlog-a-practical-guide-5bd2404b68b9
+
+PERFORMANCE REFERENCES:
+
+- https://django-cachalot.readthedocs.io/en/latest/index.html
+- https://github.com/jazzband/django-redis
+
+MONITORING REFERENCES:
+
+- https://django-debug-toolbar.readthedocs.io/en/latest/architecture.html
+- https://medium.com/@simeon.emanuilov/guide-for-django-application-profiling-235fca3b8a6e
+- https://medium.com/@adrialnathanael/mastering-django-application-monitoring-from-performance-metrics-to-error-tracking-dcd7787472e4
+
+QUALITY REFERENCES:
+
+- https://www.freecodecamp.org/news/how-to-measure-django-code-quality-using-sonarqube-pytest-and-coverage/
 
 FUTURE REFERENCES:
 
