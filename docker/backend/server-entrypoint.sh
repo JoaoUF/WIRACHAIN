@@ -17,25 +17,25 @@ done
 
 until python manage.py makemigrations
 do
-    echo "Creating migration files using $MANAGE_PY..."
+    echo "Creating migration files ..."
     sleep 2
 done
 
 until python manage.py migrate
 do
-    echo "Migrating tables to database using $MANAGE_PY..."
+    echo "Migrating tables to database ..."
     sleep 2
 done
 
 # until python manage.py cities_light
 # do
-#     echo "Migrating data of cities to db $MANAGE_PY..."
+#     echo "Migrating data of cities to db ..."
 #     sleep 2
 # done
 
 until python manage.py loaddata groups.json users.json
 do
-    echo "Loading groups fixture with $MANAGE_PY ..."
+    echo "Loading groups fixture..."
     sleep 2
 done
 
