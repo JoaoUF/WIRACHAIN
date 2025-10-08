@@ -29,6 +29,7 @@ THIRD_PARTY_APPS = [
     "drf_spectacular",
     "cities_light",
     "auditlog",
+    "cachalot",
 ]
 
 PERSONAL_APPS = [

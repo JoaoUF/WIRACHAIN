@@ -10,8 +10,11 @@ AUDIT REFERENCES:
 
 PERFORMANCE REFERENCES:
 
+CACHE REFERENCES:
+
 - https://django-cachalot.readthedocs.io/en/latest/index.html
 - https://github.com/jazzband/django-redis
+- https://dev.to/pragativerma18/django-caching-101-understanding-the-basics-and-beyond-49p
 
 MONITORING REFERENCES:
 

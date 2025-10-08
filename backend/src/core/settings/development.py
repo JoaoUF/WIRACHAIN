@@ -9,7 +9,7 @@ ASGI_APPLICATION = "core.asgi.development.application"
 DEBUG = True
 PRODUCTION = False
 SECRET_KEY = os.environ.get("SECRET_KEY")
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")  # type: ignore
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(" ")
 
 # DATABASE
 DATABASES = {
@@ -29,6 +29,17 @@ DATABASES = {
         "HOST": os.environ.get("POSTGRES_REPLICA_HOST"),
         "PORT": os.environ.get("POSTGRES_REPLICA_PORT"),
     },
+}
+
+# CACHE
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://redis:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    }
 }
 
 # STATIC FILE
