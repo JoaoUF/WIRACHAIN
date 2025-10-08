@@ -10,6 +10,8 @@ AUDIT REFERENCES:
 
 PERFORMANCE REFERENCES:
 
+- https://tarekeesa7.medium.com/optimal-performance-django-rest-framework-packages-1504963b94a4
+
 CACHE REFERENCES:
 
 - https://django-cachalot.readthedocs.io/en/latest/index.html

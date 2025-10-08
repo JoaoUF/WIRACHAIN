@@ -27,6 +27,12 @@ do
     sleep 2
 done
 
+until python manage.py collectstatic
+do
+    echo "Collecting static content ..."
+    sleep 2
+done
+
 # until python manage.py cities_light
 # do
 #     echo "Migrating data of cities to db ..."

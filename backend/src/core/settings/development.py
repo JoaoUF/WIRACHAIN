@@ -14,10 +14,12 @@ INTERNAL_IPS = os.environ.get("ALLOWED_HOSTS", "").split(" ")
 
 INSTALLED_APPS += [
     "debug_toolbar",
+    "silk",
 ]
 
 MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "silk.middleware.SilkyMiddleware",
     *MIDDLEWARE,
 ]
 
@@ -91,3 +93,8 @@ DEBUG_TOOLBAR_PANELS = [
     "debug_toolbar.panels.profiling.ProfilingPanel",
     "cachalot.panels.CachalotPanel",
 ]
+
+# DJANGO SILK
+SILKY_PYTHON_PROFILER = True
+SILKY_AUTHENTICATION = False
+SILKY_AUTHORISATION = False
