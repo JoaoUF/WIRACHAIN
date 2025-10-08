@@ -4,9 +4,7 @@ from ..models import Speciality
 
 
 class SpecialitySerializer(serializers.ModelSerializer):
-    enterprise_user = serializers.PrimaryKeyRelatedField(
-        queryset=CustomUser.objects.all()
-    )
+    enterprise_user = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all())
 
     class Meta:
         model = Speciality

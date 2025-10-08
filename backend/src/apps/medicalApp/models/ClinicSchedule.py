@@ -14,9 +14,7 @@ class ClinicSchedule(Model):
         SATURDAY = 6, _("Saturday")
         SUNDAY = 7, _("Sunday")
 
-    clinic = models.ForeignKey(
-        Clinic, related_name="schedules", on_delete=models.CASCADE
-    )
+    clinic = models.ForeignKey(Clinic, related_name="schedules", on_delete=models.CASCADE)
     day_of_week = models.PositiveSmallIntegerField(choices=WeekDay.choices)
     open_time = models.TimeField()
     close_time = models.TimeField()

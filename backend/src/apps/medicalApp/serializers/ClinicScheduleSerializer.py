@@ -3,9 +3,7 @@ from ..models import ClinicSchedule
 
 
 class ClinicScheduleSerializer(serializers.ModelSerializer):
-    day_of_week_display = serializers.CharField(
-        source="get_day_of_week_display", read_only=True
-    )
+    day_of_week_display = serializers.CharField(source="get_day_of_week_display", read_only=True)
 
     class Meta:
         model = ClinicSchedule

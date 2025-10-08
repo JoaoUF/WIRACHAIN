@@ -4,9 +4,7 @@ from ..models import Disease
 
 
 class DiseaseSerializer(serializers.ModelSerializer):
-    enterprise_user = serializers.PrimaryKeyRelatedField(
-        queryset=CustomUser.objects.all()
-    )
+    enterprise_user = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all())
 
     class Meta:
         model = Disease

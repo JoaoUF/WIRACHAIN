@@ -28,15 +28,11 @@ class CustomUser(AbstractUser, PermissionsMixin, ActivatorModel):
         _("email address"),
         unique=True,
     )
-    gender = models.CharField(
-        max_length=20, choices=Gender.choices, default=Gender.NONE
-    )
+    gender = models.CharField(max_length=20, choices=Gender.choices, default=Gender.NONE)
     custom_gender = models.CharField(max_length=255, blank=True, null=True)
     phone = PhoneNumberField()
     birth_date = models.DateTimeField(validators=[validate_age_minimum])
-    document_type = models.CharField(
-        max_length=2, choices=DocumentType.choices, default=DocumentType.NATIONAL_ID
-    )
+    document_type = models.CharField(max_length=2, choices=DocumentType.choices, default=DocumentType.NATIONAL_ID)
     document_value = models.CharField(max_length=20, unique=True)
 
     enterprise = models.ForeignKey(
@@ -83,11 +79,7 @@ class CustomUser(AbstractUser, PermissionsMixin, ActivatorModel):
             "07": 12,
         }
         required_length = doc_type_lengths.get(self.document_type)
-        if (
-            required_length
-            and self.document_value
-            and len(self.document_value) != required_length
-        ):
+        if required_length and self.document_value and len(self.document_value) != required_length:
             raise ValidationError(
                 {
                     "document_value": f"Document value for type '{self.get_document_type_display()}' must be exactly {required_length} digits/characters."  # type: ignore

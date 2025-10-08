@@ -13,15 +13,9 @@ class AppointmentStatus(models.TextChoices):
 
 
 class Appointment(models.Model):
-    patient = models.ForeignKey(
-        CustomUser, related_name="appointments_as_patient", on_delete=models.CASCADE
-    )
-    doctor = models.ForeignKey(
-        CustomUser, related_name="appointments_as_doctor", on_delete=models.CASCADE
-    )
-    clinic = models.ForeignKey(
-        Clinic, related_name="appointments", on_delete=models.CASCADE
-    )
+    patient = models.ForeignKey(CustomUser, related_name="appointments_as_patient", on_delete=models.CASCADE)
+    doctor = models.ForeignKey(CustomUser, related_name="appointments_as_doctor", on_delete=models.CASCADE)
+    clinic = models.ForeignKey(Clinic, related_name="appointments", on_delete=models.CASCADE)
     speciality = models.ForeignKey(
         Speciality,
         related_name="appointments",
@@ -47,6 +41,5 @@ class Appointment(models.Model):
 
     def __str__(self):
         return (
-            f"{self.patient} with {self.doctor} at {self.clinic} "
-            f"on {self.date} {self.start_time}-{self.end_time}"
+            f"{self.patient} with {self.doctor} at {self.clinic} " f"on {self.date} {self.start_time}-{self.end_time}"
         )

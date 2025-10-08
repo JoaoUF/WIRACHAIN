@@ -6,19 +6,11 @@ from authenticationApp.models import CustomUser
 
 
 class ClinicSerializer(serializers.ModelSerializer):
-    city = serializers.PrimaryKeyRelatedField(
-        queryset=City.objects.all(), allow_null=True, required=False
-    )
-    region = serializers.PrimaryKeyRelatedField(
-        queryset=Region.objects.all(), allow_null=True, required=False
-    )
-    country = serializers.PrimaryKeyRelatedField(
-        queryset=Country.objects.all(), allow_null=True, required=False
-    )
+    city = serializers.PrimaryKeyRelatedField(queryset=City.objects.all(), allow_null=True, required=False)
+    region = serializers.PrimaryKeyRelatedField(queryset=Region.objects.all(), allow_null=True, required=False)
+    country = serializers.PrimaryKeyRelatedField(queryset=Country.objects.all(), allow_null=True, required=False)
     phone = PhoneNumberField()
-    enterprise_user = serializers.PrimaryKeyRelatedField(
-        queryset=CustomUser.objects.all()
-    )
+    enterprise_user = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all())
 
     class Meta:
         model = Clinic

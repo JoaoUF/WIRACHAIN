@@ -2,9 +2,7 @@ import os
 import json
 from medicalApp.models import Test, Speciality, Disease
 
-ESSENTIAL_DATA_DIR = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "json"
-)
+ESSENTIAL_DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "json")
 
 
 def load_json(filename):

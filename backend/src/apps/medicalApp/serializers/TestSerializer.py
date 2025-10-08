@@ -4,9 +4,7 @@ from ..models import Test
 
 
 class TestSerializer(serializers.ModelSerializer):
-    enterprise_user = serializers.PrimaryKeyRelatedField(
-        queryset=CustomUser.objects.all()
-    )
+    enterprise_user = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all())
 
     class Meta:
         model = Test

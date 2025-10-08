@@ -5,9 +5,7 @@ from .DoctorSchedule import DoctorSchedule
 
 
 class DoctorTurn(Model):
-    doctor_schedule = models.ForeignKey(
-        DoctorSchedule, related_name="turns", on_delete=models.CASCADE
-    )
+    doctor_schedule = models.ForeignKey(DoctorSchedule, related_name="turns", on_delete=models.CASCADE)
     start_time = models.TimeField()
     end_time = models.TimeField()
 

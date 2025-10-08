@@ -5,12 +5,8 @@ from .enterprise_data import assign_essential_data_to_enterprise_user
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
-    groups = serializers.PrimaryKeyRelatedField(
-        queryset=Group.objects.all(), many=True, required=False
-    )
-    user_permissions = serializers.PrimaryKeyRelatedField(
-        queryset=Permission.objects.all(), many=True, required=False
-    )
+    groups = serializers.PrimaryKeyRelatedField(queryset=Group.objects.all(), many=True, required=False)
+    user_permissions = serializers.PrimaryKeyRelatedField(queryset=Permission.objects.all(), many=True, required=False)
 
     class Meta:
         model = CustomUser
@@ -57,11 +53,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
         return attrs
 
     def validate_enterprise(self, value):
-        if self.initial_data.get("groups") and "DOCTOR" in self.initial_data.get(  # type: ignore
-            "groups"
-        ):
+        if self.initial_data.get("groups") and "DOCTOR" in self.initial_data.get("groups"):  # type: ignore
             if value is None:
-                raise serializers.ValidationError(
-                    "A doctor user must have an enterprise assigned."
-                )
+                raise serializers.ValidationError("A doctor user must have an enterprise assigned.")
         return value

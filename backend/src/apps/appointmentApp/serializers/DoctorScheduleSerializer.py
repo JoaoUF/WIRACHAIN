@@ -4,9 +4,7 @@ from .DoctorTurnSerializer import DoctorTurnSerializer
 
 
 class DoctorScheduleSerializer(serializers.ModelSerializer):
-    day_of_week_display = serializers.CharField(
-        source="get_day_of_week_display", read_only=True
-    )
+    day_of_week_display = serializers.CharField(source="get_day_of_week_display", read_only=True)
     turns = DoctorTurnSerializer(many=True, read_only=True)
 
     class Meta:

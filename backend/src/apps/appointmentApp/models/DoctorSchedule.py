@@ -14,9 +14,7 @@ class DoctorSchedule(Model):
         SATURDAY = 6, _("Saturday")
         SUNDAY = 7, _("Sunday")
 
-    doctor = models.ForeignKey(
-        CustomUser, related_name="doctor_schedules", on_delete=models.CASCADE
-    )
+    doctor = models.ForeignKey(CustomUser, related_name="doctor_schedules", on_delete=models.CASCADE)
     day_of_week = models.PositiveSmallIntegerField(choices=WeekDay.choices)
 
     class Meta:

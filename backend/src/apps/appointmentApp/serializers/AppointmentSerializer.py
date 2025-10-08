@@ -6,9 +6,7 @@ class AppointmentSerializer(serializers.ModelSerializer):
     patient_display = serializers.StringRelatedField(source="patient", read_only=True)
     doctor_display = serializers.StringRelatedField(source="doctor", read_only=True)
     clinic_display = serializers.StringRelatedField(source="clinic", read_only=True)
-    speciality_display = serializers.StringRelatedField(
-        source="speciality", read_only=True
-    )
+    speciality_display = serializers.StringRelatedField(source="speciality", read_only=True)
     status_display = serializers.CharField(source="get_status_display", read_only=True)
 
     class Meta:
