@@ -8,6 +8,8 @@ urlpatterns = [
     path("api/v1/", include("apps.authenticationApp.urls")),
     path("api/v1/", include("apps.medicalApp.urls")),
     path("api/v1/", include("apps.appointmentApp.urls")),
+    path("api/v1/", include("dj_rest_auth.urls")),
+    path("api/v1/", include("dj_rest_auth.registration.urls")),
 ]
 
 if settings.DEBUG:

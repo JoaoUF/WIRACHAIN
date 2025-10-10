@@ -1,4 +1,5 @@
 from pathlib import Path
+from datetime import timedelta
 import os
 import sys
 
@@ -19,10 +20,12 @@ DJANGO_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
 ]
 
 THIRD_PARTY_APPS = [
     "rest_framework",
+    "rest_framework.authtoken",
     "django_filters",
     "django_extensions",
     "phonenumber_field",
@@ -30,6 +33,13 @@ THIRD_PARTY_APPS = [
     "cities_light",
     "auditlog",
     "cachalot",
+    "rest_framework_simplejwt",
+    "rest_framework_simplejwt.token_blacklist",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "dj_rest_auth",
+    "dj_rest_auth.registration",
 ]
 
 PERSONAL_APPS = [
@@ -53,6 +63,7 @@ DJANGO_MIDDLEWARE = [
 
 THIRD_PARTY_MIDDLEWARE = [
     "auditlog.middleware.AuditlogMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 PERSONAL_MIDDLEWARE = []
@@ -107,6 +118,12 @@ AUTH_USER_MODEL = "authenticationApp.CustomUser"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 ROOT_URLCONF = "core.urls"
 DATABASE_ROUTERS = ["core.db_routers.ReplicaRouter"]
+SITE_ID = 1
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
 
 # DJANGO REST FRAMEWORK
 REST_FRAMEWORK = {
@@ -115,10 +132,94 @@ REST_FRAMEWORK = {
         "rest_framework.filters.SearchFilter",
         "rest_framework.filters.OrderingFilter",
     ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+        "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
+    ],
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
 }
+
+# SIMPLE-JWT
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "UPDATE_LAST_LOGIN": True,
+    "ALGORITHM": "HS256",
+    "SIGNING_KEY": "25'a]^zbXI*A+e6",
+    "VERIFYING_KEY": "",
+    "AUDIENCE": None,
+    "ISSUER": None,
+    "JSON_ENCODER": None,
+    "JWK_URL": None,
+    "LEEWAY": 0,
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
+    "USER_ID_FIELD": "id",
+    "USER_ID_CLAIM": "user_id",
+    "USER_AUTHENTICATION_RULE": "rest_framework_simplejwt.authentication.default_user_authentication_rule",
+    "ON_LOGIN_SUCCESS": "rest_framework_simplejwt.serializers.default_on_login_success",
+    "ON_LOGIN_FAILED": "rest_framework_simplejwt.serializers.default_on_login_failed",
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+    "TOKEN_TYPE_CLAIM": "token_type",
+    "TOKEN_USER_CLASS": "rest_framework_simplejwt.models.TokenUser",
+    "JTI_CLAIM": "jti",
+    "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
+    "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
+    "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
+    "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
+    "TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSerializer",
+    "TOKEN_VERIFY_SERIALIZER": "rest_framework_simplejwt.serializers.TokenVerifySerializer",
+    "TOKEN_BLACKLIST_SERIALIZER": "rest_framework_simplejwt.serializers.TokenBlacklistSerializer",
+    "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
+    "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
+}
+
+# DJ-REST-AUTH
+REST_AUTH = {
+    "LOGIN_SERIALIZER": "dj_rest_auth.serializers.LoginSerializer",
+    "TOKEN_SERIALIZER": "dj_rest_auth.serializers.TokenSerializer",
+    "JWT_SERIALIZER": "dj_rest_auth.serializers.JWTSerializer",
+    "JWT_SERIALIZER_WITH_EXPIRATION": "dj_rest_auth.serializers.JWTSerializerWithExpiration",
+    "JWT_TOKEN_CLAIMS_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
+    "USER_DETAILS_SERIALIZER": "dj_rest_auth.serializers.UserDetailsSerializer",
+    "PASSWORD_RESET_SERIALIZER": "dj_rest_auth.serializers.PasswordResetSerializer",
+    "PASSWORD_RESET_CONFIRM_SERIALIZER": "dj_rest_auth.serializers.PasswordResetConfirmSerializer",
+    "PASSWORD_CHANGE_SERIALIZER": "dj_rest_auth.serializers.PasswordChangeSerializer",
+    "REGISTER_SERIALIZER": "dj_rest_auth.registration.serializers.RegisterSerializer",
+    "REGISTER_PERMISSION_CLASSES": ("rest_framework.permissions.AllowAny",),
+    "TOKEN_MODEL": "rest_framework.authtoken.models.Token",
+    "TOKEN_CREATOR": "dj_rest_auth.utils.default_create_token",
+    "PASSWORD_RESET_USE_SITES_DOMAIN": False,
+    "OLD_PASSWORD_FIELD_ENABLED": False,
+    "LOGOUT_ON_PASSWORD_CHANGE": True,
+    "SESSION_LOGIN": True,
+    "USE_JWT": True,
+    "JWT_AUTH_COOKIE": "access-token",
+    "JWT_AUTH_REFRESH_COOKIE": "refresh-token",
+    "JWT_AUTH_REFRESH_COOKIE_PATH": "/",
+    "JWT_AUTH_SECURE": False,
+    "JWT_AUTH_HTTPONLY": True,
+    "JWT_AUTH_SAMESITE": "Lax",
+    "JWT_AUTH_RETURN_EXPIRATION": True,
+    "JWT_AUTH_COOKIE_USE_CSRF": False,
+    "JWT_AUTH_COOKIE_ENFORCE_CSRF_ON_UNAUTHENTICATED": False,
+}
+
+# DJANGO ALLAUTH
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+EMAIL_CONFIRM_REDIRECT_BASE_URL = "http://127.0.0.1:3000/signin/"
+PASSWORD_RESET_CONFIRM_REDIRECT_BASE_URL = "http://127.0.0.1:3000/signin/"
 
 # DRF-SPECTACULAR
 SPECTACULAR_SETTINGS = {
