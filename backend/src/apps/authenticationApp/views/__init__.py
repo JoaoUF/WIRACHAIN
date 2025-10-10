@@ -5,3 +5,13 @@ from authenticationApp.views.CustomUserView import (
     PatientUserListViewSet,
     CustomUserViewSet,
 )
+from authenticationApp.views.DjangoRestAuthView import (
+    LoginView,
+    LogoutView,
+    PasswordResetView,
+    PasswordResetConfirmView,
+    PasswordChangeView,
+    RegisterView,
+    VerifyEmailView,
+    ResendEmailVerificationView,
+)
