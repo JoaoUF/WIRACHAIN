@@ -79,6 +79,35 @@ services:
     networks:
       - pg_net
 
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: unless-stopped
+    volumes:
+      - ./docker/backend/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+    networks:
+      - pg_net
+
+  celery:
+    build:
+      context: .
+      dockerfile: ./docker/backend/Dockerfile
+    command: celery -A core worker --loglevel=info
+    volumes:
+      - .:/app
+    depends_on:
+      - rabbitmq
+      - postgres-master
+    env_file:
+      - ./backend/src/environments/.env.development
+    networks:
+      - pg_net
+
 volumes:
   static_volume: {}
   postgres_data: {}
