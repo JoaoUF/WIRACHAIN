@@ -30,12 +30,6 @@ class LoginView(DjRestAuthLoginView):
         summary="User Logout",
         description="Logout the currently authenticated user.",
     ),
-    get=extend_schema(
-        tags=["Authentication"],
-        summary="User Logout (GET)",
-        description="Logout (GET, if enabled by settings).",
-        responses={200: None},
-    ),
 )
 class LogoutView(DjRestAuthLogoutView):
     pass

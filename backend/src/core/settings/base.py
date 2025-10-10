@@ -40,6 +40,7 @@ THIRD_PARTY_APPS = [
     "allauth.socialaccount",
     "dj_rest_auth",
     "dj_rest_auth.registration",
+    "djcelery_email",
 ]
 
 PERSONAL_APPS = [
@@ -119,6 +120,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 ROOT_URLCONF = "core.urls"
 DATABASE_ROUTERS = ["core.db_routers.ReplicaRouter"]
 SITE_ID = 1
+EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
 
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
@@ -221,13 +223,11 @@ ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 EMAIL_CONFIRM_REDIRECT_BASE_URL = "http://127.0.0.1:3000/signin/"
 PASSWORD_RESET_CONFIRM_REDIRECT_BASE_URL = "http://127.0.0.1:3000/signin/"
 
-# CELERY
-CELERY_BROKER_URL = "amqp://user:password@rabbitmq:5672//"
-CELERY_RESULT_BACKEND = "rpc://"
-CELERY_ACCEPT_CONTENT = ["json"]
-CELERY_TASK_SERIALIZER = "json"
-CELERY_RESULT_SERIALIZER = "json"
-CELERY_TIMEZONE = "UTC"
+# DJ-CELERY-EMAIL
+CELERY_EMAIL_TASK_CONFIG = {
+    "name": "djcelery_email_send",
+    "ignore_result": True,
+}
 
 # DRF-SPECTACULAR
 SPECTACULAR_SETTINGS = {

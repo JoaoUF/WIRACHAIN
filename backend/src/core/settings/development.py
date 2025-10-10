@@ -23,6 +23,13 @@ MIDDLEWARE = [
     *MIDDLEWARE,
 ]
 
+# EMAIL
+EMAIL_USE_TLS = bool(int(os.environ.get("EMAIL_USE_TLS", "1")))
+EMAIL_HOST = os.environ.get("EMAIL_HOST")
+EMAIL_PORT = int(os.environ.get("EMAIL_PORT", "587"))
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+
 # DATABASE
 DATABASES = {
     "default": {
@@ -53,6 +60,18 @@ CACHES = {
         },
     }
 }
+
+# RABBITMQ
+RABBIT_USER = os.environ.get("RABBITMQ_DEFAULT_USER")
+RABBIT_PASSWORD = os.environ.get("RABBITMQ_DEFAULT_PASS")
+
+# CELERY
+CELERY_BROKER_URL = "amqp://{RABBIT_USER}:{RABBIT_PASSWORD}@rabbitmq:5672//"
+CELERY_RESULT_BACKEND = "rpc://"
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TIMEZONE = "UTC"
 
 # STATIC FILE
 STATICFILES_DIRS = [
