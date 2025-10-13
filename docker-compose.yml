@@ -67,6 +67,7 @@ services:
     restart: unless-stopped
     volumes:
       - static_volume:/app/backend/src/mediafields
+      - ./backend/htmlcov:/app/backend/htmlcov
     env_file:
       - ./backend/src/environments/.env.development
     environment:

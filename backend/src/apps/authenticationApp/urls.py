@@ -1,6 +1,9 @@
 from django.urls import path, re_path
 from django.views.generic import TemplateView
 from rest_framework import routers
+from dj_rest_auth.app_settings import api_settings
+from rest_framework_simplejwt.views import TokenVerifyView
+from dj_rest_auth.jwt_auth import get_refresh_view
 
 from .views import (
     AdminUserListViewSet,
@@ -33,17 +36,6 @@ auth_urlpatterns = [
     re_path(r"^password/change/?$", PasswordChangeView.as_view(), name="rest_password_change"),
 ]
 
-from dj_rest_auth.app_settings import api_settings
-
-if api_settings.USE_JWT:
-    from rest_framework_simplejwt.views import TokenVerifyView
-    from dj_rest_auth.jwt_auth import get_refresh_view
-
-    auth_urlpatterns += [
-        re_path(r"^token/verify/?$", TokenVerifyView.as_view(), name="token_verify"),
-        re_path(r"^token/refresh/?$", get_refresh_view().as_view(), name="token_refresh"),
-    ]
-
 registration_urlpatterns = [
     path("register/", RegisterView.as_view(), name="rest_register"),
     re_path(r"^verify-email/?$", VerifyEmailView.as_view(), name="rest_verify_email"),
@@ -58,6 +50,8 @@ registration_urlpatterns = [
         TemplateView.as_view(),
         name="account_email_verification_sent",
     ),
+    re_path(r"^token/verify/?$", TokenVerifyView.as_view(), name="token_verify"),
+    re_path(r"^token/refresh/?$", get_refresh_view().as_view(), name="token_refresh"),
 ]
 
 urlpatterns = router.urls + auth_urlpatterns + registration_urlpatterns

@@ -4,7 +4,9 @@ An alternative to the project shown before on my thesis.
 
 ## TO-DO LIST:
 
-- [ ] django authentication with jwt and cookie
+- [ ] check test warnings
+- [ ] allow coverage reports to show all the files, even if all their lines are covered
+- [ ] add test to get the 100% coverage
 
 ## REFERENCES
 

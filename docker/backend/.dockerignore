@@ -21,3 +21,11 @@ db.sqlite3
 # PYTHON
 *.py[cod]
 *$py.class
+
+# TESTS
+.pytest_cache
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
