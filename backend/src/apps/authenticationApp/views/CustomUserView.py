@@ -3,7 +3,6 @@ from django_filters.rest_framework import DjangoFilterBackend
 from drf_spectacular.utils import extend_schema_view, extend_schema
 from ..models import CustomUser
 from ..serializers import CustomUserSerializer
-from ..permissions import IsAdmin, IsClinic, IsDoctor, IsPatient
 from ..filters import CustomUserFilter
 
 

@@ -9,16 +9,24 @@ class IsInGroup(BasePermission):
 
 
 class IsAdmin(IsInGroup):
-    group_name = "admin"
+    group_name = "ADMIN"
 
 
-class IsClinic(IsInGroup):
-    group_name = "clinic"
+class IsEnterpriseBasic(IsInGroup):
+    group_name = "ENTERPRISE_BASIC"
+
+
+class IsEnterprisePremium(IsInGroup):
+    group_name = "ENTERPRISE_PREMIUM"
+
+
+class IsEnterpriseProfessional(IsInGroup):
+    group_name = "ENTERPRISE_PROFESSIONAL"
 
 
 class IsDoctor(IsInGroup):
-    group_name = "doctor"
+    group_name = "DOCTOR"
 
 
 class IsPatient(IsInGroup):
-    group_name = "patient"
+    group_name = "PATIENT"

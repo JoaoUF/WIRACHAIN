@@ -1,6 +1,8 @@
 from authenticationApp.permissions.RolePermission import (
     IsAdmin,
-    IsClinic,
+    IsEnterpriseBasic,
+    IsEnterprisePremium,
+    IsEnterpriseProfessional,
     IsDoctor,
     IsPatient,
 )
