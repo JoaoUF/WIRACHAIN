@@ -1,1 +1,2 @@
 from authenticationApp.serializers.CustomUserSerializer import CustomUserSerializer
+from authenticationApp.serializers.enterprise_data import assign_essential_data_to_enterprise_user
