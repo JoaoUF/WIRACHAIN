@@ -25,13 +25,14 @@ class GroupFactory(factory.django.DjangoModelFactory):
 class CustomUserFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = CustomUser
+        skip_postgeneration_save = True
 
     email = factory.LazyAttribute(lambda o: f"{o.first_name.lower()}.{o.last_name.lower()}@example.com")  # type: ignore
     first_name = factory.Faker("first_name")  # type: ignore
     last_name = factory.Faker("last_name")  # type: ignore
     gender = factory.Iterator([choice[0] for choice in CustomUser.Gender.choices])  # type: ignore
     document_type = factory.Iterator([choice[0] for choice in CustomUser.DocumentType.choices])  # type: ignore
-    phone = factory.LazyFunction(lambda: PhoneNumber.from_string("+15555555555"))  # type: ignore
+    phone = "+51 925550123"
     birth_date = factory.LazyFunction(lambda: timezone.now().replace(year=timezone.now().year - 25))  # type: ignore
     document_type = factory.Iterator([choice[0] for choice in CustomUser.DocumentType.choices])  # type: ignore
     document_value = factory.Sequence(lambda n: f"{n:08d}")  # type: ignore
