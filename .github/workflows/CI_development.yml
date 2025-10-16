@@ -32,7 +32,7 @@ jobs:
 
       - name: Run migrations
         run: |
-          docker compose exec web sh -c "cd backend/src && python manage.py makemigrations && python manage.py migrate && python manage.py collecstatic && python manage.py loaddata groups.json user.json"
+          docker compose exec web sh -c "cd backend/src && python manage.py migrate --fake-initial"
 
       - name: Run Pytest
         run: |
