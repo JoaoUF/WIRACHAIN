@@ -25,7 +25,7 @@ jobs:
       - name: Lint with Black
         run: |
           docker compose exec web black --check .
-      
+
       - name: Lint with Flake8
         run: |
           docker compose exec web flake8 .
