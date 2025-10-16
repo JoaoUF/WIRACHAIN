@@ -1,6 +1,7 @@
 -r base.txt
 
 black==25.9.0
+flake8==7.3.0
 drf-spectacular==0.28.0
 django-debug-toolbar==6.0.0
 django-silk==5.4.3
