@@ -1,0 +1,36 @@
+name: CI - Development Branch
+
+on:
+  push:
+    branches:
+      - development
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Write .env.development file
+        run: echo "${{ secrets.ENV_DEVELOPMENT }}" > backend/src/environments/.env.development
+
+      - name: Build and start Docker Compose services
+        run: docker compose up --build -d
+
+      - name: Lint with Black
+        run: |
+          docker compose exec web black --check .
+      
+      - name: Lint with Flake8
+        run: |
+          docker compose exec web flake8 .
+
+      - name: Run Pytest
+        run: |
+          docker compose exec web bash -c "cd backend && pytest"
+
+      - name: Docker Compose Down
+        if: always()
+        run: docker compose down
