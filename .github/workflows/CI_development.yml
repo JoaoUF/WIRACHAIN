@@ -28,7 +28,7 @@ jobs:
       
       - name: Lint with Flake8
         run: |
-          docker compose exec web flake8 .
+          docker compose exec web flake8 . --config=/app/pyproject.toml
 
       - name: Run Pytest
         run: |
