@@ -30,6 +30,10 @@ jobs:
         run: |
           docker compose exec web flake8 .
 
+      - name: Run migrations
+        run: |
+          docker compose exec web sh -c "cd backend/src && python manage.py makemigrations && python manage.py migrate && python manage.py collecstatic && python manage.py loaddata groups.json user.json"
+
       - name: Run Pytest
         run: |
           docker compose exec web sh -c "cd backend && pytest"
