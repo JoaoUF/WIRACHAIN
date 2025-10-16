@@ -18,6 +18,7 @@ RUN pip install -r ${ENV_TYPE}.txt
 
 ADD ./backend $APP_HOME/backend
 ADD ./docker $APP_HOME/docker
+COPY ./pyproject.toml $APP_HOME/
 
 RUN chmod +x /app/docker/backend/server-entrypoint.sh
 RUN chmod +x /app/docker/backend/wait-for-dbs.sh
