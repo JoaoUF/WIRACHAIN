@@ -7,7 +7,7 @@ services:
     restart: unless-stopped
     command: ["postgres", "-c", "config_file=/etc/postgresql.conf"]
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      # - postgres_data:/var/lib/postgresql/data/
       - ./docker/backend/primary.conf:/etc/postgresql.conf
       - ./docker/backend/pg_hba.conf:/etc/pg_hba.conf
     env_file:

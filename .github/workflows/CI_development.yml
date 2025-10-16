@@ -44,7 +44,7 @@ jobs:
 
       - name: Run migrations
         run: |
-          docker compose exec web sh -c "cd backend/src && python manage.py makemigrations && python manage.py migrate --fake-initial"
+          docker compose exec web sh -c "cd backend/src && python manage.py migrate"
 
       - name: Run Pytest
         run: |
