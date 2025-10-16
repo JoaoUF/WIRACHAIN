@@ -32,7 +32,7 @@ jobs:
 
       - name: Run Pytest
         run: |
-          docker compose exec web bash -c "cd backend && pytest"
+          docker compose exec web sh -c "cd backend && pytest"
 
       - name: Docker Compose Down
         if: always()
