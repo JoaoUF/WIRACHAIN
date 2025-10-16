@@ -19,8 +19,14 @@ jobs:
       - name: Write .env.development file
         run: echo "${{ secrets.ENV_DEVELOPMENT }}" > backend/src/environments/.env.development
 
-      - name: Remove all Docker volumes (cleanup DB)
-        run: docker volume prune --force
+      - name: Remove all Docker containers
+        run: docker rm -f $(docker ps -aq)
+
+      - name: Remove all Docker images
+        run: docker rmi -f $(docker images -a)
+
+      - name: Remove all Docker volumens
+        run: docker volume rm -f $(docker volume ls -q)
 
       - name: Build and start Docker Compose services
         run: docker compose up --build -d
