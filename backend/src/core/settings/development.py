@@ -23,6 +23,9 @@ MIDDLEWARE = [
     *MIDDLEWARE,
 ]
 
+# DJANGO CORS HEADER
+CORS_ALLOW_ALL_ORIGINS = True
+
 # EMAIL
 EMAIL_USE_TLS = bool(int(os.environ.get("EMAIL_USE_TLS", "1")))
 EMAIL_HOST = os.environ.get("EMAIL_HOST")
