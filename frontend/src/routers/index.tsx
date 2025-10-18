@@ -1,9 +1,11 @@
 import { createBrowserRouter } from "react-router";
-import ActivateAccount from "../features/authentication/ActivateAccount";
-import Login from "../features/authentication/Login";
-import Register from "../features/authentication/Register";
-import Landing from "../features/navigation/Landing";
-import NotFound from "../features/navigation/NotFound";
+import {
+  ActivateAccount,
+  Landing,
+  Login,
+  NotFound,
+  Register,
+} from "../features";
 
 const router = createBrowserRouter([
   {

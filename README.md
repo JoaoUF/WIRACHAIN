@@ -4,9 +4,8 @@ An alternative to the project shown before on my thesis.
 
 ## TO-DO LIST:
 
-- [ ] check test warnings
-- [ ] allow coverage reports to show all the files, even if all their lines are covered
-- [ ] add test to get the 100% coverage
+- [ ] add django-health-check in stage
+- [ ] add sentry-sdk in stage (optional)
 
 ## REFERENCES
 
