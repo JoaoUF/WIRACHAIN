@@ -25,6 +25,10 @@ const router = createBrowserRouter([
     element: <ActivateAccount />,
   },
   {
+    path: "/dashboard",
+    element: <ActivateAccount />,
+  },
+  {
     path: "*",
     element: <NotFound />,
   },

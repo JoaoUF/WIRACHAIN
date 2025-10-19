@@ -6,6 +6,7 @@ An alternative to the project shown before on my thesis.
 
 - [ ] add django-health-check in stage
 - [ ] add sentry-sdk in stage (optional)
+- [ ] create shre roles routes in router
 
 ## REFERENCES
 
