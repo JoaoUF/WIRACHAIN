@@ -108,6 +108,21 @@ services:
     networks:
       - pg_net
 
+  frontend:
+    container_name: wirachain_frontend
+    build:
+      context: .
+      dockerfile: ./docker/frontend/Dockerfile
+      args:
+        VITE_API_URL: "http://web:8000"
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    networks:
+      - pg_net
+    depends_on:
+      - web
+
 volumes:
   static_volume: {}
   postgres_data: {}

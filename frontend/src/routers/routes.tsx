@@ -4,8 +4,8 @@ export const ROUTES = {
   REGISTER: "/register",
   ACTIVATE_ACCOUNT: "/activate-account/:activate_code",
   DASHBOARD: "/dashboard",
-  DOCTOR: "/doctor",
-  PATIENT: "/patient",
-  ENTERPRISE: "/enterprise",
-  PROFILE: "/profile",
+  DOCTOR: "/dashboard/doctor",
+  PATIENT: "/dashboard/patient",
+  ENTERPRISE: "/dashboard/enterprise",
+  PROFILE: "/dashboard/profile",
 };

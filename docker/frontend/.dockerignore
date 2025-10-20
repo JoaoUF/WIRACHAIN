@@ -1,0 +1,24 @@
+# Node modules and build artifacts
+node_modules
+dist
+build
+.vite
+
+# Local env files
+.env
+.env.*
+npm-debug.log
+yarn-error.log
+.pnpm-debug.log
+
+# Editor
+.vscode
+.DS_Store
+
+# Git
+.git
+.gitignore
+
+# Docker-compose and Dockerfile templates
+Dockerfile*
+docker-compose*.yml

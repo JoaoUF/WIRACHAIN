@@ -9,6 +9,10 @@ lerna-debug.log*
 
 node_modules
 dist
+build
+.vs
+.vscode
+.DS_Store
 dist-ssr
 *.local
 
@@ -22,3 +26,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Git
+.git
+.gitignore
+
+# Local editor files
+*.swp
+*.swo
