@@ -1,42 +1,52 @@
-import { Button, Form, Typography } from "antd";
+import { GithubOutlined, GoogleOutlined } from "@ant-design/icons";
+import { Button, Divider, Form, Typography } from "antd";
+import { Link } from "react-router";
 import { useLogin } from "../hooks";
+import { ROUTES } from "../routers/routes";
 import type { LoginRequest } from "../types";
 import { LoginItems } from "./LoginItems";
 
-const { Title } = Typography;
+const { Paragraph } = Typography;
 
 export const LoginForm = () => {
   const { handleLogin, isLoading } = useLogin();
   const [form] = Form.useForm<LoginRequest>();
 
   return (
-    <div className="w-full max-w-md mx-auto p-8 bg-white rounded-lg shadow-md">
-      <Title level={2} className="text-center mb-6">
-        Login
-      </Title>
+    <Form
+      form={form}
+      name="login"
+      layout="vertical"
+      size="large"
+      autoComplete="off"
+      initialValues={{ remember: true }}
+      onFinish={handleLogin}
+      disabled={isLoading}
+    >
+      <LoginItems />
 
-      <Form
-        form={form}
-        name="login"
-        layout="vertical"
-        onFinish={handleLogin}
-        disabled={isLoading}
-        autoComplete="off"
-      >
-        <LoginItems />
-
-        <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            loading={isLoading}
-            size="large"
-            block
+      <div className="text-center">
+        <Paragraph className="text-sm text-gray-500">
+          Don't have an account?{" "}
+          <Link
+            to={ROUTES.REGISTER}
+            className="text-blue-500 hover:text-blue-700"
           >
-            {isLoading ? "Logging in..." : "Login"}
-          </Button>
-        </Form.Item>
-      </Form>
-    </div>
+            Register now
+          </Link>
+        </Paragraph>
+      </div>
+
+      <Divider plain>or log in with</Divider>
+
+      <div className="flex justify-center space-x-4">
+        <Button icon={<GoogleOutlined />} size="large">
+          Google
+        </Button>
+        <Button icon={<GithubOutlined />} size="large">
+          GitHub
+        </Button>
+      </div>
+    </Form>
   );
 };

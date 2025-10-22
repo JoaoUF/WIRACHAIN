@@ -27,7 +27,7 @@ do
     sleep 2
 done
 
-until python manage.py collectstatic
+until python manage.py collectstatic --noinput
 do
     echo "Collecting static content ..."
     sleep 2
@@ -45,6 +45,5 @@ do
     sleep 2
 done
 
-# python $MANAGE_PY collectstatic --noinput
 echo "Starting Django development server with settings..."
 exec python manage.py runserver 0.0.0.0:8000

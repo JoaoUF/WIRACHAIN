@@ -9,6 +9,13 @@ export const USER_TYPES = {
 
 export type UserType = (typeof USER_TYPES)[keyof typeof USER_TYPES];
 
+interface BasicUserInfo {
+  pk: number;
+  email: string;
+  first_name: string;
+  last_nmae: string;
+}
+
 export interface UserPayloadInfo {
   email: string;
   role: UserType;
@@ -22,9 +29,9 @@ export interface LoginRequest {
 }
 
 export interface LoginResponse {
-  user: unknown;
   access: string;
-  refresh: string | null;
+  refresh: string;
+  user: BasicUserInfo;
   access_expiration: string;
   refresh_expiration: string;
 }

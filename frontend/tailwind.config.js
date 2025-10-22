@@ -6,4 +6,10 @@ module.exports = {
     extend: {},
   },
   plugins: [],
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
+  corePlugins: {
+    preflight: false,
+  },
 };

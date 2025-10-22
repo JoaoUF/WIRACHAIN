@@ -1,12 +1,13 @@
 import { createBrowserRouter } from "react-router";
 import {
   ActivateAccount,
+  ForgotPassword,
   Landing,
   Login,
   NotFound,
   Register,
 } from "../features";
-import { Dashboard } from "../layouts";
+import { Dashboard, MainLayout } from "../layouts";
 import { USER_TYPES } from "../types";
 import { ProtectedRoute } from "./ProtectedRoute";
 import RedirectRouter from "./RedirectRouter";
@@ -28,19 +29,29 @@ const ALL_USER_ROLES = [
 const router = createBrowserRouter([
   {
     path: ROUTES.ROOT,
-    element: <Landing />,
-  },
-  {
-    path: ROUTES.REGISTER,
-    element: <Register />,
-  },
-  {
-    path: ROUTES.LOGIN,
-    element: <Login />,
-  },
-  {
-    path: ROUTES.ACTIVATE_ACCOUNT,
-    element: <ActivateAccount />,
+    element: <MainLayout />,
+    children: [
+      {
+        index: true,
+        element: <Landing />,
+      },
+      {
+        path: ROUTES.REGISTER,
+        element: <Register />,
+      },
+      {
+        path: ROUTES.LOGIN,
+        element: <Login />,
+      },
+      {
+        path: ROUTES.FORGOT_PASSWORD,
+        element: <ForgotPassword />,
+      },
+      {
+        path: ROUTES.ACTIVATE_ACCOUNT,
+        element: <ActivateAccount />,
+      },
+    ],
   },
   {
     path: ROUTES.DASHBOARD,
