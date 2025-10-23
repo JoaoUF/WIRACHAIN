@@ -1,12 +1,14 @@
 import { createBrowserRouter } from "react-router";
 import {
   ActivateAccount,
+  Appointment,
   Clinic,
   Diesease,
   Doctor,
   ForgotPassword,
   Landing,
   Login,
+  MedicalRecord,
   NotFound,
   Profile,
   Register,
@@ -110,11 +112,29 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: ROUTES.APPOINTMENT,
+        element: (
+          <RoleGuard
+            allowedRoles={[USER_TYPES.DOCTOR]}
+            element={<Appointment />}
+          />
+        ),
+      },
+      {
         path: ROUTES.RESERVATION,
         element: (
           <RoleGuard
             allowedRoles={[USER_TYPES.PATIENT]}
             element={<Reservation />}
+          />
+        ),
+      },
+      {
+        path: ROUTES.MEDICAL_RECORD,
+        element: (
+          <RoleGuard
+            allowedRoles={[USER_TYPES.PATIENT]}
+            element={<MedicalRecord />}
           />
         ),
       },

@@ -12,7 +12,8 @@ export const ROUTES = {
   DISEASE: "/dashboard/disease",
   SPECIALITY: "/dashboard/speciality",
   TEST: "/dashboard/test",
-  APPOINTMENT: "/dashboard/appointment",
   WAITING_LIST: "/dashboard/waiting-list",
+  APPOINTMENT: "/dashboard/appointment",
   RESERVATION: "/dashboard/reservation",
+  MEDICAL_RECORD: "/dashboard/medical-record",
 };

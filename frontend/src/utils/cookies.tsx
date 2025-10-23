@@ -10,8 +10,11 @@ export function getCookie(name: string): string | null {
 
 export function getUserFromJWT(): UserPayloadInfo | null {
   const token = getCookie("access-token");
+  console.log("GET COOKIES IS DONE:", token);
+
   if (!token) return null;
   try {
+    console.log("THIS IS THE PAYLOAD INFO:", jwtDecode<UserPayloadInfo>(token));
     return jwtDecode<UserPayloadInfo>(token);
   } catch {
     return null;
