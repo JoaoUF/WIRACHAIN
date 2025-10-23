@@ -5,7 +5,7 @@ import { ROUTES } from "../routers/routes";
 
 const { Header, Content } = Layout;
 
-const MainLayout = () => {
+const MainMenu = () => {
   const location = useLocation();
   const [current, setCurrent] = useState(location.pathname);
 
@@ -65,4 +65,4 @@ const MainLayout = () => {
   );
 };
 
-export default MainLayout;
+export default MainMenu;

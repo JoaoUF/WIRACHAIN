@@ -16,7 +16,7 @@ const RoleGuard = ({
 }: RoleBasedRouteProps) => {
   const { user } = useAuth();
 
-  if (!user?.role || !allowedRoles.includes(user.role)) {
+  if (!user?.groups || !allowedRoles.includes(user.groups)) {
     return fallback;
   }
 

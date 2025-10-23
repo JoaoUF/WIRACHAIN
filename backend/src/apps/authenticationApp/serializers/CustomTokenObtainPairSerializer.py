@@ -15,7 +15,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         except Exception:
             group_names = []
         # token["groups"] = group_names
-        token["primary_group"] = group_names[0] if group_names else None
+        token["groups"] = group_names[0] if group_names else None
 
         enterprise = getattr(user, "enterprise", None)
         if enterprise is None:

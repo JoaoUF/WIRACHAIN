@@ -17,10 +17,11 @@ interface BasicUserInfo {
 }
 
 export interface UserPayloadInfo {
+  user_id: number;
   email: string;
-  role: UserType;
   document_value: string;
-  enterprise: string;
+  groups: UserType;
+  enterprise_id: number | null;
 }
 
 export interface LoginRequest {
