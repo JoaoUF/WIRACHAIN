@@ -24,8 +24,9 @@ MIDDLEWARE = [
 ]
 
 # DJANGO CORS HEADER
-CORS_ALLOWED_ORIGINS = os.environ.get("CORS_ALLOWED_ORIGINS", "").split(" ")
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = os.environ.get("CORS_ALLOWED_ORIGINS", "").split(" ")
+CSRF_TRUSTED_ORIGINS = os.environ.get("CORS_ALLOWED_ORIGINS", "").split(" ")
 
 # EMAIL
 EMAIL_USE_TLS = bool(int(os.environ.get("EMAIL_USE_TLS", "1")))

@@ -1,26 +1,32 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useCallback, useState } from "react";
 import type { UserPayloadInfo } from "../types/Authentication";
-import { getUserFromJWT } from "../utils/cookies";
+import { getPayloadFromJWT } from "../utils/TokenInteraction";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext<{
   user: UserPayloadInfo | null;
   isAuthenticated: boolean;
-  reloadUser: () => void;
+  setAuth: (accessToken: string) => void;
+  reset: () => void;
 }>({
   user: null,
   isAuthenticated: false,
-  reloadUser: () => {},
+  setAuth: () => {},
+  reset: () => {},
 });
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [user, setUser] = useState<UserPayloadInfo | null>(getUserFromJWT());
-  const reloadUser = () => setUser(getUserFromJWT());
+  const [user, setUser] = useState<UserPayloadInfo | null>(null);
 
-  useEffect(() => {
-    setUser(getUserFromJWT());
+  const setAuth = useCallback((accessToken: string) => {
+    const payload = getPayloadFromJWT(accessToken);
+    setUser(payload);
+  }, []);
+
+  const reset = useCallback(() => {
+    setUser(null);
   }, []);
 
   return (
@@ -28,7 +34,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       value={{
         user,
         isAuthenticated: !!user,
-        reloadUser,
+        setAuth,
+        reset,
       }}
     >
       {children}

@@ -27,6 +27,7 @@ class LoginView(DjRestAuthLoginView):
 @extend_schema_view(
     post=extend_schema(
         tags=["Authentication"],
+        request=None,
         summary="User Logout",
         description="Logout the currently authenticated user.",
     ),

@@ -3,12 +3,12 @@ import { useAuth } from "./useAuth";
 
 export const useLogout = () => {
   const [logout] = useLogoutMutation();
-  const { reloadUser } = useAuth();
+  const { reset } = useAuth();
 
   const handleLogout = async () => {
     try {
       await logout().unwrap();
-      reloadUser();
+      reset();
     } catch (error) {
       console.error("ERROR ON LOGOUT", error);
     }
