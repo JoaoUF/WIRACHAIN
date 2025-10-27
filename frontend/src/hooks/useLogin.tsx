@@ -7,15 +7,17 @@ import { useAuth } from "./useAuth";
 
 export const useLogin = () => {
   const navigate = useNavigate();
-  const { setAuth } = useAuth();
+  const { refetchUser } = useAuth();
   const [login, { isLoading }] = useLoginMutation();
 
   const handleLogin = async (values: LoginRequest) => {
     try {
-      const response = await login(values).unwrap();
-      if (response.access) {
-        setAuth(response.access);
-      }
+      // const response = await login(values).unwrap();
+      // if (response.access) {
+      //   setAuth(response.access);
+      // }
+      await login(values).unwrap();
+      await refetchUser();
       message.success("Login successful!");
       navigate(ROUTES.DASHBOARD);
     } catch (error) {

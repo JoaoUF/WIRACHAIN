@@ -33,7 +33,7 @@ export const userApi = createApi({
 
     getUser: builder.query<UserResponse, number>({
       query: (user_id) => ({
-        url: `${USER_PATH}/${String(user_id)}`,
+        url: `${USER_PATH}/${String(user_id)}/`,
         method: "GET",
       }),
       providesTags: (__result, __error, id) => [{ type: "User", id }],
@@ -53,7 +53,7 @@ export const userApi = createApi({
       { id: number; data: UserRequest }
     >({
       query: (params) => ({
-        url: `${USER_PATH}/${String(params.id)}`,
+        url: `${USER_PATH}/${String(params.id)}/`,
         method: "PUT",
         body: params.data,
       }),
@@ -65,7 +65,7 @@ export const userApi = createApi({
       { id: number; data: Partial<UserRequest> }
     >({
       query: (params) => ({
-        url: `${USER_PATH}/${String(params.id)}`,
+        url: `${USER_PATH}/${String(params.id)}/`,
         method: "PATCH",
         body: params.data,
       }),
@@ -74,7 +74,7 @@ export const userApi = createApi({
 
     deleteUser: builder.mutation<null, number>({
       query: (user_id) => ({
-        url: `${USER_PATH}/${String(user_id)}`,
+        url: `${USER_PATH}/${String(user_id)}/`,
         method: "DELETE",
       }),
       invalidatesTags: (__result, __error, id) => [{ type: "User", id }],

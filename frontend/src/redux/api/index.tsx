@@ -1,4 +1,9 @@
-export { authApi, useLoginMutation, useLogoutMutation } from "./AuthAPI";
+export {
+  authApi,
+  useGetPayloadQuery,
+  useLoginMutation,
+  useLogoutMutation,
+} from "./AuthAPI";
 export {
   useAddUserMutation,
   useDeleteUserMutation,

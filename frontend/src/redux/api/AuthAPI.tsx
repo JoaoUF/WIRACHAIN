@@ -1,5 +1,9 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import type { LoginRequest, LoginResponse } from "../../types";
+import {
+  type LoginRequest,
+  type LoginResponse,
+  type UserPayloadInfo,
+} from "../../types";
 import { customBaseQuery } from "./baseQuery";
 
 export const authApi = createApi({
@@ -19,7 +23,14 @@ export const authApi = createApi({
         method: "POST",
       }),
     }),
+    getPayload: builder.query<UserPayloadInfo, void>({
+      query: () => ({
+        url: "/me/",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useLogoutMutation } = authApi;
+export const { useLoginMutation, useLogoutMutation, useGetPayloadQuery } =
+  authApi;

@@ -11,6 +11,7 @@ export const useLogout = () => {
       reset();
     } catch (error) {
       console.error("ERROR ON LOGOUT", error);
+      reset();
     }
   };
 

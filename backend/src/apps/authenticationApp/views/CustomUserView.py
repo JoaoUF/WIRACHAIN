@@ -1,9 +1,27 @@
 from rest_framework import viewsets, mixins
-from django_filters.rest_framework import DjangoFilterBackend
 from drf_spectacular.utils import extend_schema_view, extend_schema
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from ..models import CustomUser
 from ..serializers import CustomUserSerializer
 from ..filters import CustomUserFilter
+from rest_framework import status
+
+
+class CurrentUserView(APIView):
+    def get(self, request):
+        user = request.user
+
+        return Response(
+            {
+                "user_id": user.id,
+                "email": user.email,
+                "document_value": user.document_value,
+                "groups": list(user.groups.values_list("name", flat=True))[0],
+                "enterprise_id": user.enterprise,
+            },
+            status=status.HTTP_200_OK,
+        )
 
 
 @extend_schema_view(
@@ -43,7 +61,6 @@ class ClinicUserListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
         ]
     ).distinct()
     serializer_class = CustomUserSerializer
-    # permission_classes = [permissions.IsAuthenticated, IsClinic]
     filterset_class = CustomUserFilter
 
 

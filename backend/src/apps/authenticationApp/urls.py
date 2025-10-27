@@ -19,6 +19,7 @@ from .views import (
     RegisterView,
     VerifyEmailView,
     ResendEmailVerificationView,
+    CurrentUserView,
 )
 
 router = routers.DefaultRouter()
@@ -26,7 +27,7 @@ router.register(r"users/admin-list", AdminUserListViewSet, basename="admin-list"
 router.register(r"users/enterprise-list", ClinicUserListViewSet, basename="clinic-list")
 router.register(r"users/doctor-list", DoctorUserListViewSet, basename="doctor-list")
 router.register(r"users/patient-list", PatientUserListViewSet, basename="patient-list")
-router.register(r"users", CustomUserViewSet, basename="user")
+router.register(r"users/", CustomUserViewSet, basename="user")
 
 auth_urlpatterns = [
     re_path(r"^password/reset/?$", PasswordResetView.as_view(), name="rest_password_reset"),
@@ -38,6 +39,7 @@ auth_urlpatterns = [
 
 registration_urlpatterns = [
     path("register/", RegisterView.as_view(), name="rest_register"),
+    path("me/", CurrentUserView.as_view(), name="current-user"),
     re_path(r"^verify-email/?$", VerifyEmailView.as_view(), name="rest_verify_email"),
     re_path(r"^resend-email/?$", ResendEmailVerificationView.as_view(), name="rest_resend_email"),
     re_path(

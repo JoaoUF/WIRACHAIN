@@ -4,6 +4,7 @@ from authenticationApp.views.CustomUserView import (
     DoctorUserListViewSet,
     PatientUserListViewSet,
     CustomUserViewSet,
+    CurrentUserView,
 )
 from authenticationApp.views.DjangoRestAuthView import (
     LoginView,
