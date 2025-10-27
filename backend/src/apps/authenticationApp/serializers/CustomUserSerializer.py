@@ -10,7 +10,21 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = "__all__"
+        fields = [
+            "id",
+            "groups",
+            "user_permissions",
+            "first_name",
+            "last_name",
+            "email",
+            "gender",
+            "phone",
+            "birth_date",
+            "document_type",
+            "document_value",
+            "is_active",
+            "enterprise",
+        ]
 
     def create(self, validated_data):
         groups = validated_data.pop("groups", [])

@@ -5,3 +5,9 @@ export type {
   UserPayloadInfo,
   UserType,
 } from "./Authentication";
+export type {
+  AllUsersRequest,
+  AllUsersResponse,
+  UserRequest,
+  UserResponse,
+} from "./User";
