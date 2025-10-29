@@ -15,8 +15,8 @@
     "fields": {
       "user": 2,
       "email": "clinic@example.com",
-      "verified": false,
-      "primary": false
+      "verified": true,
+      "primary": true
     }
   },
   {
