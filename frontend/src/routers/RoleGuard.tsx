@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import { NotFound } from "../features";
+import { NotAuthorized } from "../features";
 import { useAuth } from "../hooks";
 import type { UserType } from "../types";
 
@@ -12,7 +12,7 @@ interface RoleBasedRouteProps {
 const RoleGuard = ({
   allowedRoles,
   element,
-  fallback = <NotFound />,
+  fallback = <NotAuthorized />,
 }: RoleBasedRouteProps) => {
   const { user } = useAuth();
 

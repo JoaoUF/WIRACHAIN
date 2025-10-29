@@ -52,14 +52,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     return refetch();
   }, [refetch]);
 
-  useEffect(() => {
-    console.log("USER DATA", data);
-  }, [data]);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <AuthContext.Provider
       value={{

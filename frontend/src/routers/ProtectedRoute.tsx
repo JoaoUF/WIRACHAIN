@@ -12,11 +12,7 @@ export const ProtectedRoute = ({
   element,
   redirectPath = ROUTES.ROOT,
 }: ProtectedRouteProps) => {
-  const { isAuthenticated, isLoading } = useAuth();
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  const { isAuthenticated } = useAuth();
 
   if (!isAuthenticated) {
     return <Navigate to={redirectPath} replace />;

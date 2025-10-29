@@ -2,13 +2,13 @@ import { Button, Result } from "antd";
 import { Link } from "react-router";
 import { ROUTES } from "../../routers/routes";
 
-const NotFound = () => {
+function NotAuthorized() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <Result
-        status="404"
-        title="404"
-        subTitle="Sorry, the page you visited does not exist."
+        status="403"
+        title="403"
+        subTitle="Sorry, you are not authorized to access this page."
         extra={
           <Link to={ROUTES.ROOT}>
             <Button type="primary" size="large">
@@ -19,6 +19,6 @@ const NotFound = () => {
       />
     </div>
   );
-};
+}
 
-export default NotFound;
+export default NotAuthorized;

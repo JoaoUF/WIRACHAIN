@@ -12,6 +12,7 @@ export { default as Test } from "./enterprise/Test";
 export { default as Profile } from "./general/Profile";
 export { default as Setting } from "./general/Setting";
 export { default as Landing } from "./navigation/Landing";
+export { default as NotAuthorized } from "./navigation/NotAuthorized";
 export { default as NotFound } from "./navigation/NotFound";
 export { default as MedicalRecord } from "./patient/MedicalRecord";
 export { default as Reservation } from "./patient/Reservation";
