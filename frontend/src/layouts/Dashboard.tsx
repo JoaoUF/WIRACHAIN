@@ -39,16 +39,6 @@ const Dashboard = () => {
         icon: ensureIcon(<DashboardOutlined />),
         label: <Link to={ROUTES.DASHBOARD}>Dashboard</Link>,
       },
-      {
-        key: "profile",
-        icon: ensureIcon(<UserOutlined />),
-        label: <Link to={ROUTES.PROFILE}>My Profile</Link>,
-      },
-      {
-        key: "settings",
-        icon: ensureIcon(<SettingOutlined />),
-        label: <Link to={ROUTES.SETTING}>Settings</Link>,
-      },
     ],
     []
   );

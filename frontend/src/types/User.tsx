@@ -1,19 +1,14 @@
-import type {
-  Active,
-  Ordering,
-  Pagination,
-  PaginationWrapper,
-  Search,
-} from "./Extras";
+import type { Ordering, Pagination, PaginationWrapper, Search } from "./Extras";
 
 export type UserQueries = {
   document_type: string;
   email: string;
   gender: string;
+  is_active: boolean;
 };
 
 export type UserBasic = {
-  id: number;
+  id?: number;
   groups: number[];
   user_permissions: number[];
   first_name: string;
@@ -28,11 +23,10 @@ export type UserBasic = {
   enterprise: number;
 };
 
-export type AllUsersRequest = UserQueries &
-  Pagination &
-  Ordering &
-  Search &
-  Active;
+export type AllUsersRequest = Partial<UserQueries> &
+  Partial<Pagination> &
+  Partial<Ordering> &
+  Partial<Search>;
 
 export type AllUsersResponse = PaginationWrapper<UserBasic>;
 

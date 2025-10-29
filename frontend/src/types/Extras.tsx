@@ -1,18 +1,14 @@
 export type Pagination = {
-  limit?: number;
-  offset?: number;
+  limit: number;
+  offset: number;
 };
 
 export type Ordering = {
-  ordering?: string;
+  ordering: string;
 };
 
 export type Search = {
-  search?: string;
-};
-
-export type Active = {
-  is_active?: boolean;
+  search: string;
 };
 
 export type PaginationWrapper<T> = {
