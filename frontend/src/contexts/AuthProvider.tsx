@@ -49,7 +49,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   const refetchUser = useCallback(() => {
-    refetch();
+    return refetch();
   }, [refetch]);
 
   useEffect(() => {

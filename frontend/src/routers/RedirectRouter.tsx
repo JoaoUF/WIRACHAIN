@@ -19,7 +19,7 @@ function RedirectRouter() {
   const { user } = useAuth();
 
   const targetRoute = user?.groups
-    ? ROLE_REDIRECT_MAP[user.groups] || ROUTES.ROOT
+    ? ROLE_REDIRECT_MAP[user.groups]
     : ROUTES.ROOT;
 
   return <Navigate to={targetRoute} replace />;

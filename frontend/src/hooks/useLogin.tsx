@@ -12,10 +12,6 @@ export const useLogin = () => {
 
   const handleLogin = async (values: LoginRequest) => {
     try {
-      // const response = await login(values).unwrap();
-      // if (response.access) {
-      //   setAuth(response.access);
-      // }
       await login(values).unwrap();
       await refetchUser();
       message.success("Login successful!");

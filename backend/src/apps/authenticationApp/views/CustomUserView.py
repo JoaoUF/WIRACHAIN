@@ -12,16 +12,21 @@ class CurrentUserView(APIView):
     def get(self, request):
         user = request.user
 
-        return Response(
-            {
-                "user_id": user.id,
-                "email": user.email,
-                "document_value": user.document_value,
-                "groups": list(user.groups.values_list("name", flat=True))[0],
-                "enterprise_id": user.enterprise,
-            },
-            status=status.HTTP_200_OK,
-        )
+        try:
+            groups = list(user.groups.values_list("name", flat=True))
+            group_name = groups[0] if groups else None
+        except Exception:
+            group_name = None
+
+        data = {
+            "user_id": getattr(user, "pk", None),
+            "email": getattr(user, "email", None),
+            "document_value": getattr(user, "document_value", None),
+            "groups": group_name,
+            "enterprise_id": getattr(user, "enterprise_id", None),
+        }
+
+        return Response(data, status=status.HTTP_200_OK)
 
 
 @extend_schema_view(
