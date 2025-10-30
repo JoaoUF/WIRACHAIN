@@ -6,6 +6,12 @@ export type {
   UserType,
 } from "./Authentication";
 export type {
+  AllDiseasesRequest,
+  AllDiseasesResponse,
+  DiseaseRequest,
+  DiseaseResponse,
+} from "./Disease";
+export type {
   AllUsersRequest,
   AllUsersResponse,
   UserRequest,

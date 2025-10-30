@@ -48,28 +48,26 @@ export const userApi = createApi({
       invalidatesTags: ["User"],
     }),
 
-    updateUser: builder.mutation<
-      UserResponse,
-      { id: number; data: UserRequest }
-    >({
-      query: (params) => ({
-        url: `${USER_PATH}/${String(params.id)}/`,
+    updateUser: builder.mutation<UserResponse, UserRequest>({
+      query: (data) => ({
+        url: `${USER_PATH}/${String(data.id)}/`,
         method: "PUT",
-        body: params.data,
+        body: data,
       }),
-      invalidatesTags: (__result, __error, { id }) => [{ type: "User", id }],
+      invalidatesTags: (__result, __error, data) => [
+        { type: "User", id: data.id },
+      ],
     }),
 
-    patchUser: builder.mutation<
-      UserResponse,
-      { id: number; data: Partial<UserRequest> }
-    >({
-      query: (params) => ({
-        url: `${USER_PATH}/${String(params.id)}/`,
+    patchUser: builder.mutation<UserResponse, Partial<UserRequest>>({
+      query: (data) => ({
+        url: `${USER_PATH}/${String(data.id)}/`,
         method: "PATCH",
-        body: params.data,
+        body: data,
       }),
-      invalidatesTags: (__result, __error, { id }) => [{ type: "User", id }],
+      invalidatesTags: (__result, __error, data) => [
+        { type: "User", id: data.id },
+      ],
     }),
 
     deleteUser: builder.mutation<null, number>({

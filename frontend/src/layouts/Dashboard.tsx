@@ -11,8 +11,16 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Avatar, Button, Dropdown, Layout, Menu, Typography } from "antd";
-import React, { useMemo, useState } from "react";
+import {
+  Avatar,
+  Button,
+  Drawer,
+  Dropdown,
+  Layout,
+  Menu,
+  Typography,
+} from "antd";
+import React, { useEffect, useMemo, useState } from "react";
 import { Link, Navigate, Outlet, useLocation, useNavigate } from "react-router";
 import { useAuth, useLogout } from "../hooks";
 import { ROUTES } from "../routers/routes";
@@ -31,6 +39,23 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Handle responsive behavior
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      if (!mobile && mobileDrawerOpen) {
+        setMobileDrawerOpen(false);
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [mobileDrawerOpen]);
 
   const commonMenuItems: Item[] = useMemo(
     () => [
@@ -183,76 +208,118 @@ const Dashboard = () => {
   const displayName = user.email.split("@")[0];
   const avatarLetter = displayName.charAt(0).toUpperCase();
 
-  return (
-    <Layout style={{ minHeight: "100vh" }}>
-      <Sider
-        trigger={null}
-        collapsible
-        collapsed={collapsed}
-        width={256}
-        style={{
-          overflow: "auto",
-          height: "100vh",
-          position: "fixed",
-          left: 0,
-          top: 0,
-          bottom: 0,
-        }}
-        theme="light"
-        className="shadow-md"
+  const getPanelTitle = () => {
+    if (user.groups === USER_TYPES.DOCTOR) return "Doctor Panel";
+    if (user.groups === USER_TYPES.PATIENT) return "Patient Portal";
+    return "Enterprise Panel";
+  };
+
+  const getPanelInitial = () => {
+    if (user.groups === USER_TYPES.DOCTOR) return "D";
+    if (user.groups === USER_TYPES.PATIENT) return "P";
+    return "E";
+  };
+
+  const sidebarContent = (
+    <>
+      <div
+        className={`p-4 ${
+          collapsed ? "text-center" : "flex items-center justify-between"
+        }`}
       >
-        <div
-          className={`p-4 ${
-            collapsed ? "text-center" : "flex items-center justify-between"
-          }`}
-        >
-          {collapsed ? (
-            <div className="text-xl font-bold">
-              {user.groups === USER_TYPES.DOCTOR
-                ? "D"
-                : user.groups === USER_TYPES.PATIENT
-                ? "P"
-                : "E"}
-            </div>
-          ) : (
-            <div className="text-xl font-bold">
-              {user.groups === USER_TYPES.DOCTOR
-                ? "Doctor Panel"
-                : user.groups === USER_TYPES.PATIENT
-                ? "Patient Portal"
-                : "Enterprise Panel"}
-            </div>
-          )}
+        <div className="text-xl font-bold">
+          {collapsed ? getPanelInitial() : getPanelTitle()}
         </div>
+      </div>
 
-        <Menu
-          mode="inline"
-          selectedKeys={selectedKeys}
-          style={{ borderRight: 0 }}
-          items={menuItems}
-        />
+      <Menu
+        mode="inline"
+        selectedKeys={selectedKeys}
+        style={{ borderRight: 0 }}
+        items={menuItems}
+        onClick={() => {
+          if (isMobile) {
+            setMobileDrawerOpen(false);
+          }
+        }}
+      />
 
-        {!collapsed && (
-          <div className="absolute bottom-0 left-0 right-0 p-4 border-t">
-            <div className="flex items-center">
-              <Avatar style={{ backgroundColor: "#2f54eb" }}>
-                {avatarLetter}
-              </Avatar>
-              <div className="ml-2 overflow-hidden">
-                <Text strong className="block text-sm truncate">
-                  {displayName}
-                </Text>
-                <Text className="block text-xs text-gray-500 truncate">
-                  {String(user.groups)}
-                </Text>
-              </div>
+      {!collapsed && !isMobile && (
+        <div className="absolute bottom-0 left-0 right-0 p-4 border-t bg-white">
+          <div className="flex items-center">
+            <Avatar style={{ backgroundColor: "#2f54eb" }}>
+              {avatarLetter}
+            </Avatar>
+            <div className="ml-2 overflow-hidden">
+              <Text strong className="block text-sm truncate">
+                {displayName}
+              </Text>
+              <Text className="block text-xs text-gray-500 truncate">
+                {String(user.groups)}
+              </Text>
             </div>
           </div>
-        )}
-      </Sider>
+        </div>
+      )}
+    </>
+  );
+
+  return (
+    <Layout style={{ minHeight: "100vh" }}>
+      {/* Desktop Sidebar */}
+      {!isMobile && (
+        <Sider
+          trigger={null}
+          collapsible
+          collapsed={collapsed}
+          width={256}
+          style={{
+            overflow: "auto",
+            height: "100vh",
+            position: "fixed",
+            left: 0,
+            top: 0,
+            bottom: 0,
+          }}
+          theme="light"
+          className="shadow-md"
+        >
+          {sidebarContent}
+        </Sider>
+      )}
+
+      {/* Mobile Drawer */}
+      <Drawer
+        placement="left"
+        onClose={() => setMobileDrawerOpen(false)}
+        open={mobileDrawerOpen}
+        closable={false}
+        width={256}
+        styles={{ body: { padding: 0 } }}
+      >
+        {sidebarContent}
+        <div className="p-4 border-t bg-white">
+          <div className="flex items-center">
+            <Avatar style={{ backgroundColor: "#2f54eb" }}>
+              {avatarLetter}
+            </Avatar>
+            <div className="ml-2 overflow-hidden">
+              <Text strong className="block text-sm truncate">
+                {displayName}
+              </Text>
+              <Text className="block text-xs text-gray-500 truncate">
+                {String(user.groups)}
+              </Text>
+            </div>
+          </div>
+        </div>
+      </Drawer>
 
       <Layout
-        style={{ marginLeft: collapsed ? 80 : 256, transition: "all 0.2s" }}
+        style={{
+          marginLeft: isMobile ? 0 : collapsed ? 80 : 256,
+          transition: "all 0.2s",
+        }}
       >
         <Header
           className="p-0 bg-white shadow-sm flex items-center justify-between"
@@ -260,32 +327,48 @@ const Dashboard = () => {
         >
           <Button
             type="text"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => setCollapsed(!collapsed)}
+            icon={
+              isMobile ? (
+                <MenuUnfoldOutlined />
+              ) : collapsed ? (
+                <MenuUnfoldOutlined />
+              ) : (
+                <MenuFoldOutlined />
+              )
+            }
+            onClick={() => {
+              if (isMobile) {
+                setMobileDrawerOpen(true);
+              } else {
+                setCollapsed(!collapsed);
+              }
+            }}
             className="ml-4"
             size="large"
           />
 
-          <div className="flex items-center mr-6">
+          <div className="flex items-center mr-4 md:mr-6">
             <Button
               type="text"
               icon={<BellOutlined />}
               size="large"
-              className="mr-4"
+              className="mr-2 md:mr-4"
             />
             <Dropdown menu={userDropdown} trigger={["click"]}>
               <div className="flex items-center cursor-pointer">
                 <Avatar style={{ backgroundColor: "#2f54eb" }}>
                   {avatarLetter}
                 </Avatar>
-                <span className="mr-1 ml-2">{displayName}</span>
+                <span className="mr-1 ml-2 hidden sm:inline">
+                  {displayName}
+                </span>
               </div>
             </Dropdown>
           </div>
         </Header>
 
         <Content
-          className="p-6 bg-gray-50"
+          className="p-4 md:p-6 bg-gray-50"
           style={{ minHeight: "calc(100vh - 64px)" }}
         >
           <Outlet />

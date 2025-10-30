@@ -16,5 +16,5 @@ class DiseaseView(viewsets.ModelViewSet):
     queryset = Disease.objects.all()
     serializer_class = DiseaseSerializer
     # permission_classes = [permissions.IsAuthenticated]
-    filterset_fields = ["enterprise_user", "is_active"]
+    filterset_fields = ["enterprise_user", "status"]
     search_fields = ["name"]
