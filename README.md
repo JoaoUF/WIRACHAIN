@@ -8,6 +8,7 @@ An alternative to the project shown before on my thesis.
 - [ ] add sentry-sdk in stage (optional)
 - [ ] add customuser react router
 - [ ] redo logic of user authentication login
+- [ ] add permissions to django views (diseas)
 
 ## REFERENCES
 

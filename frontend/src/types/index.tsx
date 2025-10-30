@@ -8,6 +8,7 @@ export type {
 export type {
   AllDiseasesRequest,
   AllDiseasesResponse,
+  DiseaseBasic,
   DiseaseRequest,
   DiseaseResponse,
 } from "./Disease";

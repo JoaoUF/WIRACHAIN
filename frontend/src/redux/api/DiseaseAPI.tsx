@@ -15,7 +15,7 @@ export const diseaseApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
   tagTypes: ["Disease"],
   endpoints: (builder) => ({
-    getAllDiseases: builder.query<AllDiseasesRequest, AllDiseasesResponse>({
+    getAllDiseases: builder.query<AllDiseasesResponse, AllDiseasesRequest>({
       query: (params) => {
         const filteredParams = Object.fromEntries(
           Object.entries(params).filter(

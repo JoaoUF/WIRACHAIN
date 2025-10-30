@@ -1,9 +1,9 @@
 import type { UUID } from "crypto";
-import type { Ordering, Pagination, PaginationWrapper, Search } from "./Extras";
+import type { Pagination, PaginationWrapper, Search } from "./Extras";
 
 export type DiseaseQueries = {
   enterprise_user: number;
-  is_active: boolean;
+  status: boolean;
 };
 
 export type DiseaseBasic = {
@@ -15,7 +15,6 @@ export type DiseaseBasic = {
 
 export type AllDiseasesRequest = Partial<DiseaseQueries> &
   Partial<Pagination> &
-  Partial<Ordering> &
   Partial<Search>;
 
 export type AllDiseasesResponse = PaginationWrapper<DiseaseBasic>;

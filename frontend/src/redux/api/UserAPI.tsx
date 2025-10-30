@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   type AllUsersRequest,
+  type AllUsersResponse,
   type UserRequest,
   type UserResponse,
 } from "../../types";
@@ -14,7 +15,7 @@ export const userApi = createApi({
   tagTypes: ["User"],
 
   endpoints: (builder) => ({
-    getAllUsers: builder.query<AllUsersRequest, AllUsersRequest>({
+    getAllUsers: builder.query<AllUsersResponse, AllUsersRequest>({
       query: (params) => {
         const filteredParams = Object.fromEntries(
           Object.entries(params).filter(
