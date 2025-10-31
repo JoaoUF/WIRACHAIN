@@ -3,7 +3,7 @@ import {
   ActivateAccount,
   Appointment,
   Clinic,
-  Diesease,
+  Disease,
   Doctor,
   ForgotPassword,
   Landing,
@@ -87,7 +87,7 @@ const router = createBrowserRouter([
       {
         path: ROUTES.DISEASE,
         element: (
-          <RoleGuard allowedRoles={ENTERPRISE_ROLES} element={<Diesease />} />
+          <RoleGuard allowedRoles={ENTERPRISE_ROLES} element={<Disease />} />
         ),
       },
       {

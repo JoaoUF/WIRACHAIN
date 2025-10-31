@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import type { UUID } from "crypto";
 import type {
   AllDiseasesRequest,
@@ -6,13 +6,14 @@ import type {
   DiseaseRequest,
   DiseaseResponse,
 } from "../../types";
-import { API_URL, ENDPOINT_URL } from "../../utils/urls";
+import { ENDPOINT_URL } from "../../utils/urls";
+import { customBaseQuery } from "./baseQuery";
 
 const DISEASE_PATH = ENDPOINT_URL.DISEASE;
 
 export const diseaseApi = createApi({
   reducerPath: "diseaseApi",
-  baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
+  baseQuery: customBaseQuery,
   tagTypes: ["Disease"],
   endpoints: (builder) => ({
     getAllDiseases: builder.query<AllDiseasesResponse, AllDiseasesRequest>({

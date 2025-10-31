@@ -1,7 +1,8 @@
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets
 from ..models import DoctorSpeciality
 from ..serializers import DoctorSpecialitySerializer
 from drf_spectacular.utils import extend_schema_view, extend_schema
+from authenticationApp.permissions import IsAdmin, IsEnterpriseBasic, IsEnterprisePremium, IsEnterpriseProfessional
 
 
 @extend_schema_view(
@@ -15,5 +16,5 @@ from drf_spectacular.utils import extend_schema_view, extend_schema
 class DoctorSpecialityView(viewsets.ModelViewSet):
     queryset = DoctorSpeciality.objects.all()
     serializer_class = DoctorSpecialitySerializer
-    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAdmin, IsEnterpriseBasic, IsEnterprisePremium, IsEnterpriseProfessional]
     filterset_fields = ["doctor_user", "speciality"]
