@@ -9,8 +9,8 @@ import { LoginItems } from "./LoginItems";
 const { Paragraph } = Typography;
 
 export const LoginForm = () => {
-  const { handleLogin, isLoading } = useLogin();
   const [form] = Form.useForm<LoginRequest>();
+  const { handleLogin, isLoading } = useLogin(form);
 
   return (
     <Form

@@ -11,7 +11,7 @@ import { Link } from "react-router";
 const { Title, Paragraph } = Typography;
 
 const Register = () => {
-  const onFinish = (values: any) => {
+  const onFinish = (values: unknown) => {
     console.log("Register form values:", values);
     // Handle registration logic here
   };
