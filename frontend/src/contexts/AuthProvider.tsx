@@ -8,6 +8,7 @@ export const AuthContext = createContext<{
   user: UserPayloadInfo | null;
   isAuthenticated: boolean;
   isLoading: boolean;
+  authChecked: boolean;
   setAuth: (accessToken: string) => void;
   reset: () => void;
   refetchUser: () => void;
@@ -15,6 +16,7 @@ export const AuthContext = createContext<{
   user: null,
   isAuthenticated: false,
   isLoading: true,
+  authChecked: false,
   setAuth: () => {},
   reset: () => {},
   refetchUser: () => {},
@@ -24,6 +26,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [user, setUser] = useState<UserPayloadInfo | null>(null);
+  const [authChecked, setAuthChecked] = useState(false);
 
   const { data, isLoading, isError, refetch } = useGetPayloadQuery(undefined, {
     refetchOnMountOrArgChange: false,
@@ -34,8 +37,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     if (data) {
       setUser(data);
+      setAuthChecked(true);
     } else if (isError) {
       setUser(null);
+      setAuthChecked(true);
     }
   }, [data, isError]);
 
@@ -58,6 +63,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         user,
         isAuthenticated: !!user,
         isLoading,
+        authChecked,
         setAuth,
         reset,
         refetchUser,

@@ -1,6 +1,5 @@
 import type { ReactElement } from "react";
 import { Navigate } from "react-router";
-import { DashboardLoading } from "../features";
 import { useAuth } from "../hooks";
 import { ROUTES } from "./routes";
 
@@ -13,13 +12,14 @@ export const ProtectedRoute = ({
   element,
   redirectPath = ROUTES.ROOT,
 }: ProtectedRouteProps) => {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated } = useAuth();
 
-  if (isLoading) {
-    return <DashboardLoading size="default" />;
-  }
+  // if (isLoading) {
+  //   return <DashboardLoading size="default" />;
+  // }
 
   if (!isAuthenticated) {
+    console.log("SENDING TO ROOT");
     return <Navigate to={redirectPath} replace />;
   }
 
