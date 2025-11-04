@@ -24,3 +24,4 @@ class Disease(Model, ActivatorModel):
         db_table = "MED_DISEASE"
         verbose_name = _("Disease")
         verbose_name_plural = _("Diseases")
+        ordering = ["id"]

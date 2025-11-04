@@ -20,3 +20,5 @@ class DiseaseView(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     filterset_fields = ["enterprise_user", "status"]
     search_fields = ["name"]
+    # ordering_fields = ["id", "name", "enterprise_user", "status"]
+    # ordering = ["id"]

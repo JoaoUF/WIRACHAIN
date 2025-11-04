@@ -32,7 +32,6 @@ THIRD_PARTY_APPS = [
     "drf_spectacular",
     "cities_light",
     "auditlog",
-    "cachalot",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
     "allauth",
@@ -43,6 +42,7 @@ THIRD_PARTY_APPS = [
     "djcelery_email",
     "corsheaders",
 ]
+# "cachalot",
 
 PERSONAL_APPS = [
     "apps.authenticationApp",
@@ -146,6 +146,7 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 10,
 }
 
 # SIMPLE-JWT
@@ -231,15 +232,6 @@ PASSWORD_RESET_CONFIRM_REDIRECT_BASE_URL = "http://127.0.0.1:3000/signin/"
 CELERY_EMAIL_TASK_CONFIG = {
     "name": "djcelery_email_send",
     "ignore_result": True,
-}
-
-# DRF-SPECTACULAR
-SPECTACULAR_SETTINGS = {
-    "TITLE": "Wirachain API",
-    "DESCRIPTION": "This a tesis proyect for medical records in clinics.",
-    "VERSION": "1.0.0",
-    "SERVE_INCLUDE_SCHEMA": False,
-    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 # DJANGO-CITIES-LIGHT
