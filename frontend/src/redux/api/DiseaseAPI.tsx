@@ -23,14 +23,22 @@ export const diseaseApi = createApi({
             ([, value]) => value !== undefined && value !== "" && value !== null
           )
         );
-
         const queryString = new URLSearchParams(
           filteredParams as Record<string, string>
         ).toString();
 
         return `${DISEASE_PATH}/?${queryString}`;
       },
-      providesTags: ["Disease"],
+      providesTags: (result) =>
+        result?.results
+          ? [
+              { type: "Disease", id: "LIST" },
+              ...result.results.map((disease) => ({
+                type: "Disease" as const,
+                id: disease.id,
+              })),
+            ]
+          : [{ type: "Disease", id: "LIST" }],
     }),
 
     getDisease: builder.query<DiseaseResponse, UUID>({
@@ -47,7 +55,7 @@ export const diseaseApi = createApi({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Disease"],
+      invalidatesTags: [{ type: "Disease", id: "LIST" }],
     }),
 
     updateDisease: builder.mutation<DiseaseResponse, DiseaseRequest>({
@@ -58,6 +66,7 @@ export const diseaseApi = createApi({
       }),
       invalidatesTags: (__result, __error, data) => [
         { type: "Disease", id: data.id },
+        { type: "Disease", id: "LIST" },
       ],
     }),
 
@@ -69,6 +78,7 @@ export const diseaseApi = createApi({
       }),
       invalidatesTags: (__result, __error, data) => [
         { type: "Disease", id: data.id },
+        { type: "Disease", id: "LIST" },
       ],
     }),
 
@@ -77,7 +87,10 @@ export const diseaseApi = createApi({
         url: `${DISEASE_PATH}/${String(disease_id)}/`,
         method: "DELETE",
       }),
-      invalidatesTags: (__result, __error, id) => [{ type: "Disease", id }],
+      invalidatesTags: (__result, __error, id) => [
+        { type: "Disease", id },
+        { type: "Disease", id: "LIST" },
+      ],
     }),
   }),
 });

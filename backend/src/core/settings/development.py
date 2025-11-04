@@ -123,3 +123,14 @@ DEBUG_TOOLBAR_PANELS = [
 SILKY_PYTHON_PROFILER = True
 SILKY_AUTHENTICATION = False
 SILKY_AUTHORISATION = False
+
+# DRF-SPECTACULAR
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Wirachain API",
+    "DESCRIPTION": "This a tesis proyect for medical records in clinics.",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "LOGIN_URL": "api/v1/login",
+    "LOGOUT_URL": "api/v1/logout",
+}
