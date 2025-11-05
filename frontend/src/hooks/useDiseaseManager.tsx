@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
+import {
+  useAddDiseaseMutation,
+  useDeleteBulkDiseaseMutation,
+  useDeleteDiseaseMutation,
+  useGetAllDiseasesQuery,
+  usePatchDiseaseMutation,
+  useUpdateDiseaseMutation,
+} from "../redux";
 import type { AllDiseasesRequest, DiseaseBasic } from "../types";
 import { useAuth } from "./useAuth";
-import {
-  useGetAllDiseasesQuery,
-  useAddDiseaseMutation,
-  useUpdateDiseaseMutation,
-  useDeleteDiseaseMutation,
-} from "../redux";
 
 export function useDiseaseManager() {
   const { user } = useAuth();
@@ -45,6 +47,8 @@ export function useDiseaseManager() {
   const [addDisease, addState] = useAddDiseaseMutation();
   const [updateDisease, updateState] = useUpdateDiseaseMutation();
   const [deleteDisease, deleteState] = useDeleteDiseaseMutation();
+  const [patchDisease, patchState] = usePatchDiseaseMutation();
+  const [deleteBulkDisease, deleteBulkState] = useDeleteBulkDiseaseMutation();
 
   return {
     diseasesData,
@@ -63,9 +67,13 @@ export function useDiseaseManager() {
     addDisease,
     updateDisease,
     deleteDisease,
+    patchDisease,
+    deleteBulkDisease,
     addState,
     updateState,
     deleteState,
+    patchState,
+    deleteBulkState,
     refetch,
     user,
   };

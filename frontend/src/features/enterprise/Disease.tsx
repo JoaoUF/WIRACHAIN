@@ -1,6 +1,16 @@
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
-import { Button, Card, Form, Input, message, Typography } from "antd";
+import {
+  Button,
+  Card,
+  Form,
+  Input,
+  message,
+  Popconfirm,
+  Space,
+  Typography,
+} from "antd";
 import type { UUID } from "crypto";
+import { useState } from "react";
 import { DiseaseTable } from "../../componenets";
 import { DiseaseFormModal } from "../../forms";
 import { useDiseaseManager } from "../../hooks";
@@ -9,7 +19,6 @@ import type { DiseaseBasic } from "../../types";
 const { Title } = Typography;
 
 export default function Disease() {
-  // const formRef = useRef<any>();
   const {
     diseasesData,
     isLoading,
@@ -24,14 +33,16 @@ export default function Disease() {
     setIsModalOpen,
     editingDisease,
     setEditingDisease,
+    deleteDisease,
     addDisease,
     updateDisease,
-    deleteDisease,
     addState,
+    deleteBulkDisease,
     updateState,
     user,
   } = useDiseaseManager();
   const [form] = Form.useForm();
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
   const handleEdit = (record: DiseaseBasic) => {
     setEditingDisease(record);
@@ -82,6 +93,21 @@ export default function Disease() {
     setIsModalOpen(true);
   };
 
+  const handleBulkDelete = async () => {
+    try {
+      await deleteBulkDisease(selectedRowKeys as UUID[]).unwrap();
+      message.success("Diseases deleted");
+      setSelectedRowKeys([]);
+    } catch (error) {
+      console.log("ERROR", error);
+      message.error("Failed to delete diseases");
+    }
+  };
+
+  const handleBulkStatusChange = (newStatus: number) => {
+    message.info("Bulk activate/deactivate to be implemented.", newStatus);
+  };
+
   return (
     <div className="w-full">
       <Card bordered={false} className="shadow-sm">
@@ -112,6 +138,34 @@ export default function Disease() {
             Add Disease
           </Button>
         </div>
+
+        <Space className="mb-4">
+          <Popconfirm
+            title="Delete selected diseases"
+            disabled={selectedRowKeys.length === 0}
+            onConfirm={handleBulkDelete}
+            okText="Yes"
+            cancelText="No"
+            okButtonProps={{ danger: true }}
+          >
+            <Button danger disabled={selectedRowKeys.length === 0}>
+              Delete Selected
+            </Button>
+          </Popconfirm>
+          <Button
+            disabled={selectedRowKeys.length === 0}
+            onClick={() => handleBulkStatusChange(1)}
+          >
+            Set Active
+          </Button>
+          <Button
+            disabled={selectedRowKeys.length === 0}
+            onClick={() => handleBulkStatusChange(0)}
+          >
+            Set Inactive
+          </Button>
+        </Space>
+
         <div className="overflow-x-auto">
           <DiseaseTable
             data={diseasesData?.results || []}
@@ -125,6 +179,8 @@ export default function Disease() {
               setCurrentPage(page);
               setPageSize(size);
             }}
+            selectedRowKeys={selectedRowKeys}
+            onSelectChange={setSelectedRowKeys}
           />
         </div>
       </Card>

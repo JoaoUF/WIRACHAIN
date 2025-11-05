@@ -25,6 +25,7 @@ export const useAppSelector = useSelector.withTypes<RootState>();
 export {
   useAddDiseaseMutation,
   useAddUserMutation,
+  useDeleteBulkDiseaseMutation,
   useDeleteDiseaseMutation,
   useDeleteUserMutation,
   useGetAllDiseasesQuery,

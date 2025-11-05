@@ -7,7 +7,13 @@ An alternative to the project shown before on my thesis.
 - [ ] add django-health-check in stage
 - [ ] add sentry-sdk in stage (optional)
 - [ ] remove cachalote
-- [ ] search another cache option
+- [ ] bulk patch
+- [ ] remore actions column
+- [ ] centralice models
+- [ ] filter by status
+- [ ] reduce table spacing
+- [ ] create extra serializers
+- [ ] remove name column order
 
 ## REFERENCES
 

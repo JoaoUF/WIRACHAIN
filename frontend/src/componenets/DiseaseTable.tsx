@@ -1,7 +1,8 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Button, Popconfirm, Space, Table } from "antd";
+import { Button, Popconfirm, Space, Table, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import type { UUID } from "crypto";
+import React from "react";
 import type { DiseaseBasic } from "../types";
 
 interface DiseaseTableProps {
@@ -10,9 +11,11 @@ interface DiseaseTableProps {
   currentPage: number;
   pageSize: number;
   total: number;
+  selectedRowKeys: React.Key[];
   onEdit: (record: DiseaseBasic) => void;
   onDelete: (id: UUID) => void;
   onPageChange: (page: number, size: number) => void;
+  onSelectChange: (selected: React.Key[]) => void;
 }
 
 export function DiseaseTable({
@@ -21,15 +24,18 @@ export function DiseaseTable({
   currentPage,
   pageSize,
   total,
+  selectedRowKeys,
   onEdit,
   onDelete,
   onPageChange,
+  onSelectChange,
 }: DiseaseTableProps) {
   const columns: ColumnsType<DiseaseBasic> = [
     {
       title: "Name",
       dataIndex: "name",
       key: "name",
+      sorter: (a, b) => a.name.localeCompare(b.name),
       ellipsis: true,
     },
     {
@@ -40,6 +46,19 @@ export function DiseaseTable({
       render: (text: string) => (
         <span className="text-gray-600">{text || "No description"}</span>
       ),
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      align: "center",
+      width: 110,
+      render: (status: number) =>
+        status === 1 ? (
+          <Tag color="green">Active</Tag>
+        ) : (
+          <Tag color="red">Inactive</Tag>
+        ),
     },
     {
       title: "Actions",
@@ -68,8 +87,14 @@ export function DiseaseTable({
     },
   ];
 
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectChange,
+  };
+
   return (
     <Table
+      rowSelection={rowSelection}
       columns={columns}
       dataSource={data}
       rowKey="id"
@@ -83,7 +108,7 @@ export function DiseaseTable({
         showTotal: (tot) => `Total ${tot} diseases`,
         pageSizeOptions: ["10", "20", "50", "100"],
       }}
-      scroll={{ x: 600 }}
+      scroll={{ x: 800 }}
       locale={{
         emptyText: "No diseases found",
       }}

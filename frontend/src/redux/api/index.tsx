@@ -7,6 +7,7 @@ export {
 export {
   diseaseApi,
   useAddDiseaseMutation,
+  useDeleteBulkDiseaseMutation,
   useDeleteDiseaseMutation,
   useGetAllDiseasesQuery,
   useGetDiseaseQuery,
