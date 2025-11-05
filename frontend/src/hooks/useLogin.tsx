@@ -1,9 +1,9 @@
 import type { FormInstance } from "antd";
 import { useNavigate } from "react-router";
+import { globalMessage } from "../contexts/MessageProvider";
 import { useLoginMutation } from "../redux";
 import { ROUTES } from "../routers/routes";
 import type { LoginRequest } from "../types";
-import { globalMessage } from "../utils/message";
 import { useAuth } from "./useAuth";
 
 export const useLogin = (form: FormInstance<LoginRequest>) => {

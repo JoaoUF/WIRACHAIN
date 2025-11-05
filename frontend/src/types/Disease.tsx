@@ -11,6 +11,7 @@ export type DiseaseBasic = {
   name: string;
   description: string;
   enterprise_user: number;
+  status: number;
 };
 
 export type AllDiseasesRequest = Partial<DiseaseQueries> &

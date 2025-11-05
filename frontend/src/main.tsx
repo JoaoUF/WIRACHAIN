@@ -7,8 +7,8 @@ import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { AuthLoading } from "./componenets";
 import { AuthProvider } from "./contexts";
+import { MessageProvider } from "./contexts/MessageProvider";
 import { store } from "./redux";
-import { MessageProvider } from "./utils/message";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
