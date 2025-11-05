@@ -18,16 +18,21 @@ jobs:
 
       - name: Write .env.development file
         run: echo "${{ secrets.ENV_DEVELOPMENT }}" > backend/src/environments/.env.development
-      
-      - name: Remove all Docker containers
+
+      # Ensure all containers/volumes from previous jobs are removed
+      - name: Docker Compose Down (remove containers and volumes)
+        run: docker compose down -v
+
+      # (Optional but extra-thorough) Clean up stray containers/images/volumes
+      - name: Remove all Docker containers (if any left)
         run: |
           if [ "$(docker ps -aq)" ]; then docker rm -f $(docker ps -aq); fi
 
-      - name: Remove all Docker images
+      - name: Remove all Docker images (if any left)
         run: |
           if [ "$(docker images -aq)" ]; then docker rmi -f $(docker images -aq); fi
 
-      - name: Remove all Docker volumes
+      - name: Remove all Docker volumes (if any left)
         run: |
           if [ "$(docker volume ls -q)" ]; then docker volume rm -f $(docker volume ls -q); fi
 
@@ -50,6 +55,6 @@ jobs:
         run: |
           docker compose exec web sh -c "cd backend && pytest"
 
-      - name: Docker Compose Down
+      - name: Docker Compose Down (cleanup at end)
         if: always()
-        run: docker compose down
+        run: docker compose down -v
