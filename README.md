@@ -6,10 +6,8 @@ An alternative to the project shown before on my thesis.
 
 - [ ] add django-health-check in stage
 - [ ] add sentry-sdk in stage (optional)
-- [ ] rethink reload logic
-- [ ] delete data when success login
-- [ ] delete password when error login
-- [ ] fix bug that redirects if is login
+- [ ] remove cachalote
+- [ ] search another cache option
 
 ## REFERENCES
 

@@ -7,7 +7,6 @@ django-extensions==4.1
 django-phonenumber-field[phonenumberslite]==8.1.0
 django-cities-light==3.10.2
 django-auditlog==3.3.0
-# django-cachalot==2.8.0
 django-redis==6.0.0
 dj-rest-auth==7.0.1
 djangorestframework_simplejwt==5.5.1

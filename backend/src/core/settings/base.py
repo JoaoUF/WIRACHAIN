@@ -42,7 +42,6 @@ THIRD_PARTY_APPS = [
     "djcelery_email",
     "corsheaders",
 ]
-# "cachalot",
 
 PERSONAL_APPS = [
     "apps.authenticationApp",
