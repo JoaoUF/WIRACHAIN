@@ -82,7 +82,7 @@ export const diseaseApi = createApi({
       ],
     }),
 
-    deleteDisease: builder.mutation<null, number>({
+    deleteDisease: builder.mutation<null, UUID>({
       query: (disease_id) => ({
         url: `${DISEASE_PATH}/${String(disease_id)}/`,
         method: "DELETE",

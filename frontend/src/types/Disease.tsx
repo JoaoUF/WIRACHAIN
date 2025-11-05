@@ -7,7 +7,7 @@ export type DiseaseQueries = {
 };
 
 export type DiseaseBasic = {
-  id?: UUID;
+  id: UUID;
   name: string;
   description: string;
   enterprise_user: number;
@@ -19,6 +19,6 @@ export type AllDiseasesRequest = Partial<DiseaseQueries> &
 
 export type AllDiseasesResponse = PaginationWrapper<DiseaseBasic>;
 
-export type DiseaseRequest = DiseaseBasic;
+export type DiseaseRequest = Partial<DiseaseBasic>;
 
 export type DiseaseResponse = DiseaseBasic;

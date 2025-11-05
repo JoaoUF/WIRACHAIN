@@ -17,6 +17,7 @@ import {
   Typography,
 } from "antd";
 import type { ColumnsType } from "antd/es/table";
+import type { UUID } from "crypto";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks";
 import {
@@ -88,9 +89,9 @@ function Disease() {
     setIsModalOpen(true);
   };
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (id: UUID) => {
     try {
-      await deleteDisease(Number(id)).unwrap();
+      await deleteDisease(id).unwrap();
       message.success("Disease deleted successfully");
     } catch (error) {
       console.log("ERROR", error);
@@ -168,7 +169,7 @@ function Disease() {
           <Popconfirm
             title="Delete disease"
             description="Are you sure you want to delete this disease?"
-            onConfirm={() => handleDelete(String(record.id))}
+            onConfirm={() => handleDelete(record.id)}
             okText="Yes"
             cancelText="No"
             okButtonProps={{ danger: true }}
