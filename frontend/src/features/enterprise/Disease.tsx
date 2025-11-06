@@ -25,7 +25,6 @@ export default function Disease() {
     setIsModalOpen,
     editingDisease,
     setEditingDisease,
-    deleteDisease,
     addDisease,
     updateDisease,
     updateBulkDisease,
@@ -33,6 +32,8 @@ export default function Disease() {
     deleteBulkDisease,
     updateState,
     user,
+    statusFilter,
+    setStatusFilter,
   } = useDiseaseManager();
   const [form] = Form.useForm();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
@@ -41,17 +42,6 @@ export default function Disease() {
     setEditingDisease(record);
     form.setFieldsValue(record);
     setIsModalOpen(true);
-  };
-
-  const handleDelete = async (id: UUID) => {
-    try {
-      await deleteDisease(id).unwrap();
-    } catch (error) {
-      console.log("ERROR", error);
-      globalMessage.error({
-        content: "Failed to delete disease",
-      });
-    }
   };
 
   const handleSubmit = async (values: {
@@ -183,13 +173,14 @@ export default function Disease() {
             pageSize={pageSize}
             total={diseasesData?.count || 0}
             onEdit={handleEdit}
-            onDelete={handleDelete}
             onPageChange={(page, size) => {
               setCurrentPage(page);
               setPageSize(size);
             }}
             selectedRowKeys={selectedRowKeys}
             onSelectChange={setSelectedRowKeys}
+            statusFilter={statusFilter}
+            setStatusFilter={setStatusFilter}
           />
         </div>
       </Card>

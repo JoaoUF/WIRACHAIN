@@ -18,6 +18,9 @@ export function useDiseaseManager() {
   const [searchText, setSearchText] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [statusFilter, setStatusFilter] = useState<number | undefined>(
+    undefined
+  );
   const [editingDisease, setEditingDisease] = useState<DiseaseBasic | null>(
     null
   );
@@ -36,6 +39,7 @@ export function useDiseaseManager() {
     limit: pageSize,
     offset: (currentPage - 1) * pageSize,
     search: debouncedSearch || undefined,
+    status: statusFilter !== undefined ? statusFilter : undefined,
   };
 
   const {
@@ -81,5 +85,7 @@ export function useDiseaseManager() {
     updateBulkDiseaseState,
     refetch,
     user,
+    statusFilter,
+    setStatusFilter,
   };
 }

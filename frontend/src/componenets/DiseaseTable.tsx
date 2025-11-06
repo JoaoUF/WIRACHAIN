@@ -1,6 +1,5 @@
-import { Table, Tag } from "antd";
+import { Button, Table, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import type { UUID } from "crypto";
 import React from "react";
 import type { DiseaseBasic } from "../types";
 
@@ -12,9 +11,10 @@ interface DiseaseTableProps {
   total: number;
   selectedRowKeys: React.Key[];
   onEdit: (record: DiseaseBasic) => void;
-  onDelete: (id: UUID) => void;
   onPageChange: (page: number, size: number) => void;
   onSelectChange: (selected: React.Key[]) => void;
+  statusFilter: number | undefined;
+  setStatusFilter: (filter: number | undefined) => void;
 }
 
 export function DiseaseTable({
@@ -27,6 +27,8 @@ export function DiseaseTable({
   onEdit,
   onPageChange,
   onSelectChange,
+  statusFilter,
+  setStatusFilter,
 }: DiseaseTableProps) {
   const columns: ColumnsType<DiseaseBasic> = [
     {
@@ -63,21 +65,43 @@ export function DiseaseTable({
       align: "center",
       width: 110,
       filters: [
-        {
-          text: "Active",
-          value: 1,
-        },
-        {
-          text: "Inactive",
-          value: 0,
-        },
+        { text: "Active", value: 1 },
+        { text: "Inactive", value: 0 },
       ],
+      filteredValue: typeof statusFilter === "number" ? [statusFilter] : null,
       render: (status: number) =>
         status === 1 ? (
           <Tag color="green">Active</Tag>
         ) : (
           <Tag color="red">Inactive</Tag>
         ),
+      filterDropdown: () => (
+        <div style={{ padding: 8 }}>
+          <Button
+            onClick={() => setStatusFilter(undefined)}
+            disabled={statusFilter === undefined}
+            size="small"
+            style={{ width: "100%", marginBottom: 8 }}
+          >
+            Clear
+          </Button>
+          <Button
+            type={statusFilter === 1 ? "primary" : "default"}
+            style={{ width: "100%", marginBottom: 4 }}
+            onClick={() => setStatusFilter(1)}
+          >
+            Active
+          </Button>
+          <Button
+            type={statusFilter === 0 ? "primary" : "default"}
+            style={{ width: "100%" }}
+            onClick={() => setStatusFilter(0)}
+          >
+            Inactive
+          </Button>
+        </div>
+      ),
+      onFilter: () => true,
     },
   ];
 

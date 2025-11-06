@@ -6,7 +6,7 @@ An alternative to the project shown before on my thesis.
 
 - [ ] add django-health-check in stage
 - [ ] add sentry-sdk in stage (optional)
-- [ ] filter by status
+- [ ] rethink table options dispotition
 
 ## REFERENCES
 

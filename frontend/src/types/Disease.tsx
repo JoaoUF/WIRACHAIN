@@ -3,7 +3,7 @@ import type { Pagination, PaginationWrapper, Search } from "./Extras";
 
 export type DiseaseQueries = {
   enterprise_user: number;
-  status: boolean;
+  status: number;
 };
 
 export type DiseaseBasic = {
