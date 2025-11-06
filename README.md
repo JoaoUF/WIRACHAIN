@@ -6,7 +6,9 @@ An alternative to the project shown before on my thesis.
 
 - [ ] add django-health-check in stage
 - [ ] add sentry-sdk in stage (optional)
-- [ ] rethink table options dispotition
+- [ ] remove card border and bg-color
+- [ ] centralice add popupmodel in movile
+- [ ] centralize pagination table
 
 ## REFERENCES
 

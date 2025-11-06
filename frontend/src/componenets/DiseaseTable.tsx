@@ -125,6 +125,7 @@ export function DiseaseTable({
         onChange: onPageChange,
         showSizeChanger: true,
         showTotal: (tot) => `Total ${tot} diseases`,
+        align: "center",
         pageSizeOptions: ["10", "20", "50", "100"],
       }}
       scroll={{ x: 800 }}
