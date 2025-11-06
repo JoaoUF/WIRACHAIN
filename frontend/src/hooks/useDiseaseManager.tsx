@@ -5,6 +5,7 @@ import {
   useDeleteDiseaseMutation,
   useGetAllDiseasesQuery,
   usePatchDiseaseMutation,
+  useUpdateBulkDiseaseMutation,
   useUpdateDiseaseMutation,
 } from "../redux";
 import type { AllDiseasesRequest, DiseaseBasic } from "../types";
@@ -49,6 +50,8 @@ export function useDiseaseManager() {
   const [deleteDisease, deleteState] = useDeleteDiseaseMutation();
   const [patchDisease, patchState] = usePatchDiseaseMutation();
   const [deleteBulkDisease, deleteBulkState] = useDeleteBulkDiseaseMutation();
+  const [updateBulkDisease, updateBulkDiseaseState] =
+    useUpdateBulkDiseaseMutation();
 
   return {
     diseasesData,
@@ -69,11 +72,13 @@ export function useDiseaseManager() {
     deleteDisease,
     patchDisease,
     deleteBulkDisease,
+    updateBulkDisease,
     addState,
     updateState,
     deleteState,
     patchState,
     deleteBulkState,
+    updateBulkDiseaseState,
     refetch,
     user,
   };

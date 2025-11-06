@@ -15,7 +15,3 @@ class DiseaseSerializer(serializers.ModelSerializer):
             "enterprise_user",
             "status",
         ]
-
-
-class BulkDeleteDiseaseSerializer(serializers.Serializer):
-    ids = serializers.ListField(child=serializers.UUIDField())

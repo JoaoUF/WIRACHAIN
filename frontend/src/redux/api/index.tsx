@@ -12,6 +12,7 @@ export {
   useGetAllDiseasesQuery,
   useGetDiseaseQuery,
   usePatchDiseaseMutation,
+  useUpdateBulkDiseaseMutation,
   useUpdateDiseaseMutation,
 } from "./DiseaseAPI";
 export {

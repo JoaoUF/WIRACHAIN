@@ -1,17 +1,9 @@
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
-import {
-  Button,
-  Card,
-  Form,
-  Input,
-  message,
-  Popconfirm,
-  Space,
-  Typography,
-} from "antd";
+import { Button, Card, Form, Input, Popconfirm, Space, Typography } from "antd";
 import type { UUID } from "crypto";
 import { useState } from "react";
 import { DiseaseTable } from "../../componenets";
+import { globalMessage } from "../../contexts/MessageProvider";
 import { DiseaseFormModal } from "../../forms";
 import { useDiseaseManager } from "../../hooks";
 import type { DiseaseBasic } from "../../types";
@@ -36,6 +28,7 @@ export default function Disease() {
     deleteDisease,
     addDisease,
     updateDisease,
+    updateBulkDisease,
     addState,
     deleteBulkDisease,
     updateState,
@@ -53,10 +46,11 @@ export default function Disease() {
   const handleDelete = async (id: UUID) => {
     try {
       await deleteDisease(id).unwrap();
-      message.success("Disease deleted successfully");
     } catch (error) {
       console.log("ERROR", error);
-      message.error("Failed to delete disease");
+      globalMessage.error({
+        content: "Failed to delete disease",
+      });
     }
   };
 
@@ -73,17 +67,17 @@ export default function Disease() {
       };
       if (editingDisease) {
         await updateDisease(diseaseData).unwrap();
-        message.success("Disease updated successfully");
       } else {
         await addDisease(diseaseData).unwrap();
-        message.success("Disease added successfully");
       }
       setIsModalOpen(false);
       form.resetFields();
       setEditingDisease(null);
     } catch (error) {
       console.log("ERROR", error);
-      message.error("Failed to save disease");
+      globalMessage.error({
+        content: "Failed to save disease",
+      });
     }
   };
 
@@ -96,21 +90,36 @@ export default function Disease() {
   const handleBulkDelete = async () => {
     try {
       await deleteBulkDisease(selectedRowKeys as UUID[]).unwrap();
-      message.success("Diseases deleted");
       setSelectedRowKeys([]);
     } catch (error) {
       console.log("ERROR", error);
-      message.error("Failed to delete diseases");
+      globalMessage.error({
+        content: "Failed to delete diseases",
+      });
     }
   };
 
-  const handleBulkStatusChange = (newStatus: number) => {
-    message.info("Bulk activate/deactivate to be implemented.", newStatus);
+  const handleBulkStatusChange = async (newStatus: number) => {
+    try {
+      await updateBulkDisease({
+        list_ids: selectedRowKeys as UUID[],
+        new_status: newStatus,
+      }).unwrap();
+      setSelectedRowKeys([]);
+    } catch (error) {
+      console.log("ERROR", error);
+      globalMessage.error({
+        content:
+          newStatus === 1
+            ? "Failed to set diseases as active."
+            : "Failed to set diseases as inactive.",
+      });
+    }
   };
 
   return (
     <div className="w-full">
-      <Card bordered={false} className="shadow-sm">
+      <Card className="shadow-sm">
         <div className="mb-4 md:mb-6">
           <Title level={2} className="!mb-2">
             Diseases Management

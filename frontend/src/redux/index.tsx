@@ -36,6 +36,7 @@ export {
   useLogoutMutation,
   usePatchDiseaseMutation,
   usePatchUserMutation,
+  useUpdateBulkDiseaseMutation,
   useUpdateDiseaseMutation,
   useUpdateUserMutation,
 } from "./api";

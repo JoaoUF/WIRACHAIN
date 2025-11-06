@@ -1,5 +1,4 @@
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Button, Popconfirm, Space, Table, Tag } from "antd";
+import { Table, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import type { UUID } from "crypto";
 import React from "react";
@@ -26,7 +25,6 @@ export function DiseaseTable({
   total,
   selectedRowKeys,
   onEdit,
-  onDelete,
   onPageChange,
   onSelectChange,
 }: DiseaseTableProps) {
@@ -35,8 +33,19 @@ export function DiseaseTable({
       title: "Name",
       dataIndex: "name",
       key: "name",
-      sorter: (a, b) => a.name.localeCompare(b.name),
       ellipsis: true,
+      render: (_text: string, record: DiseaseBasic) => (
+        <a
+          className="text-blue-600 hover:underline"
+          onClick={(e) => {
+            e.preventDefault();
+            onEdit(record);
+          }}
+          role="button"
+        >
+          {record.name}
+        </a>
+      ),
     },
     {
       title: "Description",
@@ -53,37 +62,22 @@ export function DiseaseTable({
       key: "status",
       align: "center",
       width: 110,
+      filters: [
+        {
+          text: "Active",
+          value: 1,
+        },
+        {
+          text: "Inactive",
+          value: 0,
+        },
+      ],
       render: (status: number) =>
         status === 1 ? (
           <Tag color="green">Active</Tag>
         ) : (
           <Tag color="red">Inactive</Tag>
         ),
-    },
-    {
-      title: "Actions",
-      key: "actions",
-      width: 120,
-      render: (_: unknown, record: DiseaseBasic) => (
-        <Space size="small">
-          <Button
-            type="text"
-            icon={<EditOutlined />}
-            onClick={() => onEdit(record)}
-            className="text-blue-600 hover:text-blue-700"
-          />
-          <Popconfirm
-            title="Delete disease"
-            description="Are you sure you want to delete this disease?"
-            onConfirm={() => onDelete(record.id)}
-            okText="Yes"
-            cancelText="No"
-            okButtonProps={{ danger: true }}
-          >
-            <Button type="text" icon={<DeleteOutlined />} danger />
-          </Popconfirm>
-        </Space>
-      ),
     },
   ];
 
@@ -99,6 +93,7 @@ export function DiseaseTable({
       dataSource={data}
       rowKey="id"
       loading={loading}
+      size="small"
       pagination={{
         current: currentPage,
         pageSize: pageSize,

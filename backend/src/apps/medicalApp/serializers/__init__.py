@@ -5,5 +5,6 @@ from medicalApp.serializers.ClinicSpecialitySerializer import ClinicSpecialitySe
 from medicalApp.serializers.ClinicTestSerializer import ClinicTestSerializer
 from medicalApp.serializers.SpecialitySerializer import SpecialitySerializer
 from medicalApp.serializers.TestSerializer import TestSerializer
-from medicalApp.serializers.DiseaseSerializer import DiseaseSerializer, BulkDeleteDiseaseSerializer
+from medicalApp.serializers.DiseaseSerializer import DiseaseSerializer
 from medicalApp.serializers.ClinicScheduleSerializer import ClinicScheduleSerializer
+from medicalApp.serializers.ExtrasSerializer import BulkDeleteSerializer, BulkUpdateSerializer

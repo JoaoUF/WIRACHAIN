@@ -26,8 +26,8 @@ export function DiseaseFormModal({
       title={editingDisease ? "Edit Disease" : "Add New Disease"}
       open={open}
       onCancel={onCancel}
+      centered
       footer={null}
-      destroyOnClose
       width={600}
       className="max-w-full mx-4"
     >
