@@ -137,6 +137,9 @@ export default function Disease() {
         variant="borderless"
         style={{
           minHeight: 500,
+          border: "none",
+          boxShadow: "none",
+          backgroundColor: "transparent",
         }}
         styles={{
           body: {

@@ -16,11 +16,7 @@ export const useLogin = (form: FormInstance<LoginRequest>) => {
       await login(values).unwrap();
       await refetchUser();
       form.resetFields();
-      globalMessage.success({
-        content: "Login successful!",
-        duration: 1.0,
-        onClose: () => navigate(ROUTES.DASHBOARD),
-      });
+      navigate(ROUTES.DASHBOARD);
     } catch (error) {
       console.error("ERROR ON LOGIN", error);
       form.setFieldValue("password", "");

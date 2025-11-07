@@ -126,6 +126,7 @@ export function DiseaseTable({
         showSizeChanger: true,
         showTotal: (tot) => `Total ${tot} diseases`,
         align: "center",
+        position: ["bottomCenter"],
         pageSizeOptions: ["10", "20", "50", "100"],
       }}
       scroll={{ x: 800 }}

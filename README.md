@@ -6,9 +6,10 @@ An alternative to the project shown before on my thesis.
 
 - [ ] add django-health-check in stage
 - [ ] add sentry-sdk in stage (optional)
-- [ ] remove card border and bg-color
+- [ ] add personalize cache to the backend (cache that support db replication)
 - [ ] centralice add popupmodel in movile
-- [ ] centralize pagination table
+- [ ] made editable cells???
+- [ ] fix filter for default
 
 ## REFERENCES
 
