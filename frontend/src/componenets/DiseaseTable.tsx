@@ -1,5 +1,5 @@
-import { Button, Table, Tag } from "antd";
-import type { ColumnsType } from "antd/es/table";
+import { Table, Tag } from "antd";
+import type { ColumnsType, TableProps } from "antd/es/table";
 import React from "react";
 import type { DiseaseBasic } from "../types";
 
@@ -63,51 +63,62 @@ export function DiseaseTable({
       dataIndex: "status",
       key: "status",
       align: "center",
-      width: 110,
+      width: 140,
+      // use AntD's default filter dropdown (checkboxes + Reset / OK)
       filters: [
         { text: "Active", value: 1 },
         { text: "Inactive", value: 0 },
       ],
+      // controlled "filteredValue" so the UI reflects external filter state
       filteredValue: typeof statusFilter === "number" ? [statusFilter] : null,
       render: (status: number) =>
         status === 1 ? (
-          <Tag color="green">Active</Tag>
-        ) : (
-          <Tag color="red">Inactive</Tag>
-        ),
-      filterDropdown: () => (
-        <div style={{ padding: 8 }}>
-          <Button
-            onClick={() => setStatusFilter(undefined)}
-            disabled={statusFilter === undefined}
-            size="small"
-            style={{ width: "100%", marginBottom: 8 }}
-          >
-            Clear
-          </Button>
-          <Button
-            type={statusFilter === 1 ? "primary" : "default"}
-            style={{ width: "100%", marginBottom: 4 }}
-            onClick={() => setStatusFilter(1)}
+          <Tag
+            style={{
+              background: "#f4fff7",
+              borderColor: "#b7eb8f",
+              color: "#389e0d",
+              fontWeight: 500,
+            }}
           >
             Active
-          </Button>
-          <Button
-            type={statusFilter === 0 ? "primary" : "default"}
-            style={{ width: "100%" }}
-            onClick={() => setStatusFilter(0)}
+          </Tag>
+        ) : (
+          <Tag
+            style={{
+              background: "#fff5f6",
+              borderColor: "#ffccc7",
+              color: "#b71c1c",
+              fontWeight: 500,
+            }}
           >
             Inactive
-          </Button>
-        </div>
-      ),
-      onFilter: () => true,
+          </Tag>
+        ),
     },
   ];
 
   const rowSelection = {
     selectedRowKeys,
     onChange: onSelectChange,
+  };
+
+  const handleTableChange: TableProps<DiseaseBasic>["onChange"] = (
+    pagination,
+    filters
+  ) => {
+    const nextPage = pagination?.current ?? 1;
+    const nextPageSize = pagination?.pageSize ?? pageSize;
+    onPageChange(nextPage, nextPageSize);
+
+    const statusFilterValues = filters?.status as unknown;
+    if (Array.isArray(statusFilterValues) && statusFilterValues.length > 0) {
+      const raw = statusFilterValues[0];
+      const parsed = typeof raw === "string" ? Number(raw) : Number(raw);
+      setStatusFilter(Number.isNaN(parsed) ? undefined : parsed);
+    } else {
+      setStatusFilter(undefined);
+    }
   };
 
   return (
@@ -129,6 +140,7 @@ export function DiseaseTable({
         position: ["bottomCenter"],
         pageSizeOptions: ["10", "20", "50", "100"],
       }}
+      onChange={handleTableChange}
       scroll={{ x: 800 }}
       locale={{
         emptyText: "No diseases found",
