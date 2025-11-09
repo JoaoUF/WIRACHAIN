@@ -1,4 +1,4 @@
-import { Table, Tag } from "antd";
+import { Empty, Table, Tag } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import React from "react";
 import type { DiseaseBasic } from "../types";
@@ -143,7 +143,7 @@ export function DiseaseTable({
       onChange={handleTableChange}
       scroll={{ x: 800 }}
       locale={{
-        emptyText: "No diseases found",
+        emptyText: <Empty />,
       }}
     />
   );

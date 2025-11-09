@@ -1,3 +1,4 @@
+import type { FormInstance } from "antd";
 import { Button, Form, Input, Modal, Space } from "antd";
 import type { DiseaseBasic } from "../types";
 
@@ -7,10 +8,9 @@ interface DiseaseFormModalProps {
   open: boolean;
   onCancel: () => void;
   onFinish: (values: { name: string; description: string }) => void;
-  loading: boolean;
-  editingDisease: DiseaseBasic | null;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  form: any;
+  loading?: boolean;
+  editingDisease?: DiseaseBasic | null;
+  form: FormInstance;
 }
 
 export function DiseaseFormModal({
@@ -28,8 +28,8 @@ export function DiseaseFormModal({
       onCancel={onCancel}
       centered
       footer={null}
-      width={600}
-      className="max-w-full mx-4"
+      width="min(600px, 96%)"
+      className="max-w-full"
     >
       <Form
         form={form}
