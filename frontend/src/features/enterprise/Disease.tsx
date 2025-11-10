@@ -125,11 +125,6 @@ export default function Disease() {
     }
   };
 
-  // const inputHeight = screens.xs ? 32 : undefined;
-  // const inputFontSize = screens.xs ? 14 : undefined;
-  const universalWidth = screens.sm ? undefined : "100%";
-  // const universalHeight = screens.xs ? 32 : 40;
-
   return (
     <div className="w-full">
       <Card
@@ -144,69 +139,63 @@ export default function Disease() {
         styles={{
           body: {
             padding: screens.xs
-              ? "24px 8px 20px 8px"
+              ? "20px 8px 16px 8px"
               : screens.sm
-              ? "26px 14px 22px 14px"
-              : "32px 40px 28px 40px",
+              ? "22px 14px 20px 14px"
+              : "28px 32px 24px 32px",
           },
         }}
       >
-        {/* --- Header Section: Responsive Search/Add --- */}
+        {/* --- Header: title left, flexible search center, add right (desktop).
+              Mobile: stacked title / search / add */}
         <div
           style={{
             display: "flex",
-            flexDirection: screens.sm ? "row" : "column",
-            alignItems: screens.sm ? "center" : "stretch",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 12,
             justifyContent: "space-between",
+            marginBottom: screens.sm ? 18 : 12,
             flexWrap: "wrap",
-            marginBottom: screens.sm ? 24 : 16,
-            gap: screens.sm ? 16 : 10,
           }}
         >
-          {/* Title and Description */}
-          <div style={{ minWidth: 200, marginBottom: screens.sm ? 0 : 12 }}>
-            <Title
-              level={3}
-              style={{
-                color: "#2f54eb",
-                marginBottom: 4,
-                fontSize: screens.xs ? 20 : 24,
-                lineHeight: 1.2,
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <CheckCircleOutlined
-                style={{
-                  color: "#52c41a",
-                  marginRight: 8,
-                  fontSize: screens.xs ? 19 : 22,
-                }}
-              />
-              Diseases Management
-            </Title>
-            <div
-              style={{
-                color: "#6c6f93",
-                fontSize: screens.xs ? 13 : 14,
-                maxWidth: 260,
-              }}
-            >
-              Manage your medical diseases catalog with quick search and bulk
-              actions.
-            </div>
-          </div>
-
-          {/* --- Responsive Search and Add --- */}
+          {/* Left: compact title */}
           <div
             style={{
               display: "flex",
-              flexDirection: screens.sm ? "row" : "column",
+              alignItems: "center",
               gap: 10,
-              alignItems: screens.sm ? "center" : "stretch",
-              width: universalWidth,
-              flex: screens.sm ? "" : 1,
-              marginTop: screens.sm ? 0 : 10,
+              minWidth: 160,
+            }}
+          >
+            <CheckCircleOutlined style={{ color: "#52c41a", fontSize: 20 }} />
+            <div>
+              <Title
+                level={4}
+                style={{
+                  color: "#2f54eb",
+                  margin: 0,
+                  fontSize: 18,
+                  lineHeight: 1.1,
+                }}
+              >
+                Diseases
+              </Title>
+              <div style={{ color: "#6c6f93", fontSize: 12 }}>
+                Catalog & quick actions
+              </div>
+            </div>
+          </div>
+
+          {/* Center / Middle: flexible search on desktop; full width on mobile */}
+          <div
+            style={{
+              flex: screens.sm ? "1 1 auto" : "1 1 100%",
+              display: "flex",
+              justifyContent: screens.sm ? "center" : "stretch",
+              paddingLeft: screens.sm ? 8 : 0,
+              paddingRight: screens.sm ? 8 : 0,
+              minWidth: 0,
             }}
           >
             <Input
@@ -215,46 +204,66 @@ export default function Disease() {
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
               style={{
-                maxWidth: screens.xs ? "100%" : 310,
-                width: universalWidth,
+                // width: screens.sm ? 320 : "100%",
+                width: screens.sm ? "50%" : "100%",
+                maxWidth: "100%",
+                minWidth: 0,
+                borderRadius: 8,
+                height: screens.xs ? 36 : 36,
+                background: "#fbfcff",
+                border: "1px solid #e6e7f5",
               }}
               allowClear
-              size={"middle"}
+              size="small"
             />
+          </div>
+
+          {/* Right: Add button — icon circle on desktop, full-width labeled on mobile */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
+              width: screens.sm ? "auto" : "100%",
+              marginTop: screens.sm ? 0 : 8,
+            }}
+          >
             <Button
               type="primary"
               icon={<PlusOutlined />}
               onClick={handleAdd}
-              size={"middle"}
+              size="middle"
               style={{
                 backgroundColor: "#2f54eb",
-                width: universalWidth,
-                // minWidth: 10,
+                width: screens.sm ? "auto" : "100%",
+                borderRadius: 8,
               }}
-              aria-label="Add Disease"
-            />
+              aria-label="Add"
+            >
+              Add
+            </Button>
           </div>
         </div>
-        {/* --- End Header Section --- */}
+        {/* --- End Header --- */}
 
         <Divider
           style={{
-            margin: screens.sm ? "14px 0 20px 0" : "10px 0 15px 0",
+            margin: screens.sm ? "12px 0 18px 0" : "8px 0 12px 0",
             borderColor: "#e6e7f5",
           }}
         />
 
-        {/* --- Bulk Actions: Responsive --- */}
+        {/* --- Bulk Actions: single place for all devices (no duplication in header) */}
         <div
           style={{
             display: "flex",
             flexDirection: screens.sm ? "row" : "column",
             alignItems: "stretch",
             gap: 10,
-            marginBottom: screens.sm ? 18 : 12,
+            marginBottom: screens.sm ? 20 : 14,
             borderRadius: 8,
             background: "#f6f8fd",
-            padding: screens.sm ? "14px 18px" : "10px 7px",
+            padding: screens.sm ? "12px 14px" : "8px 6px",
             border: "1px solid #e6e7f5",
             width: "100%",
             maxWidth: "100%",
@@ -279,7 +288,7 @@ export default function Disease() {
                 width: screens.sm ? "min-content" : "100%",
               }}
             >
-              Delete Selected Diseases
+              Delete
             </Button>
           </Popconfirm>
           <Tooltip title="Make selected diseases active">
@@ -296,7 +305,7 @@ export default function Disease() {
               }}
               size={"small"}
             >
-              Set All As Active
+              Set Active
             </Button>
           </Tooltip>
           <Tooltip title="Make selected diseases inactive">
@@ -313,7 +322,7 @@ export default function Disease() {
               }}
               size={"small"}
             >
-              Set All As Inactive
+              Set Inactive
             </Button>
           </Tooltip>
           <div

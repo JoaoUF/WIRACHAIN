@@ -39,7 +39,7 @@ export function DiseaseFormModal({
         className="mt-4"
       >
         <Form.Item
-          label="Disease Name"
+          label="Name"
           name="name"
           rules={[
             { required: true, message: "Please enter the disease name" },

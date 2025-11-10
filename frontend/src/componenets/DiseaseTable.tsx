@@ -123,6 +123,7 @@ export function DiseaseTable({
 
   return (
     <Table
+      bordered
       rowSelection={rowSelection}
       columns={columns}
       dataSource={data}
