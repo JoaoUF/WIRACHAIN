@@ -64,12 +64,11 @@ export function DiseaseTable({
       key: "status",
       align: "center",
       width: 140,
-      // use AntD's default filter dropdown (checkboxes + Reset / OK)
       filters: [
         { text: "Active", value: 1 },
         { text: "Inactive", value: 0 },
       ],
-      // controlled "filteredValue" so the UI reflects external filter state
+      filterMultiple: false,
       filteredValue: typeof statusFilter === "number" ? [statusFilter] : null,
       render: (status: number) =>
         status === 1 ? (
