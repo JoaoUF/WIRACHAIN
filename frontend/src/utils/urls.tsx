@@ -4,6 +4,8 @@ export const ENDPOINT_URL = {
   CLINIC: "clinics",
   USER: "users",
   DISEASE: "diseases",
+  TEST: "tests",
+  SPECIALITY: "specialities",
 } as const;
 
 export type ModelKey = keyof typeof ENDPOINT_URL;

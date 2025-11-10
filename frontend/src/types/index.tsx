@@ -13,6 +13,20 @@ export type {
   DiseaseResponse,
 } from "./Disease";
 export type {
+  AllSpecialityRequest,
+  AllSpecialityResponse,
+  SpecialityBasic,
+  SpecialityRequest,
+  SpecialityResponse,
+} from "./Speciality";
+export type {
+  AllTestRequest,
+  AllTestResponse,
+  TestBasic,
+  TestRequest,
+  TestResponse,
+} from "./Test";
+export type {
   AllUsersRequest,
   AllUsersResponse,
   UserRequest,

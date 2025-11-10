@@ -12,8 +12,6 @@ class TestSerializer(serializers.ModelSerializer):
             "id",
             "name",
             "description",
-            "status",
-            "activate_date",
-            "deactivate_date",
             "enterprise_user",
+            "status",
         ]
