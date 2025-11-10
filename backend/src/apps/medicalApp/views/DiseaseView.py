@@ -1,11 +1,12 @@
-from rest_framework import viewsets, permissions
-from rest_framework.pagination import LimitOffsetPagination
+from rest_framework import viewsets
 from ..models import Disease
 from ..serializers import DiseaseSerializer, BulkDeleteSerializer, BulkUpdateSerializer
 from drf_spectacular.utils import extend_schema_view, extend_schema
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from authenticationApp.permissions import IsAdminOrEnterprise
 
 
 @extend_schema_view(
@@ -19,8 +20,7 @@ from rest_framework import status
 class DiseaseView(viewsets.ModelViewSet):
     queryset = Disease.objects.all()
     serializer_class = DiseaseSerializer
-    pagination_class = LimitOffsetPagination
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAdminOrEnterprise]
     filterset_fields = ["enterprise_user", "status"]
     search_fields = ["name"]
 

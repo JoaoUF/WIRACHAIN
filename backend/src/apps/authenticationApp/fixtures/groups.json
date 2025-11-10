@@ -24,7 +24,7 @@
         "model": "auth.group",
         "pk": 4,
         "fields": {
-            "name": "ENTERPRISE_PROFESSISONAL"
+            "name": "ENTERPRISE_PROFESSIONAL"
         }
     },
     {

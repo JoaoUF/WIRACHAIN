@@ -1,7 +1,12 @@
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 from ..models import Speciality
-from ..serializers import SpecialitySerializer
+from ..serializers import SpecialitySerializer, BulkDeleteSerializer, BulkUpdateSerializer
 from drf_spectacular.utils import extend_schema_view, extend_schema
+from authenticationApp.permissions import IsAdminOrEnterprise
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework import status
 
 
 @extend_schema_view(
@@ -15,6 +20,37 @@ from drf_spectacular.utils import extend_schema_view, extend_schema
 class SpecialityView(viewsets.ModelViewSet):
     queryset = Speciality.objects.all()
     serializer_class = SpecialitySerializer
-    # permission_classes = [permissions.IsAuthenticated]
-    filterset_fields = ["name", "status", "activate_date", "deactivate_date"]
+    permission_classes = [IsAuthenticated, IsAdminOrEnterprise]
+    filterset_fields = ["name", "status"]
     search_fields = ["name"]
+
+    @extend_schema(
+        tags=["Speciality"],
+        request=BulkDeleteSerializer,
+        responses={204: None, 400: "Bad Request"},
+        summary="Bulk delete Specialities",
+        description="Delete one or more specialities by IDs in bulk.",
+    )
+    @action(detail=False, methods=["delete"])
+    def delete_bulk(self, request):
+        serializer = BulkDeleteSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        ids = serializer.validated_data["ids"]  # type: ignore
+        self.queryset.filter(id__in=ids).delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    @extend_schema(
+        tags=["Speciality"],
+        request=BulkUpdateSerializer,
+        responses={200: None, 400: "Bad Request"},
+        summary="Bulk update Speciality",
+        description="Bulk update the status of one or more speciality by their IDs.",
+    )
+    @action(detail=False, methods=["put"])
+    def update_bulk(self, request):
+        serializer = BulkUpdateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        ids = serializer.validated_data["ids"]  # type: ignore
+        new_status = serializer.validated_data["status"]  # type: ignore
+        self.queryset.filter(id__in=ids).update(status=new_status)
+        return Response(status=status.HTTP_200_OK)
