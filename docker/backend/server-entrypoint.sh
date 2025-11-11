@@ -39,7 +39,7 @@ done
 #     sleep 2
 # done
 
-until python manage.py loaddata groups.json users.json email_adresses.json
+until python manage.py loaddata groups.json users.json email_adresses.json test.json disease.json speciality.json
 do
     echo "Loading groups fixture..."
     sleep 2
