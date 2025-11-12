@@ -7,6 +7,8 @@ An alternative to the project shown before on my thesis.
 - [ ] add django-health-check in stage
 - [ ] add sentry-sdk in stage (optional)
 - [ ] add personalize cache to the backend (cache that support db replication)
+- [ ] made clicable the rows???
+- [ ] add customuser redux crud && table and add page
 
 ## REFERENCES
 

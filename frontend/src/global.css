@@ -1,3 +1,25 @@
 @layer theme, base, antd, components, utilities;
 
 @import 'tailwindcss';
+
+/* make clickable rows show pointer on hover and outline on focus */
+.ant-table-row.clickable-row {
+  transition: background-color 0.12s ease;
+}
+
+.ant-table-row.clickable-row:hover {
+  cursor: pointer;
+  background-color: rgba(59, 130, 246, 0.04); /* subtle blue-ish hover, adjust as needed */
+}
+
+.ant-table-row.clickable-row:focus {
+  outline: 2px solid rgba(59, 130, 246, 0.24);
+  outline-offset: -2px;
+  background-color: rgba(59, 130, 246, 0.04);
+}
+
+/* Optional: make the name text slightly bolder on hover to emphasize clickability */
+.ant-table-row.clickable-row:hover .text-gray-600 {
+  color: rgba(30, 64, 175, 1); /* deep blue */
+  font-weight: 600;
+}

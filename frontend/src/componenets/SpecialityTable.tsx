@@ -37,16 +37,7 @@ export function SpecialityTable({
       key: "name",
       ellipsis: true,
       render: (_text: string, record: SpecialityBasic) => (
-        <a
-          className="text-blue-600 hover:underline"
-          onClick={(e) => {
-            e.preventDefault();
-            onEdit(record);
-          }}
-          role="button"
-        >
-          {record.name}
-        </a>
+        <span className="text-gray-600">{record.name}</span>
       ),
     },
     {
@@ -120,6 +111,63 @@ export function SpecialityTable({
     }
   };
 
+  const onRow = (record: SpecialityBasic) => {
+    return {
+      className: "clickable-row",
+      tabIndex: 0,
+      onClick: (event: React.MouseEvent) => {
+        const target = event.target as HTMLElement | null;
+        if (!target) {
+          onEdit(record);
+          return;
+        }
+
+        const ignoredSelectors = [
+          "a",
+          "button",
+          "input",
+          "textarea",
+          "select",
+          ".ant-checkbox",
+          ".ant-checkbox-input",
+          ".ant-table-selection-column",
+          ".ant-btn",
+          ".anticon",
+        ];
+
+        for (const sel of ignoredSelectors) {
+          if (target.closest(sel)) return;
+        }
+
+        onEdit(record);
+      },
+      onKeyDown: (event: React.KeyboardEvent) => {
+        if (event.key === "Enter" || event.key === " ") {
+          const target = event.target as HTMLElement | null;
+          const ignoredSelectors = [
+            "a",
+            "button",
+            "input",
+            "textarea",
+            "select",
+            ".ant-checkbox",
+            ".ant-checkbox-input",
+            ".ant-table-selection-column",
+            ".ant-btn",
+            ".anticon",
+          ];
+          if (target) {
+            for (const sel of ignoredSelectors) {
+              if (target.closest(sel)) return;
+            }
+          }
+          event.preventDefault();
+          onEdit(record);
+        }
+      },
+    };
+  };
+
   return (
     <Table
       bordered
@@ -141,6 +189,7 @@ export function SpecialityTable({
         pageSizeOptions: ["10", "20", "50", "100"],
       }}
       onChange={handleTableChange}
+      onRow={onRow}
       scroll={{ x: 800 }}
       locale={{
         emptyText: <Empty />,
