@@ -1,15 +1,10 @@
 from django.urls import path, re_path
 from django.views.generic import TemplateView
 from rest_framework import routers
-from dj_rest_auth.app_settings import api_settings
 from rest_framework_simplejwt.views import TokenVerifyView
 from dj_rest_auth.jwt_auth import get_refresh_view
 
 from .views import (
-    AdminUserListViewSet,
-    ClinicUserListViewSet,
-    DoctorUserListViewSet,
-    PatientUserListViewSet,
     CustomUserViewSet,
     LoginView,
     LogoutView,
@@ -23,10 +18,6 @@ from .views import (
 )
 
 router = routers.DefaultRouter()
-router.register(r"users/admin-list", AdminUserListViewSet, basename="admin-list")
-router.register(r"users/enterprise-list", ClinicUserListViewSet, basename="clinic-list")
-router.register(r"users/doctor-list", DoctorUserListViewSet, basename="doctor-list")
-router.register(r"users/patient-list", PatientUserListViewSet, basename="patient-list")
 router.register(r"users", CustomUserViewSet, basename="user")
 
 auth_urlpatterns = [

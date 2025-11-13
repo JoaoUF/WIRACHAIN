@@ -41,6 +41,7 @@ THIRD_PARTY_APPS = [
     "dj_rest_auth.registration",
     "djcelery_email",
     "corsheaders",
+    "guardian",
 ]
 
 PERSONAL_APPS = [
@@ -126,6 +127,7 @@ EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
+    "guardian.backends.ObjectPermissionBackend",
 ]
 
 # DJANGO REST FRAMEWORK

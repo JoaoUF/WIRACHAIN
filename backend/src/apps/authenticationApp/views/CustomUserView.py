@@ -6,6 +6,8 @@ from ..models import CustomUser
 from ..serializers import CustomUserSerializer
 from ..filters import CustomUserFilter
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from authenticationApp.permissions import IsAdminOrEnterprise
 
 
 class CurrentUserView(APIView):
@@ -40,50 +42,6 @@ class CurrentUserView(APIView):
 class CustomUserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
-    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAdminOrEnterprise]
     filterset_class = CustomUserFilter
-
-
-@extend_schema_view(
-    list=extend_schema(tags=["Users"]),
-)
-class AdminUserListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    queryset = CustomUser.objects.filter(groups__name="ADMIN")
-    serializer_class = CustomUserSerializer
-    # permission_classes = [permissions.IsAuthenticated, IsAdmin]
-    filterset_class = CustomUserFilter
-
-
-@extend_schema_view(
-    list=extend_schema(tags=["Users"]),
-)
-class ClinicUserListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    queryset = CustomUser.objects.filter(
-        groups__name__in=[
-            "ENTERPRISE_BASIC",
-            "ENTERPRISE_PREMIUM",
-            "ENTERPRISE_PROFESSISONAL",
-        ]
-    ).distinct()
-    serializer_class = CustomUserSerializer
-    filterset_class = CustomUserFilter
-
-
-@extend_schema_view(
-    list=extend_schema(tags=["Users"]),
-)
-class DoctorUserListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    queryset = CustomUser.objects.filter(groups__name="DOCTOR")
-    serializer_class = CustomUserSerializer
-    # permission_classes = [permissions.IsAuthenticated, IsDoctor]
-    filterset_class = CustomUserFilter
-
-
-@extend_schema_view(
-    list=extend_schema(tags=["Users"]),
-)
-class PatientUserListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    queryset = CustomUser.objects.filter(groups__name="PATIENT")
-    serializer_class = CustomUserSerializer
-    # permission_classes = [permissions.IsAuthenticated, IsPatient]
-    filterset_class = CustomUserFilter
+    search_fields = ["email", "document_value"]
