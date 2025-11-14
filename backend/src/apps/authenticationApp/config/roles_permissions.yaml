@@ -19,18 +19,30 @@ roles:
     - app: auth
       model: group
       perms: [view]
+    - app: medicalApp
+      model: Disease
+      perms: [view, add, change, delete]
   ENTERPRISE_BASIC:
     - app: authenticationApp
       model: CustomUser
       perms: [view, add, view_enterprise_roles]
+    - app: medicalApp
+      model: Disease
+      perms: [add]
   ENTERPRISE_PREMIUM:
     - app: authenticationApp
       model: CustomUser
       perms: [view, add, view_enterprise_roles]
+    - app: medicalApp
+      model: Disease
+      perms: [add]
   ENTERPRISE_PROFESSIONAL:
     - app: authenticationApp
       model: CustomUser
       perms: [view, add, view_enterprise_roles]
+    - app: medicalApp
+      model: Disease
+      perms: [add]
   DOCTOR:
     - app: authenticationApp
       model: CustomUser

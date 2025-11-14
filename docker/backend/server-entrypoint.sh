@@ -39,7 +39,6 @@ done
 #     sleep 2
 # done
 
-# Ensure we pass the YAML mapping file to the command so it doesn't require CLI input
 ROLES_CONFIG="/app/backend/src/apps/authenticationApp/config/roles_permissions.yaml"
 
 until python manage.py SetUpPermissions --config "$ROLES_CONFIG"

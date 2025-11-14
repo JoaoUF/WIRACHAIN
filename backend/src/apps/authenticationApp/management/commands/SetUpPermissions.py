@@ -16,9 +16,9 @@ from django.core.management.base import BaseCommand
 from django.db import transaction
 
 try:
-    import yaml  # PyYAML
+    import yaml
 except Exception:
-    yaml = None  # type: ignore
+    yaml = None
 
 STANDARD_PERM_MAP = {
     "view": "view_{model}",
