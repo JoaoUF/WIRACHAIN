@@ -7,8 +7,7 @@ An alternative to the project shown before on my thesis.
 - [ ] add django-health-check in stage
 - [ ] add sentry-sdk in stage (optional)
 - [ ] add personalize cache to the backend (cache that support db replication)
-- [ ] made clicable the rows???
-- [ ] add customuser redux crud && table and add page
+- [ ] modify all roles data display
 
 ## REFERENCES
 
@@ -17,6 +16,7 @@ An alternative to the project shown before on my thesis.
 - https://django-rest-framework-simplejwt.readthedocs.io/en/latest/index.html
 - https://dj-rest-auth.readthedocs.io/en/latest/index.html
 - https://docs.allauth.org/en/latest/installation/quickstart.html
+- https://medium.com/@fahimad/role-based-access-control-rbac-in-django-1955b31d93a5
 
 ### AUDIT REFERENCES:
 

@@ -1,0 +1,41 @@
+# Declarative mapping of roles -> model permissions.
+# Each role maps to a list of entries. Each entry contains:
+#   app: Django app label
+#   model: Model class name (case-sensitive)
+#   perms: list of permissions. Use 'view','add','change','delete' for standard model perms,
+#          or list custom codenames (e.g. view_enterprise_roles).
+# Optional: you can include `perm_names` mapping inside an entry to provide human-readable names
+# for custom permission codenames when they are created.
+#
+# Example usage:
+#   python manage.py setup_roles_permissions --config config/roles_permissions.yaml
+#   python manage.py setup_roles_permissions --config config/roles_permissions.yaml --assign-object-perms
+#
+roles:
+  ADMIN:
+    - app: authenticationApp
+      model: CustomUser
+      perms: [view, add, change, delete, view_enterprise_roles]
+    - app: auth
+      model: group
+      perms: [view]
+  ENTERPRISE_BASIC:
+    - app: authenticationApp
+      model: CustomUser
+      perms: [view, add, view_enterprise_roles]
+  ENTERPRISE_PREMIUM:
+    - app: authenticationApp
+      model: CustomUser
+      perms: [view, add, view_enterprise_roles]
+  ENTERPRISE_PROFESSIONAL:
+    - app: authenticationApp
+      model: CustomUser
+      perms: [view, add, view_enterprise_roles]
+  DOCTOR:
+    - app: authenticationApp
+      model: CustomUser
+      perms: [view, add]
+  PATIENT: 
+    - app: authenticationApp
+      model: CustomUser
+      perms: [view, add]

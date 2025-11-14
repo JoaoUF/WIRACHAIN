@@ -21,7 +21,6 @@
             "is_verified": true,
             "is_active": true,
             "is_staff": true,
-            "groups": [1],
             "user_permissions": []
         }
     },
@@ -47,7 +46,6 @@
             "is_verified": true,
             "is_active": true,
             "is_staff": false,
-            "groups": [2],
             "user_permissions": []
         }
     },
@@ -73,7 +71,6 @@
             "is_verified": true,
             "is_active": true,
             "is_staff": false,
-            "groups": [5],
             "user_permissions": [],
             "enterprise": 2
         }
@@ -100,7 +97,6 @@
             "is_verified": true,
             "is_active": true,
             "is_staff": false,
-            "groups": [6],
             "user_permissions": []
         }
     }
