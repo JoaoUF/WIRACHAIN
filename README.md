@@ -8,6 +8,8 @@ An alternative to the project shown before on my thesis.
 - [ ] add sentry-sdk in stage (optional)
 - [ ] add personalize cache to the backend (cache that support db replication)
 - [ ] modify all roles data display
+- [ ] modify status logic
+- [ ] add doctor permission logic on views
 
 ## REFERENCES
 

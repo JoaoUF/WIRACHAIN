@@ -29,6 +29,12 @@ roles:
     - app: medicalApp
       model: Disease
       perms: [add]
+    - app: medicalApp
+      model: Test
+      perms: [add]
+    - app: medicalApp
+      model: Speciality
+      perms: [add]
   ENTERPRISE_PREMIUM:
     - app: authenticationApp
       model: CustomUser
@@ -36,12 +42,24 @@ roles:
     - app: medicalApp
       model: Disease
       perms: [add]
+    - app: medicalApp
+      model: Test
+      perms: [add]
+    - app: medicalApp
+      model: Speciality
+      perms: [add]
   ENTERPRISE_PROFESSIONAL:
     - app: authenticationApp
       model: CustomUser
       perms: [view, add, view_enterprise_roles]
     - app: medicalApp
       model: Disease
+      perms: [add]
+    - app: medicalApp
+      model: Test
+      perms: [add]
+    - app: medicalApp
+      model: Speciality
       perms: [add]
   DOCTOR:
     - app: authenticationApp

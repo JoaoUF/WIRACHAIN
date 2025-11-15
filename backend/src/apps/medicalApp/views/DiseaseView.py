@@ -1,10 +1,9 @@
-from rest_framework import viewsets
 from ..models import Disease
 from ..serializers import DiseaseSerializer, BulkDeleteSerializer, BulkUpdateSerializer
 from drf_spectacular.utils import extend_schema_view, extend_schema
+from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import PermissionDenied
 from guardian.shortcuts import assign_perm, get_objects_for_user
@@ -94,6 +93,7 @@ class DiseaseView(viewsets.ModelViewSet):
         deletable_ids = [o.id for o in deletable_qs if request.user.has_perm("medicalApp.delete_disease", o)]
         requested_ids = set(ids)
         not_allowed = requested_ids - set(deletable_ids)
+
         if not_allowed:
             return Response(
                 {
@@ -124,6 +124,7 @@ class DiseaseView(viewsets.ModelViewSet):
         updatable_ids = [o.id for o in updatable_qs if request.user.has_perm("medicalApp.change_disease", o)]
         requested_ids = set(ids)
         not_allowed = requested_ids - set(updatable_ids)
+
         if not_allowed:
             return Response(
                 {
