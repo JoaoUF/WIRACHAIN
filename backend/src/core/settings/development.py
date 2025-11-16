@@ -53,6 +53,7 @@ DATABASES = {
         "HOST": os.environ.get("POSTGRES_REPLICA_HOST"),
         "PORT": os.environ.get("POSTGRES_REPLICA_PORT"),
         "TEST": {"MIRROR": "default"},
+        "CONN_MAX_AGE": 600,
     },
 }
 

@@ -8,9 +8,13 @@ An alternative to the project shown before on my thesis.
 - [ ] add sentry-sdk in stage (optional)
 - [ ] add personalize cache to the backend (cache that support db replication)
 - [ ] add csp in django (django-csp library)
+- [ ] whitenoise library for static content????
+- [ ] add validations to django serializer (names ...)
 - [ ] modify all roles data display
 - [ ] modify status logic
 - [ ] add doctor permission logic on views
+- [ ] modify base data object permission of clinic@example.com
+- [ ] add permission data table to admin panel??
 
 ## REFERENCES
 
