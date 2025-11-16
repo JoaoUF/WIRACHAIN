@@ -6,6 +6,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import PermissionDenied
+from rest_framework.throttling import UserRateThrottle
 from guardian.shortcuts import assign_perm, get_objects_for_user
 
 
@@ -21,6 +22,7 @@ class TestView(viewsets.ModelViewSet):
     queryset = Test.objects.all()
     serializer_class = TestSerializer
     permission_classes = [IsAuthenticated]
+    throttle_classes = [UserRateThrottle]
     filterset_fields = ["name", "status"]
     search_fields = ["name"]
 

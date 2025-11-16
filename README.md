@@ -7,6 +7,7 @@ An alternative to the project shown before on my thesis.
 - [ ] add django-health-check in stage
 - [ ] add sentry-sdk in stage (optional)
 - [ ] add personalize cache to the backend (cache that support db replication)
+- [ ] add csp in django (django-csp library)
 - [ ] modify all roles data display
 - [ ] modify status logic
 - [ ] add doctor permission logic on views
@@ -19,6 +20,10 @@ An alternative to the project shown before on my thesis.
 - https://dj-rest-auth.readthedocs.io/en/latest/index.html
 - https://docs.allauth.org/en/latest/installation/quickstart.html
 - https://medium.com/@fahimad/role-based-access-control-rbac-in-django-1955b31d93a5
+
+### SECURITY REFERENCES:
+
+- https://freedium.cfd/https://codepane.medium.com/%EF%B8%8F-11-django-security-mistakes-developers-still-make-in-2025-part-1-97e10a445d88
 
 ### AUDIT REFERENCES:
 
