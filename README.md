@@ -13,8 +13,6 @@ An alternative to the project shown before on my thesis.
 - [ ] modify all roles data display
 - [ ] modify status logic
 - [ ] add doctor permission logic on views
-- [ ] modify base data object permission of clinic@example.com
-- [ ] add permission data table to admin panel??
 
 ## REFERENCES
 

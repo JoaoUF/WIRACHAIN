@@ -1,9 +1,10 @@
 from django.contrib import admin
+from guardian.admin import GuardedModelAdmin
 from ..models import Disease
 
 
 @admin.register(Disease)
-class DiseaseAdmin(admin.ModelAdmin):
+class DiseaseAdmin(GuardedModelAdmin):
     list_display = [
         "id",
         "name",

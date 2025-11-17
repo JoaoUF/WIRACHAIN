@@ -1,9 +1,10 @@
 from django.contrib import admin
+from guardian.admin import GuardedModelAdmin
 from ..models import Test
 
 
 @admin.register(Test)
-class TestAdmin(admin.ModelAdmin):
+class TestAdmin(GuardedModelAdmin):
     list_display = [
         "id",
         "name",

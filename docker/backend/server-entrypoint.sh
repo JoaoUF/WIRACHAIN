@@ -47,7 +47,7 @@ do
     sleep 2
 done
 
-until python manage.py loaddata users.json email_adresses.json test.json disease.json speciality.json
+until python manage.py loaddata users.json email_adresses.json
 do
     echo "Loading groups fixture..."
     sleep 2
@@ -56,6 +56,12 @@ done
 until python manage.py AssignGroups
 do
     echo "Running AssignGroups (mapping fixture groups -> actual groups by name)..."
+    sleep 2
+done
+
+until python manage.py SeedData
+do
+    echo "Running SeedData (adding some basic data to default users)"
     sleep 2
 done
 
