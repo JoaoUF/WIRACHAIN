@@ -1,0 +1,1 @@
+from medicalApp.validators.GeneralPurpose import alphanumeric

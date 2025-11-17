@@ -9,7 +9,6 @@ An alternative to the project shown before on my thesis.
 - [ ] add personalize cache to the backend (cache that support db replication)
 - [ ] add csp in django (django-csp library)
 - [ ] whitenoise library for static content????
-- [ ] add validations to django serializer (names ...)
 - [ ] modify all roles data display
 - [ ] modify status logic
 - [ ] add doctor permission logic on views

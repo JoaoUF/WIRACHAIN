@@ -2,12 +2,14 @@ from django_extensions.db.models import ActivatorModel
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from utils import Model
+from ..validators import alphanumeric
 
 
 class Speciality(Model, ActivatorModel):
     name = models.CharField(
         _("name"),
         max_length=255,
+        validators=[alphanumeric],
     )
     description = models.TextField(
         _("description"),
