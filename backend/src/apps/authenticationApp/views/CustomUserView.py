@@ -1,13 +1,12 @@
-from rest_framework import viewsets, mixins
-from drf_spectacular.utils import extend_schema_view, extend_schema
-from rest_framework.views import APIView
-from rest_framework.response import Response
 from ..models import CustomUser
 from ..serializers import CustomUserSerializer
 from ..filters import CustomUserFilter
-from rest_framework import status
+from rest_framework import status, viewsets
 from rest_framework.permissions import IsAuthenticated
-from authenticationApp.permissions import IsAdminOrEnterprise
+from rest_framework.throttling import UserRateThrottle
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from drf_spectacular.utils import extend_schema_view, extend_schema
 
 
 class CurrentUserView(APIView):
@@ -42,6 +41,7 @@ class CurrentUserView(APIView):
 class CustomUserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
-    permission_classes = [IsAuthenticated, IsAdminOrEnterprise]
+    permission_classes = [IsAuthenticated]
+    throttle_classes = [UserRateThrottle]
     filterset_class = CustomUserFilter
     search_fields = ["email", "document_value"]

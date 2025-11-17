@@ -48,7 +48,6 @@ export default function Disease() {
     addState,
     deleteBulkDisease,
     updateState,
-    user,
     statusFilter,
     setStatusFilter,
   } = useDiseaseManager();
@@ -69,8 +68,6 @@ export default function Disease() {
     try {
       const diseaseData = {
         ...values,
-        // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-        enterprise_user: user?.user_id!,
         ...(editingDisease?.id && { id: editingDisease.id }),
       };
       if (editingDisease) {

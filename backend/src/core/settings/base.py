@@ -159,10 +159,12 @@ REST_FRAMEWORK = {
     "DEFAULT_THROTTLE_CLASSES": [
         "rest_framework.throttling.AnonRateThrottle",
         "rest_framework.throttling.UserRateThrottle",
+        "authenticationApp.throttles.AuthThrottle",
     ],
     "DEFAULT_THROTTLE_RATES": {
-        "anon": "100/min",
-        "user": "100/min",
+        "anon": "100/hour",
+        "user": "1000/hour",
+        "auth": "1/s",
     },
 }
 

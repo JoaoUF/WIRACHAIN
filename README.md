@@ -4,11 +4,12 @@ An alternative to the project shown before on my thesis.
 
 ## TO-DO LIST:
 
-- [ ] add django-health-check in stage
 - [ ] add sentry-sdk in stage (optional)
 - [ ] add personalize cache to the backend (cache that support db replication)
 - [ ] add csp in django (django-csp library)
 - [ ] whitenoise library for static content????
+
+- [ ] add django-health-check in stage
 - [ ] modify all roles data display
 - [ ] modify status logic
 - [ ] add doctor permission logic on views

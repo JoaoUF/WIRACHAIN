@@ -48,7 +48,6 @@ export default function Test() {
     addState,
     deleteBulkTest,
     updateState,
-    user,
     statusFilter,
     setStatusFilter,
     refetch,
@@ -71,8 +70,6 @@ export default function Test() {
     try {
       const payload = {
         ...values,
-        // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-        enterprise_user: user?.user_id!,
         ...(editingTest?.id && { id: editingTest.id }),
       };
       if (editingTest) {

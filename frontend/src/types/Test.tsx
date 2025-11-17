@@ -10,7 +10,6 @@ export type TestBasic = {
   id: UUID;
   name: string;
   description: string;
-  enterprise_user: number;
   status: number;
 };
 

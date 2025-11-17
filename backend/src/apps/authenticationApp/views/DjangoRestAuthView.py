@@ -11,6 +11,7 @@ from dj_rest_auth.registration.views import (
     VerifyEmailView as DjRestAuthVerifyEmailView,
     ResendEmailVerificationView as DjRestAuthResendEmailVerificationView,
 )
+from ..throttles import AuthThrottle
 
 
 @extend_schema_view(
@@ -21,6 +22,7 @@ from dj_rest_auth.registration.views import (
     )
 )
 class LoginView(DjRestAuthLoginView):
+    throttle_classes = [AuthThrottle]
     pass
 
 

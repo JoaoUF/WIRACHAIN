@@ -48,7 +48,6 @@ export default function Speciality() {
     addState,
     deleteBulkSpeciality,
     updateState,
-    user,
     statusFilter,
     setStatusFilter,
     refetch,
@@ -71,8 +70,6 @@ export default function Speciality() {
     try {
       const payload = {
         ...values,
-        // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-        enterprise_user: user?.user_id!,
         ...(editingSpeciality?.id && { id: editingSpeciality.id }),
       };
       if (editingSpeciality) {
