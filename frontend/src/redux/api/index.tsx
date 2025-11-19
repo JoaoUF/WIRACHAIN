@@ -3,6 +3,8 @@ export {
   useGetPayloadQuery,
   useLoginMutation,
   useLogoutMutation,
+  useRegisterMutation,
+  useResendEmailMutation,
 } from "./AuthAPI";
 export {
   diseaseApi,

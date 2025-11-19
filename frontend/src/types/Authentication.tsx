@@ -1,3 +1,5 @@
+import type { Dayjs } from "dayjs";
+
 export const USER_TYPES = {
   ADMIN: "ADMIN",
   ENTERPRISE_BASIC: "ENTERPRISE_BASIC",
@@ -35,4 +37,23 @@ export interface LoginResponse {
   user: BasicUserInfo;
   access_expiration: string;
   refresh_expiration: string;
+}
+
+export interface RegisterRequest {
+  id: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  gender: string;
+  phone: string;
+  country_code: string;
+  birth_date: Dayjs;
+  document_type: string;
+  document_value: string;
+  password1: string;
+  password2: string;
+}
+
+export interface ResendEmailRequest {
+  email: string;
 }

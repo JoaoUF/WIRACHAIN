@@ -22,7 +22,6 @@ class CustomUserSerializer(serializers.ModelSerializer):
             "birth_date",
             "document_type",
             "document_value",
-            "is_active",
             "enterprise",
         ]
 

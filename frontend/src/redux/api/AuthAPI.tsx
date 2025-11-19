@@ -2,6 +2,8 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import {
   type LoginRequest,
   type LoginResponse,
+  type RegisterRequest,
+  type ResendEmailRequest,
   type UserPayloadInfo,
 } from "../../types";
 import { customBaseQuery } from "./baseQuery";
@@ -23,6 +25,20 @@ export const authApi = createApi({
         method: "POST",
       }),
     }),
+    register: builder.mutation<void, RegisterRequest>({
+      query: (data) => ({
+        url: "/register/",
+        method: "POST",
+        body: data,
+      }),
+    }),
+    resendEmail: builder.mutation<void, ResendEmailRequest>({
+      query: (data) => ({
+        url: "/resend-email/",
+        method: "POST",
+        body: data,
+      }),
+    }),
     getPayload: builder.query<UserPayloadInfo, void>({
       query: () => ({
         url: "/me/",
@@ -32,5 +48,10 @@ export const authApi = createApi({
   }),
 });
 
-export const { useLoginMutation, useLogoutMutation, useGetPayloadQuery } =
-  authApi;
+export const {
+  useRegisterMutation,
+  useLoginMutation,
+  useLogoutMutation,
+  useResendEmailMutation,
+  useGetPayloadQuery,
+} = authApi;

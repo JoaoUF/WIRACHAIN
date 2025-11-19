@@ -13,6 +13,8 @@ An alternative to the project shown before on my thesis.
 - [ ] modify all roles data display
 - [ ] modify status logic
 - [ ] add doctor permission logic on views
+- [ ] test registration and email of confirmation
+- [ ] activate account
 
 ## REFERENCES
 

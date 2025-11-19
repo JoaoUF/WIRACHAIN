@@ -17,7 +17,6 @@ export type UserBasic = {
   birth_date: string;
   document_type: string;
   document_value: string;
-  is_active: boolean;
   enterprise: number;
 };
 

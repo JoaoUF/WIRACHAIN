@@ -12,6 +12,7 @@ import {
   NotFound,
   Profile,
   Register,
+  ResendEmail,
   Reservation,
   Setting,
   Speciality,
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
       {
         path: ROUTES.ACTIVATE_ACCOUNT,
         element: <ActivateAccount />,
+      },
+      {
+        path: ROUTES.RESEND_EMAIL,
+        element: <ResendEmail />,
       },
     ],
   },

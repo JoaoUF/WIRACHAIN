@@ -51,7 +51,6 @@ class DiseaseView(viewsets.ModelViewSet):
 
         assign_perm("medicalApp.view_disease", owner, instance)
         assign_perm("medicalApp.change_disease", owner, instance)
-        assign_perm("medicalApp.delete_disease", owner, instance)
 
     def _ensure_obj_perm_or_403(self, user, perm_codename: str, obj):
         if user.has_perm(perm_codename, obj):

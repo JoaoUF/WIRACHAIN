@@ -2,6 +2,8 @@ export { USER_TYPES } from "./Authentication";
 export type {
   LoginRequest,
   LoginResponse,
+  RegisterRequest,
+  ResendEmailRequest,
   UserPayloadInfo,
   UserType,
 } from "./Authentication";

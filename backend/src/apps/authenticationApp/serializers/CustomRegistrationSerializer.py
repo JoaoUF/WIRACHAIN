@@ -3,21 +3,53 @@ from dj_rest_auth.registration.serializers import RegisterSerializer
 from rest_framework import serializers
 from authenticationApp.validators import validate_age_minimum
 from medicalApp.validators import alphanumeric
+from guardian.shortcuts import assign_perm
 
 from ..models import CustomUser
+from django.contrib.auth.models import Group
 
 
 class CustomRegisterSerializer(RegisterSerializer):
-    first_name = serializers.CharField(required=True, max_length=150, validators=[alphanumeric])
-    last_name = serializers.CharField(required=True, max_length=150, validators=[alphanumeric])
-    gender = serializers.ChoiceField(choices=CustomUser.Gender.choices, default=CustomUser.Gender.NONE)
-    custom_gender = serializers.CharField(required=False, allow_blank=True, allow_null=True)
-    phone = serializers.CharField(required=True)
-    birth_date = serializers.DateField(required=True, input_formats=["%Y-%m-%d"], validators=[validate_age_minimum])
-    document_type = serializers.ChoiceField(choices=CustomUser.DocumentType.choices, required=True)
-    document_value = serializers.CharField(required=True, max_length=20)
-    enterprise = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all(), required=False, allow_null=True)
-    # add a groups default for patient
+    first_name = serializers.CharField(
+        required=True,
+        max_length=150,
+        validators=[alphanumeric],
+    )
+    last_name = serializers.CharField(
+        required=True,
+        max_length=150,
+        validators=[alphanumeric],
+    )
+    gender = serializers.ChoiceField(
+        choices=CustomUser.Gender.choices,
+        default=CustomUser.Gender.NONE,
+    )
+    custom_gender = serializers.CharField(
+        required=False,
+        allow_blank=True,
+        allow_null=True,
+    )
+    phone = serializers.CharField(
+        required=True,
+    )
+    birth_date = serializers.DateField(
+        required=True,
+        input_formats=["%Y-%m-%d"],
+        validators=[validate_age_minimum],
+    )
+    document_type = serializers.ChoiceField(
+        choices=CustomUser.DocumentType.choices,
+        required=True,
+    )
+    document_value = serializers.CharField(
+        required=True,
+        max_length=20,
+    )
+    enterprise = serializers.PrimaryKeyRelatedField(
+        queryset=CustomUser.objects.all(),
+        required=False,
+        allow_null=True,
+    )
 
     def validate(self, attrs):
         if attrs.get("password1") != attrs.get("password2"):
@@ -64,3 +96,10 @@ class CustomRegisterSerializer(RegisterSerializer):
             "document_value": self.validated_data.get("document_value"),  # type: ignore
             "enterprise": self.validated_data.get("enterprise", None),  # type: ignore
         }
+
+    def custom_signup(self, request, user):
+        patient_group, _ = Group.objects.get_or_create(name="PATIENT")
+        user.groups.add(patient_group)
+        assign_perm("authenticationApp.view_customuser", user, user)
+        assign_perm("authenticationApp.change_customuser", user, user)
+        return super().custom_signup(request, user)

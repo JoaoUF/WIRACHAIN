@@ -2,6 +2,7 @@ export const ROUTES = {
   ROOT: "/",
   LOGIN: "/login",
   REGISTER: "/register",
+  RESEND_EMAIL: "/resend-email",
   FORGOT_PASSWORD: "/forgot-password",
   ACTIVATE_ACCOUNT: "/activate-account/:activate_code",
   DASHBOARD: "/dashboard",

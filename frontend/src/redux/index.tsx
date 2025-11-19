@@ -52,6 +52,8 @@ export {
   usePatchSpecialityMutation,
   usePatchTestMutation,
   usePatchUserMutation,
+  useRegisterMutation,
+  useResendEmailMutation,
   useUpdateBulkDiseaseMutation,
   useUpdateBulkSpecialityMutation,
   useUpdateBulkTestMutation,
