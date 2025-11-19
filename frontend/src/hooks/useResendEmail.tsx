@@ -12,7 +12,7 @@ export const useResendEmail = () => {
     } catch (error) {
       console.error("ERROR ON LOGIN", error);
       globalMessage.error({
-        content: `Register filed: ${error}`,
+        content: `Register failed: ${error}`,
         duration: 1.5,
       });
     }

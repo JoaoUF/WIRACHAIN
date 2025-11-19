@@ -6,6 +6,7 @@ export type {
   ResendEmailRequest,
   UserPayloadInfo,
   UserType,
+  verifyEmailRequest,
 } from "./Authentication";
 export type {
   AllDiseasesRequest,

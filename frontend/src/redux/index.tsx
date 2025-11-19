@@ -61,4 +61,5 @@ export {
   useUpdateSpecialityMutation,
   useUpdateTestMutation,
   useUpdateUserMutation,
+  useVerifyEmailMutation,
 } from "./api";

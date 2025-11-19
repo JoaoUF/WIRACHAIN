@@ -5,6 +5,7 @@ export {
   useLogoutMutation,
   useRegisterMutation,
   useResendEmailMutation,
+  useVerifyEmailMutation,
 } from "./AuthAPI";
 export {
   diseaseApi,

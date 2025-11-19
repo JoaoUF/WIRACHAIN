@@ -5,6 +5,7 @@ import {
   type RegisterRequest,
   type ResendEmailRequest,
   type UserPayloadInfo,
+  type verifyEmailRequest,
 } from "../../types";
 import { customBaseQuery } from "./baseQuery";
 
@@ -39,6 +40,13 @@ export const authApi = createApi({
         body: data,
       }),
     }),
+    verifyEmail: builder.mutation<void, verifyEmailRequest>({
+      query: (data) => ({
+        url: "/verify-email/",
+        method: "POST",
+        body: data,
+      }),
+    }),
     getPayload: builder.query<UserPayloadInfo, void>({
       query: () => ({
         url: "/me/",
@@ -54,4 +62,5 @@ export const {
   useLogoutMutation,
   useResendEmailMutation,
   useGetPayloadQuery,
+  useVerifyEmailMutation,
 } = authApi;

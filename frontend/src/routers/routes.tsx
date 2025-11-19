@@ -4,7 +4,7 @@ export const ROUTES = {
   REGISTER: "/register",
   RESEND_EMAIL: "/resend-email",
   FORGOT_PASSWORD: "/forgot-password",
-  ACTIVATE_ACCOUNT: "/activate-account/:activate_code",
+  ACTIVATE_ACCOUNT: "/activate-account/:key",
   DASHBOARD: "/dashboard",
   PROFILE: "/dashboard/profile",
   SETTING: "/dashboard/setting",
