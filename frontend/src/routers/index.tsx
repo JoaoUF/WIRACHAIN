@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router";
+import { AuthProvider } from "../contexts";
 import {
   ActivateAccount,
   Appointment,
@@ -21,6 +22,7 @@ import {
 } from "../features";
 import { Dashboard, MainMenu } from "../layouts";
 import { USER_TYPES } from "../types";
+import AuthGuard from "./AuthGuard";
 import { ProtectedRoute } from "./ProtectedRoute";
 import RedirectRouter from "./RedirectRouter";
 import RoleGuard from "./RoleGuard";
@@ -71,7 +73,13 @@ const router = createBrowserRouter([
   },
   {
     path: ROUTES.DASHBOARD,
-    element: <ProtectedRoute element={<Dashboard />} />,
+    element: (
+      <AuthProvider>
+        <AuthGuard>
+          <ProtectedRoute element={<Dashboard />} />
+        </AuthGuard>
+      </AuthProvider>
+    ),
     children: [
       {
         index: true,

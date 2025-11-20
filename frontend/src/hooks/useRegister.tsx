@@ -1,12 +1,11 @@
 import type { FormInstance } from "antd";
 import { useNavigate } from "react-router";
-import { globalMessage } from "../contexts/MessageProvider";
 import { useRegisterMutation } from "../redux";
 import { ROUTES } from "../routers/routes";
-import type { RegisterRequest } from "../types";
+import type { RegisterForm, RegisterRequest } from "../types";
 import { useLocalStorageEmail } from "./useLocalStorageEmail";
 
-export const useRegister = (form: FormInstance<RegisterRequest>) => {
+export const useRegister = (form: FormInstance<RegisterForm>) => {
   const navigate = useNavigate();
   const [register, { isLoading }] = useRegisterMutation();
   const { setRegisterEmail } = useLocalStorageEmail();
@@ -20,14 +19,9 @@ export const useRegister = (form: FormInstance<RegisterRequest>) => {
         state: { email: values.email },
         replace: true,
       });
-    } catch (error) {
-      console.error("ERROR ON LOGIN", error);
+    } catch {
       form.setFieldValue("password1", "");
       form.setFieldValue("password2", "");
-      globalMessage.error({
-        content: `Register filed: ${error}`,
-        duration: 1.5,
-      });
     }
   };
 

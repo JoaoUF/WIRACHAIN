@@ -39,8 +39,7 @@ export interface LoginResponse {
   refresh_expiration: string;
 }
 
-export interface RegisterRequest {
-  id: number;
+export interface RegisterForm {
   first_name: string;
   last_name: string;
   email: string;
@@ -48,6 +47,20 @@ export interface RegisterRequest {
   phone: string;
   country_code: string;
   birth_date: Dayjs;
+  document_type: string;
+  document_value: string;
+  password1: string;
+  password2: string;
+}
+
+export interface RegisterRequest {
+  first_name: string;
+  last_name: string;
+  email: string;
+  gender: string;
+  phone: string;
+  country_code: string;
+  birth_date: string;
   document_type: string;
   document_value: string;
   password1: string;

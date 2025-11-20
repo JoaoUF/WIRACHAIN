@@ -5,24 +5,22 @@ import { App as AntApp, ConfigProvider } from "antd";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
-import { AuthLoading } from "./componenets";
-import { AuthProvider } from "./contexts";
 import { MessageProvider } from "./contexts/MessageProvider";
 import { store } from "./redux";
+import { RouterProvider } from "react-router";
+import { router } from "./routers";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
-      <AuthProvider>
-        <StyleProvider layer>
-          <ConfigProvider>
-            <AntApp>
-              <MessageProvider />
-              <AuthLoading />
-            </AntApp>
-          </ConfigProvider>
-        </StyleProvider>
-      </AuthProvider>
+      <StyleProvider layer>
+        <ConfigProvider>
+          <AntApp>
+            <MessageProvider />
+            <RouterProvider router={router} />
+          </AntApp>
+        </ConfigProvider>
+      </StyleProvider>
     </Provider>
   </StrictMode>
 );

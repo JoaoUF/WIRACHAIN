@@ -9,7 +9,7 @@ from ..models import CustomUser
 from django.contrib.auth.models import Group
 
 
-class CustomRegisterSerializer(RegisterSerializer):
+class CustomRegistrationSerializer(RegisterSerializer):
     first_name = serializers.CharField(
         required=True,
         max_length=150,

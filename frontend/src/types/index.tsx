@@ -2,6 +2,7 @@ export { USER_TYPES } from "./Authentication";
 export type {
   LoginRequest,
   LoginResponse,
+  RegisterForm,
   RegisterRequest,
   ResendEmailRequest,
   UserPayloadInfo,

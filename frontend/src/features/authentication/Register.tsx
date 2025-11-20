@@ -14,7 +14,6 @@ import {
   Divider,
   Form,
   Input,
-  message,
   Row,
   Select,
   Typography,
@@ -23,7 +22,9 @@ import type { RuleObject } from "antd/es/form";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import { Link } from "react-router";
-import type { RegisterRequest } from "../../types";
+import { useRegister } from "../../hooks/useRegister";
+import type { RegisterForm } from "../../types";
+import { toRegisterDTO } from "../../utils/Dtos";
 
 const { Title, Paragraph } = Typography;
 const { Option } = Select;
@@ -61,21 +62,12 @@ const passwordStrengthRegex =
   /^(?=.*[A-Z])(?=.*[!@#$%^&*()_\-+=[\]{};:'"\\|,.<>/?]).{9,}$/;
 
 const Register = () => {
-  const [form] = Form.useForm<RegisterRequest>();
+  const [form] = Form.useForm<RegisterForm>();
+  const { handleRegister, isLoading } = useRegister(form);
 
-  const onFinish = (values: RegisterRequest) => {
-    const birth = values.birth_date.format("YYYY-MM-DD");
-    const phoneDigits = String(values.phone || "").replace(/\D+/g, "");
-    const formattedPhone = `+${values.country_code} ${phoneDigits}`;
-
-    const payload = {
-      ...values,
-      birth_date: birth,
-      phone: formattedPhone,
-    };
-
-    console.log("Register payload:", payload);
-    message.success("Registration form validated (see console).");
+  const onFinish = (values: RegisterForm) => {
+    const payload = toRegisterDTO(values);
+    handleRegister(payload);
   };
 
   const validatePasswords = (_: RuleObject, value: string) => {
@@ -158,6 +150,7 @@ const Register = () => {
           form={form}
           name="register"
           onFinish={onFinish}
+          disabled={isLoading}
           layout="vertical"
           size="large"
           initialValues={{

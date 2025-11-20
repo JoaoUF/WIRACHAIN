@@ -11,6 +11,9 @@ PRODUCTION = False
 SECRET_KEY = os.environ.get("SECRET_KEY")
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(" ")
 INTERNAL_IPS = os.environ.get("ALLOWED_HOSTS", "").split(" ")
+VERIFICATION_EMAIL_REDIRECT_URL = os.environ.get("VERIFICATION_EMAIL_REDIRECT_URL", "")
+
+ACCOUNT_ADAPTER = "authenticationApp.adapter.CustomAccountAdapter"
 
 INSTALLED_APPS += [
     "debug_toolbar",

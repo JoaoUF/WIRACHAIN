@@ -8,13 +8,13 @@ An alternative to the project shown before on my thesis.
 - [ ] add personalize cache to the backend (cache that support db replication)
 - [ ] add csp in django (django-csp library)
 - [ ] whitenoise library for static content????
+- [ ] async endpoints????
 
 - [ ] add django-health-check in stage
 - [ ] modify all roles data display
 - [ ] modify status logic
 - [ ] add doctor permission logic on views
 - [ ] modify frontend redirect link from email
-- [ ] create a middleware in redux for error handling??
 - [ ] test complite logic
 
 ## REFERENCES

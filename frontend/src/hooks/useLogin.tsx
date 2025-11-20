@@ -1,6 +1,5 @@
 import type { FormInstance } from "antd";
 import { useNavigate } from "react-router";
-import { globalMessage } from "../contexts/MessageProvider";
 import { useLoginMutation } from "../redux";
 import { ROUTES } from "../routers/routes";
 import type { LoginRequest } from "../types";
@@ -17,13 +16,8 @@ export const useLogin = (form: FormInstance<LoginRequest>) => {
       await refetchUser();
       form.resetFields();
       navigate(ROUTES.DASHBOARD);
-    } catch (error) {
-      console.error("ERROR ON LOGIN", error);
+    } catch {
       form.setFieldValue("password", "");
-      globalMessage.error({
-        content: "Login failed. Please check your credentials.",
-        duration: 1.5,
-      });
     }
   };
 

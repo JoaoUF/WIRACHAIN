@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import { authApi, diseaseApi, specialityApi, testApi, userApi } from "./api";
+import { ErrorMiddleware } from "./middleware";
 
 export const store = configureStore({
   reducer: {
@@ -11,12 +12,14 @@ export const store = configureStore({
     [specialityApi.reducerPath]: specialityApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware()
-      .concat(authApi.middleware)
-      .concat(userApi.middleware)
-      .concat(diseaseApi.middleware)
-      .concat(testApi.middleware)
-      .concat(specialityApi.middleware),
+    getDefaultMiddleware().concat(
+      authApi.middleware,
+      userApi.middleware,
+      diseaseApi.middleware,
+      testApi.middleware,
+      specialityApi.middleware,
+      ErrorMiddleware
+    ),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
