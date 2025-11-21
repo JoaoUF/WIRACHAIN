@@ -97,7 +97,10 @@ services:
     build:
       context: .
       dockerfile: ./docker/backend/Dockerfile
+      args:
+        - ENV_TYPE=development
     command: celery -A core worker --loglevel=info
+    working_dir: /app/backend/src
     volumes:
       - .:/app
     depends_on:
@@ -105,6 +108,9 @@ services:
       - postgres-master
     env_file:
       - ./backend/src/environments/.env.development
+    environment:
+      - ENV_TYPE=development
+      - DJANGO_SETTINGS_MODULE=core.settings.development
     networks:
       - pg_net
 
