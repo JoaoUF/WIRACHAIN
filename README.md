@@ -14,8 +14,13 @@ An alternative to the project shown before on my thesis.
 - [ ] modify all roles data display
 - [ ] modify status logic
 - [ ] add doctor permission logic on views
-- [ ] modify frontend redirect link from email
-- [ ] test complite logic
+- [ ] add url querys that are being fetch to the frontend????
+- [ ] do not allow is_active false to login into the app
+- [ ] update bulk actions in frontend and backend
+
+## NEXT PROJECT CONSIDERATIONS:
+
+- [ ] next time setting roles use textchoices
 
 ## REFERENCES
 

@@ -29,6 +29,9 @@ roles:
     - app: medicalApp
       model: Speciality
       perms: [add]
+    - app: authenticationApp
+      model: CustomUser
+      perms: [add]
   ENTERPRISE_PREMIUM:
     - app: authenticationApp
       model: CustomUser
@@ -42,6 +45,9 @@ roles:
     - app: medicalApp
       model: Speciality
       perms: [add]
+    - app: authenticationApp
+      model: CustomUser
+      perms: [add]
   ENTERPRISE_PROFESSIONAL:
     - app: authenticationApp
       model: CustomUser
@@ -54,6 +60,9 @@ roles:
       perms: [add]
     - app: medicalApp
       model: Speciality
+      perms: [add]
+    - app: authenticationApp
+      model: CustomUser
       perms: [add]
   DOCTOR:
     - app: authenticationApp

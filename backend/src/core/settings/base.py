@@ -207,7 +207,7 @@ SIMPLE_JWT = {
 
 # DJ-REST-AUTH
 REST_AUTH = {
-    "LOGIN_SERIALIZER": "dj_rest_auth.serializers.LoginSerializer",
+    "LOGIN_SERIALIZER": "authenticationApp.serializers.CustomLoginSerializer",
     "TOKEN_SERIALIZER": "dj_rest_auth.serializers.TokenSerializer",
     "JWT_SERIALIZER": "dj_rest_auth.serializers.JWTSerializer",
     "JWT_SERIALIZER_WITH_EXPIRATION": "dj_rest_auth.serializers.JWTSerializerWithExpiration",

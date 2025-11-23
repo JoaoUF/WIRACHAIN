@@ -1,51 +1,29 @@
 from django.contrib.auth.models import Group, Permission
 from ..models import CustomUser
 from rest_framework import serializers
-from .enterprise_data import assign_essential_data_to_enterprise_user
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
     groups = serializers.PrimaryKeyRelatedField(queryset=Group.objects.all(), many=True, required=False)
     user_permissions = serializers.PrimaryKeyRelatedField(queryset=Permission.objects.all(), many=True, required=False)
+    enterprise_user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
         model = CustomUser
         fields = [
             "id",
-            "groups",
-            "user_permissions",
             "first_name",
             "last_name",
             "email",
             "gender",
+            "custom_gender",
             "phone",
             "birth_date",
             "document_type",
             "document_value",
             "enterprise",
+            "is_active",
         ]
-
-    def create(self, validated_data):
-        groups = validated_data.pop("groups", [])
-        user_permissions = validated_data.pop("user_permissions", [])
-        user = CustomUser.objects.create(**validated_data)
-        user.groups.set(groups)
-        user.user_permissions.set(user_permissions)
-        assign_essential_data_to_enterprise_user(user)
-        return user
-
-    def update(self, instance, validated_data):
-        groups = validated_data.pop("groups", None)
-        user_permissions = validated_data.pop("user_permissions", None)
-        for attr, value in validated_data.items():
-            setattr(instance, attr, value)
-        instance.save()
-        if groups is not None:
-            instance.groups.set(groups)
-        if user_permissions is not None:
-            instance.user_permissions.set(user_permissions)
-        assign_essential_data_to_enterprise_user(instance)
-        return instance
 
     def validate(self, attrs):
         doc_type = attrs.get("document_type")
