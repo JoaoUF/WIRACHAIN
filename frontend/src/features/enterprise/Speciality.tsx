@@ -3,7 +3,6 @@ import {
   DeleteOutlined,
   PlusOutlined,
   SearchOutlined,
-  StopOutlined,
 } from "@ant-design/icons";
 import {
   Button,
@@ -13,7 +12,6 @@ import {
   Grid,
   Input,
   Popconfirm,
-  Tooltip,
   Typography,
 } from "antd";
 import type { UUID } from "crypto";
@@ -46,10 +44,7 @@ export default function Speciality() {
     updateSpeciality,
     updateBulkSpeciality,
     addState,
-    deleteBulkSpeciality,
     updateState,
-    statusFilter,
-    setStatusFilter,
     refetch,
   } = useSpecialityManager();
 
@@ -95,33 +90,14 @@ export default function Speciality() {
     setIsModalOpen(true);
   };
 
-  const handleBulkDelete = async () => {
-    try {
-      await deleteBulkSpeciality(selectedRowKeys as UUID[]).unwrap();
-      setSelectedRowKeys([]);
-    } catch (error) {
-      console.error("ERROR", error);
-      globalMessage.error({
-        content: "Failed to delete specialities",
-      });
-    }
-  };
-
-  const handleBulkStatusChange = async (newStatus: number) => {
+  const handleBulkStatusChange = async () => {
     try {
       await updateBulkSpeciality({
         list_ids: selectedRowKeys as UUID[],
-        new_status: newStatus,
       }).unwrap();
       setSelectedRowKeys([]);
     } catch (error) {
       console.error("ERROR", error);
-      globalMessage.error({
-        content:
-          newStatus === 1
-            ? "Failed to set specialities as active."
-            : "Failed to set specialities as inactive.",
-      });
     }
   };
 
@@ -267,7 +243,7 @@ export default function Speciality() {
           <Popconfirm
             title="Delete selected specialities"
             disabled={selectedRowKeys.length === 0}
-            onConfirm={handleBulkDelete}
+            onConfirm={handleBulkStatusChange}
             okText="Yes"
             cancelText="No"
             okButtonProps={{ danger: true }}
@@ -286,43 +262,6 @@ export default function Speciality() {
               Delete
             </Button>
           </Popconfirm>
-
-          <Tooltip title="Make selected specialities active">
-            <Button
-              disabled={selectedRowKeys.length === 0}
-              icon={<CheckCircleOutlined style={{ color: "#52c41a" }} />}
-              onClick={() => handleBulkStatusChange(1)}
-              block
-              style={{
-                background: "#f4fff7",
-                borderColor: "#b7eb8f",
-                color: "#389e0d",
-                width: screens.sm ? "min-content" : "100%",
-              }}
-              size={"small"}
-            >
-              Set Active
-            </Button>
-          </Tooltip>
-
-          <Tooltip title="Make selected specialities inactive">
-            <Button
-              disabled={selectedRowKeys.length === 0}
-              icon={<StopOutlined style={{ color: "#b71c1c" }} />}
-              onClick={() => handleBulkStatusChange(0)}
-              block
-              style={{
-                background: "#fff5f6",
-                borderColor: "#ffccc7",
-                color: "#b71c1c",
-                width: screens.sm ? "min-content" : "100%",
-              }}
-              size={"small"}
-            >
-              Set Inactive
-            </Button>
-          </Tooltip>
-
           <div
             style={{
               color: "#787a99",
@@ -355,8 +294,6 @@ export default function Speciality() {
             }}
             selectedRowKeys={selectedRowKeys}
             onSelectChange={setSelectedRowKeys}
-            statusFilter={statusFilter}
-            setStatusFilter={setStatusFilter}
           />
         </div>
       </Card>

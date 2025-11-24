@@ -3,14 +3,12 @@ import type { Pagination, PaginationWrapper, Search } from "./Extras";
 
 export type TestQueries = {
   enterprise_user: number;
-  status: number;
 };
 
 export type TestBasic = {
   id: UUID;
   name: string;
   description: string;
-  status: number;
 };
 
 export type AllTestRequest = Partial<TestQueries> &

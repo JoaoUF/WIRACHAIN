@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from authenticationApp.models import CustomUser
 from ..models import Test
 from ..validators import alphanumeric
 
@@ -16,5 +15,4 @@ class TestSerializer(serializers.ModelSerializer):
             "name",
             "description",
             "enterprise_user",
-            "status",
         ]

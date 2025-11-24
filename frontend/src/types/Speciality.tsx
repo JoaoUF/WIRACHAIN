@@ -3,15 +3,12 @@ import type { Pagination, PaginationWrapper, Search } from "./Extras";
 
 export type SpecialityQueries = {
   enterprise_user: number;
-  status: number;
 };
 
 export type SpecialityBasic = {
   id: UUID;
   name: string;
   description: string;
-  enterprise_user: number;
-  status: number;
 };
 
 export type AllSpecialityRequest = Partial<SpecialityQueries> &

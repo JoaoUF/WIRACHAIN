@@ -15,5 +15,4 @@ class SpecialitySerializer(serializers.ModelSerializer):
             "name",
             "description",
             "enterprise_user",
-            "status",
         ]

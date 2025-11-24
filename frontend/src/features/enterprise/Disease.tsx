@@ -3,7 +3,6 @@ import {
   DeleteOutlined,
   PlusOutlined,
   SearchOutlined,
-  StopOutlined,
 } from "@ant-design/icons";
 import {
   Button,
@@ -13,7 +12,6 @@ import {
   Grid,
   Input,
   Popconfirm,
-  Tooltip,
   Typography,
 } from "antd";
 import type { UUID } from "crypto";
@@ -46,10 +44,7 @@ export default function Disease() {
     updateDisease,
     updateBulkDisease,
     addState,
-    deleteBulkDisease,
     updateState,
-    statusFilter,
-    setStatusFilter,
   } = useDiseaseManager();
   const [form] = Form.useForm();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
@@ -92,33 +87,14 @@ export default function Disease() {
     setIsModalOpen(true);
   };
 
-  const handleBulkDelete = async () => {
-    try {
-      await deleteBulkDisease(selectedRowKeys as UUID[]).unwrap();
-      setSelectedRowKeys([]);
-    } catch (error) {
-      console.log("ERROR", error);
-      globalMessage.error({
-        content: "Failed to delete diseases",
-      });
-    }
-  };
-
-  const handleBulkStatusChange = async (newStatus: number) => {
+  const handleBulkStatusChange = async () => {
     try {
       await updateBulkDisease({
         list_ids: selectedRowKeys as UUID[],
-        new_status: newStatus,
       }).unwrap();
       setSelectedRowKeys([]);
-    } catch (error) {
-      console.log("ERROR", error);
-      globalMessage.error({
-        content:
-          newStatus === 1
-            ? "Failed to set diseases as active."
-            : "Failed to set diseases as inactive.",
-      });
+    } catch {
+      console.log("ERROR");
     }
   };
 
@@ -269,7 +245,7 @@ export default function Disease() {
           <Popconfirm
             title="Delete selected diseases"
             disabled={selectedRowKeys.length === 0}
-            onConfirm={handleBulkDelete}
+            onConfirm={handleBulkStatusChange}
             okText="Yes"
             cancelText="No"
             okButtonProps={{ danger: true }}
@@ -288,40 +264,6 @@ export default function Disease() {
               Delete
             </Button>
           </Popconfirm>
-          <Tooltip title="Make selected diseases active">
-            <Button
-              disabled={selectedRowKeys.length === 0}
-              icon={<CheckCircleOutlined style={{ color: "#52c41a" }} />}
-              onClick={() => handleBulkStatusChange(1)}
-              block
-              style={{
-                background: "#f4fff7",
-                borderColor: "#b7eb8f",
-                color: "#389e0d",
-                width: screens.sm ? "min-content" : "100%",
-              }}
-              size={"small"}
-            >
-              Set Active
-            </Button>
-          </Tooltip>
-          <Tooltip title="Make selected diseases inactive">
-            <Button
-              disabled={selectedRowKeys.length === 0}
-              icon={<StopOutlined style={{ color: "#b71c1c" }} />}
-              onClick={() => handleBulkStatusChange(0)}
-              block
-              style={{
-                background: "#fff5f6",
-                borderColor: "#ffccc7",
-                color: "#b71c1c",
-                width: screens.sm ? "min-content" : "100%",
-              }}
-              size={"small"}
-            >
-              Set Inactive
-            </Button>
-          </Tooltip>
           <div
             style={{
               color: "#787a99",
@@ -354,8 +296,6 @@ export default function Disease() {
             }}
             selectedRowKeys={selectedRowKeys}
             onSelectChange={setSelectedRowKeys}
-            statusFilter={statusFilter}
-            setStatusFilter={setStatusFilter}
           />
         </div>
       </Card>

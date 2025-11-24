@@ -88,32 +88,16 @@ export const specialityApi = createApi({
       ],
     }),
 
-    updateBulkSpeciality: builder.mutation<
-      null,
-      { list_ids: UUID[]; new_status: number }
-    >({
+    updateBulkSpeciality: builder.mutation<null, { list_ids: UUID[] }>({
       query: (params) => ({
         url: `${SPECIALITY_PATH}/update_bulk/`,
         method: "PUT",
         body: {
           ids: params.list_ids,
-          status: params.new_status,
         },
       }),
       invalidatesTags: (_result, _error, params) => [
         ...params.list_ids.map((id) => ({ type: "Speciality" as const, id })),
-        { type: "Speciality" as const, id: "LIST" },
-      ],
-    }),
-
-    deleteBulkSpeciality: builder.mutation<null, UUID[]>({
-      query: (list_ids) => ({
-        url: `${SPECIALITY_PATH}/delete_bulk/`,
-        method: "DELETE",
-        body: { ids: list_ids },
-      }),
-      invalidatesTags: (_result, _error, list_ids) => [
-        ...list_ids.map((id) => ({ type: "Speciality" as const, id })),
         { type: "Speciality" as const, id: "LIST" },
       ],
     }),
@@ -138,6 +122,5 @@ export const {
   useUpdateSpecialityMutation,
   usePatchSpecialityMutation,
   useUpdateBulkSpecialityMutation,
-  useDeleteBulkSpecialityMutation,
   useDeleteSpecialityMutation,
 } = specialityApi;

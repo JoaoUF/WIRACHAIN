@@ -8,7 +8,7 @@ from rest_framework.decorators import action
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied
-from medicalApp.serializers import BulkUpdateSerializer
+from medicalApp.serializers import BulkDeleteSerializer
 from drf_spectacular.utils import extend_schema_view, extend_schema
 from guardian.shortcuts import assign_perm, get_objects_for_user
 
@@ -105,14 +105,14 @@ class CustomUserViewSet(viewsets.ModelViewSet):
 
     @extend_schema(
         tags=["Users"],
-        request=BulkUpdateSerializer,
+        request=BulkDeleteSerializer,
         responses={200: None, 400: "Bad Request"},
         summary="Bulk remove customuser",
         description="Bulk delete one or more customuser by their IDs.",
     )
     @action(detail=False, methods=["put"])
     def update_bulk(self, request):
-        serializer = BulkUpdateSerializer(data=request.data)
+        serializer = BulkDeleteSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         ids = serializer.validated_data["ids"]  # type: ignore
 

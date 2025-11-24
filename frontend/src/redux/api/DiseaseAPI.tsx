@@ -82,34 +82,16 @@ export const diseaseApi = createApi({
       ],
     }),
 
-    updateBulkDisease: builder.mutation<
-      null,
-      { list_ids: UUID[]; new_status: number }
-    >({
+    updateBulkDisease: builder.mutation<null, { list_ids: UUID[] }>({
       query: (params) => ({
         url: `${DISEASE_PATH}/update_bulk/`,
         method: "PUT",
         body: {
           ids: params.list_ids,
-          status: params.new_status,
         },
       }),
       invalidatesTags: (_result, _error, params) => [
         ...params.list_ids.map((id) => ({ type: "Disease" as const, id })),
-        { type: "Disease" as const, id: "LIST" },
-      ],
-    }),
-
-    deleteBulkDisease: builder.mutation<null, UUID[]>({
-      query: (list_disease_id) => ({
-        url: `${DISEASE_PATH}/delete_bulk/`,
-        method: "DELETE",
-        body: {
-          ids: list_disease_id,
-        },
-      }),
-      invalidatesTags: (_result, _error, list_disease_id) => [
-        ...list_disease_id.map((id) => ({ type: "Disease" as const, id })),
         { type: "Disease" as const, id: "LIST" },
       ],
     }),
@@ -135,5 +117,4 @@ export const {
   useDeleteDiseaseMutation,
   useUpdateBulkDiseaseMutation,
   usePatchDiseaseMutation,
-  useDeleteBulkDiseaseMutation,
 } = diseaseApi;

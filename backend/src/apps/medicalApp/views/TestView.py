@@ -1,5 +1,5 @@
 from ..models import Test
-from ..serializers import TestSerializer, BulkDeleteSerializer, BulkUpdateSerializer
+from ..serializers import TestSerializer, BulkDeleteSerializer
 from drf_spectacular.utils import extend_schema_view, extend_schema
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
@@ -23,7 +23,7 @@ class TestView(viewsets.ModelViewSet):
     serializer_class = TestSerializer
     permission_classes = [IsAuthenticated]
     throttle_classes = [UserRateThrottle]
-    filterset_fields = ["name", "status"]
+    filterset_fields = ["enterprise_user"]
     search_fields = ["name"]
 
     def get_queryset(self):
@@ -80,46 +80,15 @@ class TestView(viewsets.ModelViewSet):
     @extend_schema(
         tags=["Test"],
         request=BulkDeleteSerializer,
-        responses={204: None, 400: "Bad Request"},
-        summary="Bulk delete Test",
-        description="Delete one or more tests by IDs in bulk.",
-    )
-    @action(detail=False, methods=["delete"])
-    def delete_bulk(self, request):
-        serializer = BulkDeleteSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        ids = serializer.validated_data["ids"]  # type: ignore
-
-        deletable_qs = self.get_queryset().filter(id__in=ids)
-        deletable_ids = [o.id for o in deletable_qs if request.user.has_perm("medicalApp.delete_test", o)]
-        requested_ids = set(ids)
-        not_allowed = requested_ids - set(deletable_ids)
-
-        if not_allowed:
-            return Response(
-                {
-                    "detail": "You don't have permission to delete some requested items.",
-                    "not_allowed_ids": list(not_allowed),
-                },
-                status=status.HTTP_403_FORBIDDEN,
-            )
-
-        self.queryset.filter(id__in=deletable_ids).delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-    @extend_schema(
-        tags=["Test"],
-        request=BulkUpdateSerializer,
         responses={200: None, 400: "Bad Request"},
         summary="Bulk update Tests",
         description="Bulk update the status of one or more tests by their IDs.",
     )
     @action(detail=False, methods=["put"])
     def update_bulk(self, request):
-        serializer = BulkUpdateSerializer(data=request.data)
+        serializer = BulkDeleteSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         ids = serializer.validated_data["ids"]  # type: ignore
-        new_status = serializer.validated_data["status"]  # type: ignore
 
         updatable_qs = self.get_queryset().filter(id__in=ids)
         updatable_ids = [o.id for o in updatable_qs if request.user.has_perm("medicalApp.change_test", o)]
@@ -135,5 +104,5 @@ class TestView(viewsets.ModelViewSet):
                 status=status.HTTP_403_FORBIDDEN,
             )
 
-        self.queryset.filter(id__in=updatable_ids).update(status=new_status)
+        self.queryset.filter(id__in=updatable_ids).update(status=0)
         return Response(status=status.HTTP_200_OK)

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import {
   useAddSpecialityMutation,
-  useDeleteBulkSpecialityMutation,
   useDeleteSpecialityMutation,
   useGetAllSpecialitiesQuery,
   usePatchSpecialityMutation,
@@ -19,9 +18,6 @@ export function useSpecialityManager() {
   const [searchText, setSearchText] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [statusFilter, setStatusFilter] = useState<number | undefined>(
-    undefined
-  );
   const [editingSpeciality, setEditingSpeciality] =
     useState<SpecialityBasic | null>(null);
 
@@ -39,7 +35,6 @@ export function useSpecialityManager() {
     limit: pageSize,
     offset: (currentPage - 1) * pageSize,
     search: debouncedSearch || undefined,
-    status: statusFilter !== undefined ? statusFilter : undefined,
   };
 
   const {
@@ -53,8 +48,6 @@ export function useSpecialityManager() {
   const [updateSpeciality, updateState] = useUpdateSpecialityMutation();
   const [deleteSpeciality, deleteState] = useDeleteSpecialityMutation();
   const [patchSpeciality, patchState] = usePatchSpecialityMutation();
-  const [deleteBulkSpeciality, deleteBulkState] =
-    useDeleteBulkSpecialityMutation();
   const [updateBulkSpeciality, updateBulkSpecialityState] =
     useUpdateBulkSpecialityMutation();
 
@@ -76,17 +69,13 @@ export function useSpecialityManager() {
     updateSpeciality,
     deleteSpeciality,
     patchSpeciality,
-    deleteBulkSpeciality,
     updateBulkSpeciality,
     addState,
     updateState,
     deleteState,
     patchState,
-    deleteBulkState,
     updateBulkSpecialityState,
     refetch,
     user,
-    statusFilter,
-    setStatusFilter,
   };
 }

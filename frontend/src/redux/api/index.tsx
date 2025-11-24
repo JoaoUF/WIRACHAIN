@@ -10,7 +10,6 @@ export {
 export {
   diseaseApi,
   useAddDiseaseMutation,
-  useDeleteBulkDiseaseMutation,
   useDeleteDiseaseMutation,
   useGetAllDiseasesQuery,
   useGetDiseaseQuery,
@@ -21,18 +20,16 @@ export {
 export {
   specialityApi,
   useAddSpecialityMutation,
-  useDeleteBulkSpecialityMutation,
   useDeleteSpecialityMutation,
   useGetAllSpecialitiesQuery,
   useGetSpecialityQuery,
   usePatchSpecialityMutation,
   useUpdateBulkSpecialityMutation,
   useUpdateSpecialityMutation,
-} from "./Speciality";
+} from "./SpecialityAPI";
 export {
   testApi,
   useAddTestMutation,
-  useDeleteBulkTestMutation,
   useDeleteTestMutation,
   useGetAllTestsQuery,
   useGetTestQuery,

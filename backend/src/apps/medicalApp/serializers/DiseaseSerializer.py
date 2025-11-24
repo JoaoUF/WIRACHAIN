@@ -15,5 +15,4 @@ class DiseaseSerializer(serializers.ModelSerializer):
             "name",
             "description",
             "enterprise_user",
-            "status",
         ]

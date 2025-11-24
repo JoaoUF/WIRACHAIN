@@ -1,4 +1,4 @@
-import { Empty, Table, Tag } from "antd";
+import { Empty, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import React from "react";
 import type { SpecialityBasic } from "../types";
@@ -13,8 +13,6 @@ interface SpecialityTableProps {
   onEdit: (record: SpecialityBasic) => void;
   onPageChange: (page: number, size: number) => void;
   onSelectChange: (selected: React.Key[]) => void;
-  statusFilter: number | undefined;
-  setStatusFilter: (filter: number | undefined) => void;
 }
 
 export function SpecialityTable({
@@ -27,8 +25,6 @@ export function SpecialityTable({
   onEdit,
   onPageChange,
   onSelectChange,
-  statusFilter,
-  setStatusFilter,
 }: SpecialityTableProps) {
   const columns: ColumnsType<SpecialityBasic> = [
     {
@@ -49,43 +45,6 @@ export function SpecialityTable({
         <span className="text-gray-600">{text || "No description"}</span>
       ),
     },
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-      align: "center",
-      width: 140,
-      filters: [
-        { text: "Active", value: 1 },
-        { text: "Inactive", value: 0 },
-      ],
-      filterMultiple: false,
-      filteredValue: typeof statusFilter === "number" ? [statusFilter] : null,
-      render: (status: number) =>
-        status === 1 ? (
-          <Tag
-            style={{
-              background: "#f4fff7",
-              borderColor: "#b7eb8f",
-              color: "#389e0d",
-              fontWeight: 500,
-            }}
-          >
-            Active
-          </Tag>
-        ) : (
-          <Tag
-            style={{
-              background: "#fff5f6",
-              borderColor: "#ffccc7",
-              color: "#b71c1c",
-              fontWeight: 500,
-            }}
-          >
-            Inactive
-          </Tag>
-        ),
-    },
   ];
 
   const rowSelection = {
@@ -94,21 +53,11 @@ export function SpecialityTable({
   };
 
   const handleTableChange: TableProps<SpecialityBasic>["onChange"] = (
-    pagination,
-    filters
+    pagination
   ) => {
     const nextPage = pagination?.current ?? 1;
     const nextPageSize = pagination?.pageSize ?? pageSize;
     onPageChange(nextPage, nextPageSize);
-
-    const statusFilterValues = filters?.status as unknown;
-    if (Array.isArray(statusFilterValues) && statusFilterValues.length > 0) {
-      const raw = statusFilterValues[0];
-      const parsed = typeof raw === "string" ? Number(raw) : Number(raw);
-      setStatusFilter(Number.isNaN(parsed) ? undefined : parsed);
-    } else {
-      setStatusFilter(undefined);
-    }
   };
 
   const onRow = (record: SpecialityBasic) => {

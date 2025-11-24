@@ -20,6 +20,6 @@
 
 /* Optional: make the name text slightly bolder on hover to emphasize clickability */
 .ant-table-row.clickable-row:hover .text-gray-600 {
-  color: rgba(30, 64, 175, 1); /* deep blue */
-  font-weight: 600;
+  color: #2f54eb; /* deep blue */
+  font-weight: 500;
 }

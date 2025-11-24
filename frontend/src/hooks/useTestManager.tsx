@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import {
   useAddTestMutation,
-  useDeleteBulkTestMutation,
   useDeleteTestMutation,
   useGetAllTestsQuery,
   usePatchTestMutation,
@@ -19,9 +18,6 @@ export function useTestManager() {
   const [searchText, setSearchText] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [statusFilter, setStatusFilter] = useState<number | undefined>(
-    undefined
-  );
   const [editingTest, setEditingTest] = useState<TestBasic | null>(null);
 
   useEffect(() => {
@@ -38,7 +34,6 @@ export function useTestManager() {
     limit: pageSize,
     offset: (currentPage - 1) * pageSize,
     search: debouncedSearch || undefined,
-    status: statusFilter !== undefined ? statusFilter : undefined,
   };
 
   const {
@@ -52,7 +47,6 @@ export function useTestManager() {
   const [updateTest, updateState] = useUpdateTestMutation();
   const [deleteTest, deleteState] = useDeleteTestMutation();
   const [patchTest, patchState] = usePatchTestMutation();
-  const [deleteBulkTest, deleteBulkState] = useDeleteBulkTestMutation();
   const [updateBulkTest, updateBulkTestState] = useUpdateBulkTestMutation();
 
   return {
@@ -73,17 +67,13 @@ export function useTestManager() {
     updateTest,
     deleteTest,
     patchTest,
-    deleteBulkTest,
     updateBulkTest,
     addState,
     updateState,
     deleteState,
     patchState,
-    deleteBulkState,
     updateBulkTestState,
     refetch,
     user,
-    statusFilter,
-    setStatusFilter,
   };
 }

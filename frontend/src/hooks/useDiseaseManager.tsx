@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import {
   useAddDiseaseMutation,
-  useDeleteBulkDiseaseMutation,
   useDeleteDiseaseMutation,
   useGetAllDiseasesQuery,
   usePatchDiseaseMutation,
@@ -18,9 +17,6 @@ export function useDiseaseManager() {
   const [searchText, setSearchText] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [statusFilter, setStatusFilter] = useState<number | undefined>(
-    undefined
-  );
   const [editingDisease, setEditingDisease] = useState<DiseaseBasic | null>(
     null
   );
@@ -39,7 +35,6 @@ export function useDiseaseManager() {
     limit: pageSize,
     offset: (currentPage - 1) * pageSize,
     search: debouncedSearch || undefined,
-    status: statusFilter !== undefined ? statusFilter : undefined,
   };
 
   const {
@@ -53,7 +48,6 @@ export function useDiseaseManager() {
   const [updateDisease, updateState] = useUpdateDiseaseMutation();
   const [deleteDisease, deleteState] = useDeleteDiseaseMutation();
   const [patchDisease, patchState] = usePatchDiseaseMutation();
-  const [deleteBulkDisease, deleteBulkState] = useDeleteBulkDiseaseMutation();
   const [updateBulkDisease, updateBulkDiseaseState] =
     useUpdateBulkDiseaseMutation();
 
@@ -75,17 +69,13 @@ export function useDiseaseManager() {
     updateDisease,
     deleteDisease,
     patchDisease,
-    deleteBulkDisease,
     updateBulkDisease,
     addState,
     updateState,
     deleteState,
     patchState,
-    deleteBulkState,
     updateBulkDiseaseState,
     refetch,
     user,
-    statusFilter,
-    setStatusFilter,
   };
 }
