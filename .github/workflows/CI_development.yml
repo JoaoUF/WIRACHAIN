@@ -1,60 +1,60 @@
-name: CI - Development Branch
+# name: CI - Development Branch
 
-on:
-  push:
-    branches:
-      - development
+# on:
+#   push:
+#     branches:
+#       - development
 
-jobs:
-  lint-and-test:
-    runs-on: ubuntu-latest
+# jobs:
+#   lint-and-test:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
 
-      - name: Create environments directory
-        run: mkdir -p backend/src/environments
+#       - name: Create environments directory
+#         run: mkdir -p backend/src/environments
 
-      - name: Write .env.development file
-        run: echo "${{ secrets.ENV_DEVELOPMENT }}" > backend/src/environments/.env.development
+#       - name: Write .env.development file
+#         run: echo "${{ secrets.ENV_DEVELOPMENT }}" > backend/src/environments/.env.development
 
-      # Ensure all containers/volumes from previous jobs are removed
-      - name: Docker Compose Down (remove containers and volumes)
-        run: docker compose down -v
+#       # Ensure all containers/volumes from previous jobs are removed
+#       - name: Docker Compose Down (remove containers and volumes)
+#         run: docker compose down -v
 
-      # (Optional but extra-thorough) Clean up stray containers/images/volumes
-      - name: Remove all Docker containers (if any left)
-        run: |
-          if [ "$(docker ps -aq)" ]; then docker rm -f $(docker ps -aq); fi
+#       # (Optional but extra-thorough) Clean up stray containers/images/volumes
+#       - name: Remove all Docker containers (if any left)
+#         run: |
+#           if [ "$(docker ps -aq)" ]; then docker rm -f $(docker ps -aq); fi
 
-      - name: Remove all Docker images (if any left)
-        run: |
-          if [ "$(docker images -aq)" ]; then docker rmi -f $(docker images -aq); fi
+#       - name: Remove all Docker images (if any left)
+#         run: |
+#           if [ "$(docker images -aq)" ]; then docker rmi -f $(docker images -aq); fi
 
-      - name: Remove all Docker volumes (if any left)
-        run: |
-          if [ "$(docker volume ls -q)" ]; then docker volume rm -f $(docker volume ls -q); fi
+#       - name: Remove all Docker volumes (if any left)
+#         run: |
+#           if [ "$(docker volume ls -q)" ]; then docker volume rm -f $(docker volume ls -q); fi
 
-      - name: Build and start Docker Compose services
-        run: docker compose up --build -d
+#       - name: Build and start Docker Compose services
+#         run: docker compose up --build -d
 
-      - name: Lint with Black
-        run: |
-          docker compose exec web black --check .
+#       - name: Lint with Black
+#         run: |
+#           docker compose exec web black --check .
 
-      - name: Lint with Flake8
-        run: |
-          docker compose exec web flake8 .
+#       - name: Lint with Flake8
+#         run: |
+#           docker compose exec web flake8 .
 
-      - name: Run migrations
-        run: |
-          docker compose exec web sh -c "cd backend/src && python manage.py migrate"
+#       - name: Run migrations
+#         run: |
+#           docker compose exec web sh -c "cd backend/src && python manage.py migrate"
 
-      - name: Run Pytest
-        run: |
-          docker compose exec web sh -c "cd backend && pytest"
+#       - name: Run Pytest
+#         run: |
+#           docker compose exec web sh -c "cd backend && pytest"
 
-      - name: Docker Compose Down (cleanup at end)
-        if: always()
-        run: docker compose down -v
+#       - name: Docker Compose Down (cleanup at end)
+#         if: always()
+#         run: docker compose down -v

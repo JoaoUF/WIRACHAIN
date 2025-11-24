@@ -15,11 +15,11 @@ do
     echo "Waiting for server volume..."
 done
 
-# until python manage.py makemigrations
-# do
-#     echo "Creating migration files ..."
-#     sleep 2
-# done
+until python manage.py makemigrations
+do
+    echo "Creating migration files ..."
+    sleep 2
+done
 
 until python manage.py migrate --fake-initial
 do

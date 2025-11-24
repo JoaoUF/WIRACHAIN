@@ -97,12 +97,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "mediafields")
 
 
 # DJANGO DEBUG TOOLBAR
-def show_toolbar(request):
-    return True
-
-
 DEBUG_TOOLBAR_CONFIG = {
-    "SHOW_TOOLBAR_CALLBACK": show_toolbar,
+    "SHOW_TOOLBAR_CALLBACK": lambda request: True,
 }
 
 DEBUG_TOOLBAR_PANELS = [

@@ -19,7 +19,7 @@ from guardian.shortcuts import assign_perm, get_objects_for_user
     destroy=extend_schema(tags=["Test"]),
 )
 class TestView(viewsets.ModelViewSet):
-    queryset = Test.objects.active()  # type: ignore
+    queryset = Test.objects.none()
     serializer_class = TestSerializer
     permission_classes = [IsAuthenticated]
     throttle_classes = [UserRateThrottle]
@@ -29,6 +29,11 @@ class TestView(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         base_qs = Test.objects.active()  # type: ignore
+        base_qs = base_qs.only(
+            "id",
+            "name",
+            "description",
+        )
 
         return get_objects_for_user(
             user,

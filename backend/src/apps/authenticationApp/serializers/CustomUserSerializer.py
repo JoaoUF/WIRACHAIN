@@ -1,12 +1,9 @@
-from django.contrib.auth.models import Group, Permission
 from ..models import CustomUser
 from rest_framework import serializers
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
-    groups = serializers.PrimaryKeyRelatedField(queryset=Group.objects.all(), many=True, required=False)
-    user_permissions = serializers.PrimaryKeyRelatedField(queryset=Permission.objects.all(), many=True, required=False)
-    enterprise_user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    enterprise = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
         model = CustomUser

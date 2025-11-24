@@ -9,12 +9,13 @@ An alternative to the project shown before on my thesis.
 - [ ] add csp in django (django-csp library)
 - [ ] whitenoise library for static content????
 - [ ] async endpoints????
-
 - [ ] add django-health-check in stage
+
 - [ ] modify all roles data display
-- [ ] modify status logic
 - [ ] add doctor permission logic on views
-- [ ] add url querys that are being fetch to the frontend????
+- [ ] add refresh token logic in frontend
+- [ ] fix github actions
+- [ ] replace frontend cache for backend cache or use both ....?
 
 ## NEXT PROJECT CONSIDERATIONS:
 
@@ -41,6 +42,7 @@ An alternative to the project shown before on my thesis.
 ### PERFORMANCE REFERENCES:
 
 - https://tarekeesa7.medium.com/optimal-performance-django-rest-framework-packages-1504963b94a4
+- https://freedium.cfd/https://medium.com/@anas-issath/the-django-performance-optimization-playbook-098a95f7418e
 
 ### CACHE REFERENCES:
 

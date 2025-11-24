@@ -20,9 +20,11 @@ class Speciality(Model, ActivatorModel):
         "authenticationApp.CustomUser",
         on_delete=models.CASCADE,
         related_name="speciality",
+        db_index=True,
     )
 
     class Meta:
         db_table = "MED_SPECIALITY"
         verbose_name = _("Speciality")
         verbose_name_plural = _("Specialities")
+        indexes = [models.Index(fields=["enterprise_user", "-activate_date"])]

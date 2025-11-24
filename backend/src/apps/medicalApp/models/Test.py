@@ -20,9 +20,11 @@ class Test(Model, ActivatorModel):
         "authenticationApp.CustomUser",
         on_delete=models.CASCADE,
         related_name="test",
+        db_index=True,
     )
 
     class Meta:
         db_table = "MED_TEST"
         verbose_name = _("Test")
         verbose_name_plural = _("Tests")
+        indexes = [models.Index(fields=["enterprise_user", "-activate_date"])]
