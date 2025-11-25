@@ -11,11 +11,8 @@ An alternative to the project shown before on my thesis.
 - [ ] async endpoints????
 - [ ] add django-health-check in stage
 
-- [ ] modify all roles data display
-- [ ] add doctor permission logic on views
 - [ ] add refresh token logic in frontend
 - [ ] fix github actions
-- [ ] replace frontend cache for backend cache or use both ....?
 
 ## NEXT PROJECT CONSIDERATIONS:
 

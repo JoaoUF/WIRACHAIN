@@ -23,13 +23,13 @@ class DiseaseView(viewsets.ModelViewSet):
     serializer_class = DiseaseSerializer
     permission_classes = [IsAuthenticated]
     throttle_classes = [UserRateThrottle]
-    filterset_fields = ["enterprise_user"]
     search_fields = ["name"]
 
     def get_queryset(self):
         user = self.request.user
+        enterprise_id = getattr(user, "id", None)
         base_qs = Disease.objects.active()  # type: ignore
-        base_qs = base_qs.only(
+        base_qs = base_qs.filter(enterprise_user=enterprise_id).only(
             "id",
             "name",
             "description",

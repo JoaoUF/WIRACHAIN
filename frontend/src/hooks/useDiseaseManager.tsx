@@ -8,10 +8,8 @@ import {
   useUpdateDiseaseMutation,
 } from "../redux";
 import type { AllDiseasesRequest, DiseaseBasic } from "../types";
-import { useAuth } from "./useAuth";
 
 export function useDiseaseManager() {
-  const { user } = useAuth();
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [searchText, setSearchText] = useState("");
@@ -31,7 +29,6 @@ export function useDiseaseManager() {
   }, [searchText]);
 
   const diseaseQueries: AllDiseasesRequest = {
-    enterprise_user: user?.user_id,
     limit: pageSize,
     offset: (currentPage - 1) * pageSize,
     search: debouncedSearch || undefined,
@@ -76,6 +73,5 @@ export function useDiseaseManager() {
     patchState,
     updateBulkDiseaseState,
     refetch,
-    user,
   };
 }

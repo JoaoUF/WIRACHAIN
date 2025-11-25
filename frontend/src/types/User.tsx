@@ -1,3 +1,4 @@
+import type { Dayjs } from "dayjs";
 import type { Pagination, PaginationWrapper, Search } from "./Extras";
 
 export type UserQueries = {
@@ -5,10 +6,20 @@ export type UserQueries = {
   is_active: boolean;
 };
 
+export interface UserForm {
+  first_name: string;
+  last_name: string;
+  email: string;
+  gender: string;
+  country_code: string;
+  phone: string;
+  birth_date: Dayjs;
+  document_type: string;
+  document_value: string;
+}
+
 export type UserBasic = {
   id: number;
-  groups: number[];
-  user_permissions: number[];
   first_name: string;
   last_name: string;
   email: string;
@@ -17,7 +28,7 @@ export type UserBasic = {
   birth_date: string;
   document_type: string;
   document_value: string;
-  enterprise: number;
+  is_active: boolean;
 };
 
 export type AllUsersRequest = Partial<UserQueries> &

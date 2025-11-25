@@ -8,11 +8,8 @@ import {
   useUpdateTestMutation,
 } from "../redux";
 import type { AllTestRequest, TestBasic } from "../types";
-import { useAuth } from "./useAuth";
 
 export function useTestManager() {
-  const { user } = useAuth();
-
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [searchText, setSearchText] = useState("");
@@ -30,7 +27,6 @@ export function useTestManager() {
   }, [searchText]);
 
   const testQueries: AllTestRequest = {
-    enterprise_user: user?.user_id,
     limit: pageSize,
     offset: (currentPage - 1) * pageSize,
     search: debouncedSearch || undefined,
@@ -74,6 +70,5 @@ export function useTestManager() {
     patchState,
     updateBulkTestState,
     refetch,
-    user,
   };
 }

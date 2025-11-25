@@ -33,6 +33,7 @@ export type {
 export type {
   AllUsersRequest,
   AllUsersResponse,
+  UserForm,
   UserRequest,
   UserResponse,
 } from "./User";

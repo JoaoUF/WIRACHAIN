@@ -23,40 +23,19 @@ import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import { Link } from "react-router";
 import { useRegister } from "../../hooks/useRegister";
+import { ROUTES } from "../../routers/routes";
 import type { RegisterForm } from "../../types";
 import { toRegisterDTO } from "../../utils/Dtos";
+import {
+  COUNTRY_CODES,
+  DOC_TYPE_LENGTHS,
+  DOC_TYPES,
+  GENDERS,
+  MIN_AGE,
+} from "../../utils/HardcoreData";
 
 const { Title, Paragraph } = Typography;
 const { Option } = Select;
-
-const MIN_AGE = 18;
-
-const GENDERS = [
-  { label: "Prefer not to say", value: "NONE" },
-  { label: "Male", value: "MALE" },
-  { label: "Female", value: "FEMALE" },
-  { label: "Custom", value: "CUSTOM" },
-];
-
-const COUNTRY_CODES = [
-  { label: "+51 (Peru)", value: "51" },
-  { label: "+1 (USA)", value: "1" },
-  { label: "+44 (UK)", value: "44" },
-];
-
-const DOC_TYPES = [
-  { label: "DNI", value: "01" }, // expects length 8
-  { label: "RUC", value: "04" }, // expects length 12
-  { label: "CE", value: "06" }, // expects length 11
-  { label: "Passport", value: "07" }, // expects length 12
-];
-
-const DOC_TYPE_LENGTHS: Record<string, number> = {
-  "01": 8,
-  "04": 12,
-  "06": 11,
-  "07": 12,
-};
 
 const passwordStrengthRegex =
   /^(?=.*[A-Z])(?=.*[!@#$%^&*()_\-+=[\]{};:'"\\|,.<>/?]).{9,}$/;
@@ -395,7 +374,10 @@ const Register = () => {
           <div className="text-center">
             <Paragraph className="text-sm text-gray-500">
               Already have an account?{" "}
-              <Link to="/login" className="text-blue-500 hover:text-blue-700">
+              <Link
+                to={ROUTES.LOGIN}
+                className="text-blue-500 hover:text-blue-700"
+              >
                 Log in
               </Link>
             </Paragraph>

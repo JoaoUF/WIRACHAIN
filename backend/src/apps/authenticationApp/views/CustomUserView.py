@@ -11,6 +11,7 @@ from rest_framework.exceptions import PermissionDenied
 from medicalApp.serializers import BulkDeleteSerializer
 from drf_spectacular.utils import extend_schema_view, extend_schema
 from guardian.shortcuts import assign_perm, get_objects_for_user
+from allauth.account.models import EmailAddress
 
 
 class CurrentUserView(APIView):
@@ -43,16 +44,30 @@ class CurrentUserView(APIView):
     destroy=extend_schema(tags=["Users"]),
 )
 class CustomUserViewSet(viewsets.ModelViewSet):
-    queryset = CustomUser.objects.active()  # type: ignore
+    queryset = CustomUser.objects.none()
     serializer_class = CustomUserSerializer
     permission_classes = [IsAuthenticated]
     throttle_classes = [UserRateThrottle]
-    filterset_class = CustomUserFilter
+    filterset_fields = ["is_active", "gender"]
     search_fields = ["email", "document_value"]
 
     def get_queryset(self):
         user = self.request.user
+        enterprise_id = getattr(user, "id", None)
         base_qs = CustomUser.objects.active()  # type: ignore
+        base_qs = base_qs.filter(enterprise=enterprise_id).only(
+            "id",
+            "first_name",
+            "last_name",
+            "email",
+            "gender",
+            "custom_gender",
+            "phone",
+            "birth_date",
+            "document_type",
+            "document_value",
+            "is_active",
+        )
 
         return get_objects_for_user(
             user,
@@ -72,6 +87,11 @@ class CustomUserViewSet(viewsets.ModelViewSet):
 
         instance = serializer.save()
         owner = instance.enterprise_user
+        EmailAddress.objects.get_or_create(
+            user=instance,
+            email=instance.email,
+            defaults={"primary": True, "verified": False},
+        )
 
         assign_perm("medicalApp.view_test", owner, instance)
         assign_perm("medicalApp.change_test", owner, instance)
