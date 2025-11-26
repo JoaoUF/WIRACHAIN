@@ -13,10 +13,13 @@ An alternative to the project shown before on my thesis.
 
 - [ ] add refresh token logic in frontend
 - [ ] fix github actions
+- [ ] create a general modal context for frontend
 
 ## NEXT PROJECT CONSIDERATIONS:
 
 - [ ] next time setting roles use textchoices
+- [ ] use personalize loggin
+- [ ] add version api
 
 ## REFERENCES
 

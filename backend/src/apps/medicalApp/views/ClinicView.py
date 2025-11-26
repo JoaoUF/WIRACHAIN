@@ -1,6 +1,8 @@
-from rest_framework import viewsets, permissions
 from ..models import Clinic
 from ..serializers import ClinicSerializer
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.throttling import UserRateThrottle
 from drf_spectacular.utils import extend_schema_view, extend_schema
 
 
@@ -13,8 +15,9 @@ from drf_spectacular.utils import extend_schema_view, extend_schema
     destroy=extend_schema(tags=["Clinic"]),
 )
 class ClinicView(viewsets.ModelViewSet):
-    queryset = Clinic.objects.all()
+    queryset = Clinic.objects.none()
     serializer_class = ClinicSerializer
-    # permission_classes = [permissions.IsAuthenticated]
-    filterset_fields = ["city", "country", "enterprise_user"]
+    permission_classes = [IsAuthenticated]
+    throttle_classes = [UserRateThrottle]
+    filterset_fields = ["city", "region", "country"]
     search_fields = ["name"]

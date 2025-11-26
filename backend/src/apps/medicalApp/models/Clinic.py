@@ -30,18 +30,21 @@ class Clinic(Model, ActivatorModel):
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
+        db_index=True,
     )
     region = models.ForeignKey(
         Region,
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
+        db_index=True,
     )
     country = models.ForeignKey(
         Country,
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
+        db_index=True,
     )
     enterprise_user = models.ForeignKey(
         "authenticationApp.CustomUser",

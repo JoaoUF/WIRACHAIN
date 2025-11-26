@@ -49,6 +49,7 @@ class CustomUser(AbstractUser, PermissionsMixin, ActivatorModel):
             ]
         },
         help_text="The enterprise (user) that created this doctor account.",
+        db_index=True,
     )
 
     is_verified = models.BooleanField(default=False)

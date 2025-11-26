@@ -1,6 +1,5 @@
 from ..models import CustomUser
 from ..serializers import CustomUserSerializer
-from ..filters import CustomUserFilter
 from rest_framework import status, viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.throttling import UserRateThrottle
@@ -12,6 +11,7 @@ from medicalApp.serializers import BulkDeleteSerializer
 from drf_spectacular.utils import extend_schema_view, extend_schema
 from guardian.shortcuts import assign_perm, get_objects_for_user
 from allauth.account.models import EmailAddress
+from django.db.models import Q
 
 
 class CurrentUserView(APIView):
@@ -54,8 +54,7 @@ class CustomUserViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         enterprise_id = getattr(user, "id", None)
-        base_qs = CustomUser.objects.active()  # type: ignore
-        base_qs = base_qs.filter(enterprise=enterprise_id).only(
+        base_qs = CustomUser.objects.filter(Q(enterprise=enterprise_id) & Q(status=CustomUser.ACTIVE_STATUS)).only(
             "id",
             "first_name",
             "last_name",
@@ -137,7 +136,7 @@ class CustomUserViewSet(viewsets.ModelViewSet):
         ids = serializer.validated_data["ids"]  # type: ignore
 
         updatable_qs = self.get_queryset().filter(id__in=ids)
-        updatable_ids = [o.id for o in updatable_qs if request.user.has_perm("authenticationApp.change_customuser", o)]
+        updatable_ids = [o.pk for o in updatable_qs if request.user.has_perm("authenticationApp.change_customuser", o)]
         requested_ids = set(ids)
         not_allowed = requested_ids - set(updatable_ids)
 
@@ -150,5 +149,5 @@ class CustomUserViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_403_FORBIDDEN,
             )
 
-        self.queryset.filter(id__in=updatable_ids).update(status=0)
+        self.get_queryset().filter(id__in=updatable_ids).update(status=CustomUser.INACTIVE_STATUS)
         return Response(status=status.HTTP_200_OK)

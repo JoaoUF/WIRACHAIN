@@ -2,7 +2,6 @@ from rest_framework import serializers
 from cities_light.models import Country, Region, City
 from phonenumber_field.serializerfields import PhoneNumberField
 from ..models import Clinic
-from authenticationApp.models import CustomUser
 
 
 class ClinicSerializer(serializers.ModelSerializer):
@@ -10,7 +9,7 @@ class ClinicSerializer(serializers.ModelSerializer):
     region = serializers.PrimaryKeyRelatedField(queryset=Region.objects.all(), allow_null=True, required=False)
     country = serializers.PrimaryKeyRelatedField(queryset=Country.objects.all(), allow_null=True, required=False)
     phone = PhoneNumberField()
-    enterprise_user = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all())
+    enterprise_user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
         model = Clinic
@@ -25,7 +24,4 @@ class ClinicSerializer(serializers.ModelSerializer):
             "region",
             "country",
             "enterprise_user",
-            "status",
-            "activate_date",
-            "deactivate_date",
         ]

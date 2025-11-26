@@ -8,6 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.throttling import UserRateThrottle
 from guardian.shortcuts import assign_perm, get_objects_for_user
+from django.db.models import Q
 
 
 @extend_schema_view(
@@ -28,8 +29,7 @@ class TestView(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         enterprise_id = getattr(user, "id", None)
-        base_qs = Test.objects.active()  # type: ignore
-        base_qs = base_qs.filter(enterprise_user=enterprise_id).only(
+        base_qs = Test.objects.filter(Q(enterprise_user=enterprise_id) & Q(status=Test.ACTIVE_STATUS)).only(
             "id",
             "name",
             "description",
@@ -109,5 +109,5 @@ class TestView(viewsets.ModelViewSet):
                 status=status.HTTP_403_FORBIDDEN,
             )
 
-        self.queryset.filter(id__in=updatable_ids).update(status=0)
+        self.get_queryset().filter(id__in=updatable_ids).update(status=Test.INACTIVE_STATUS)
         return Response(status=status.HTTP_200_OK)

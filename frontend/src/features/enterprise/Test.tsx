@@ -17,7 +17,6 @@ import {
 import type { UUID } from "crypto";
 import { useState } from "react";
 import { TestTable } from "../../componenets";
-import { globalMessage } from "../../contexts/MessageProvider";
 import { TestFormModal } from "../../forms";
 import { useTestManager } from "../../hooks";
 import type { TestBasic } from "../../types";
@@ -45,7 +44,6 @@ export default function Test() {
     updateBulkTest,
     addState,
     updateState,
-    refetch,
   } = useTestManager();
 
   const [form] = Form.useForm();
@@ -62,25 +60,14 @@ export default function Test() {
     name: string;
     description: string;
   }) => {
-    try {
-      const payload = {
-        ...values,
-        ...(editingTest?.id && { id: editingTest.id }),
-      };
-      if (editingTest) {
-        await updateTest(payload).unwrap();
-      } else {
-        await addTest(payload).unwrap();
-      }
-      setIsModalOpen(false);
-      form.resetFields();
-      setEditingTest(null);
-      refetch?.();
-    } catch (error) {
-      console.error("ERROR", error);
-      globalMessage.error({
-        content: "Failed to save test",
-      });
+    const payload = {
+      ...values,
+      ...(editingTest?.id && { id: editingTest.id }),
+    };
+    if (editingTest) {
+      await updateTest(payload).unwrap().then(handleDone);
+    } else {
+      await addTest(payload).unwrap().then(handleDone);
     }
   };
 
@@ -90,15 +77,20 @@ export default function Test() {
     setIsModalOpen(true);
   };
 
+  const handleDone = () => {
+    setIsModalOpen(false);
+    form.resetFields();
+    setEditingTest(null);
+  };
+
   const handleBulkStatusChange = async () => {
-    try {
-      await updateBulkTest({
-        list_ids: selectedRowKeys as UUID[],
-      }).unwrap();
-      setSelectedRowKeys([]);
-    } catch (error) {
-      console.error("ERROR", error);
-    }
+    await updateBulkTest({
+      list_ids: selectedRowKeys as UUID[],
+    })
+      .unwrap()
+      .then(() => {
+        setSelectedRowKeys([]);
+      });
   };
 
   return (

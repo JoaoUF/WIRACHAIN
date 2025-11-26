@@ -17,7 +17,6 @@ import {
 import type { UUID } from "crypto";
 import { useState } from "react";
 import { SpecialityTable } from "../../componenets";
-import { globalMessage } from "../../contexts/MessageProvider";
 import { SpecialityFormModal } from "../../forms";
 import { useSpecialityManager } from "../../hooks";
 import type { SpecialityBasic } from "../../types";
@@ -58,47 +57,42 @@ export default function Speciality() {
     setIsModalOpen(true);
   };
 
-  const handleSubmit = async (values: {
-    name: string;
-    description: string;
-  }) => {
-    try {
-      const payload = {
-        ...values,
-        ...(editingSpeciality?.id && { id: editingSpeciality.id }),
-      };
-      if (editingSpeciality) {
-        await updateSpeciality(payload).unwrap();
-      } else {
-        await addSpeciality(payload).unwrap();
-      }
-      setIsModalOpen(false);
-      form.resetFields();
-      setEditingSpeciality(null);
-      refetch?.();
-    } catch (error) {
-      console.error("ERROR", error);
-      globalMessage.error({
-        content: "Failed to save speciality",
-      });
-    }
-  };
-
   const handleAdd = () => {
     setEditingSpeciality(null);
     form.resetFields();
     setIsModalOpen(true);
   };
 
-  const handleBulkStatusChange = async () => {
-    try {
-      await updateBulkSpeciality({
-        list_ids: selectedRowKeys as UUID[],
-      }).unwrap();
-      setSelectedRowKeys([]);
-    } catch (error) {
-      console.error("ERROR", error);
+  const handleDone = () => {
+    setIsModalOpen(false);
+    form.resetFields();
+    setEditingSpeciality(null);
+    refetch?.();
+  };
+
+  const handleSubmit = async (values: {
+    name: string;
+    description: string;
+  }) => {
+    const payload = {
+      ...values,
+      ...(editingSpeciality?.id && { id: editingSpeciality.id }),
+    };
+    if (editingSpeciality) {
+      await updateSpeciality(payload).unwrap().then(handleDone);
+    } else {
+      await addSpeciality(payload).unwrap().then(handleDone);
     }
+  };
+
+  const handleBulkStatusChange = async () => {
+    await updateBulkSpeciality({
+      list_ids: selectedRowKeys as UUID[],
+    })
+      .unwrap()
+      .then(() => {
+        setSelectedRowKeys([]);
+      });
   };
 
   return (

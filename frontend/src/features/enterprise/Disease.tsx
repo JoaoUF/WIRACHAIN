@@ -17,7 +17,6 @@ import {
 import type { UUID } from "crypto";
 import { useState } from "react";
 import { DiseaseTable } from "../../componenets";
-import { globalMessage } from "../../contexts/MessageProvider";
 import { DiseaseFormModal } from "../../forms";
 import { useDiseaseManager } from "../../hooks";
 import type { DiseaseBasic } from "../../types";
@@ -60,24 +59,14 @@ export default function Disease() {
     name: string;
     description: string;
   }) => {
-    try {
-      const diseaseData = {
-        ...values,
-        ...(editingDisease?.id && { id: editingDisease.id }),
-      };
-      if (editingDisease) {
-        await updateDisease(diseaseData).unwrap();
-      } else {
-        await addDisease(diseaseData).unwrap();
-      }
-      setIsModalOpen(false);
-      form.resetFields();
-      setEditingDisease(null);
-    } catch (error) {
-      console.log("ERROR", error);
-      globalMessage.error({
-        content: "Failed to save disease",
-      });
+    const diseaseData = {
+      ...values,
+      ...(editingDisease?.id && { id: editingDisease.id }),
+    };
+    if (editingDisease) {
+      await updateDisease(diseaseData).unwrap().then(handleDone);
+    } else {
+      await addDisease(diseaseData).unwrap().then(handleDone);
     }
   };
 
@@ -87,15 +76,20 @@ export default function Disease() {
     setIsModalOpen(true);
   };
 
+  const handleDone = () => {
+    setIsModalOpen(false);
+    form.resetFields();
+    setEditingDisease(null);
+  };
+
   const handleBulkStatusChange = async () => {
-    try {
-      await updateBulkDisease({
-        list_ids: selectedRowKeys as UUID[],
-      }).unwrap();
-      setSelectedRowKeys([]);
-    } catch {
-      console.log("ERROR");
-    }
+    await updateBulkDisease({
+      list_ids: selectedRowKeys as UUID[],
+    })
+      .unwrap()
+      .then(() => {
+        setSelectedRowKeys([]);
+      });
   };
 
   return (
