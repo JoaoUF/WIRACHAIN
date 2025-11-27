@@ -25,8 +25,8 @@ class Clinic(Model, ActivatorModel):
         _("Street Address"),
         max_length=255,
     )
-    city = models.ForeignKey(
-        City,
+    country = models.ForeignKey(
+        Country,
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -39,8 +39,8 @@ class Clinic(Model, ActivatorModel):
         blank=True,
         db_index=True,
     )
-    country = models.ForeignKey(
-        Country,
+    city = models.ForeignKey(
+        City,
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -50,6 +50,7 @@ class Clinic(Model, ActivatorModel):
         "authenticationApp.CustomUser",
         on_delete=models.CASCADE,
         related_name="clinic_medical_specialities",
+        db_index=True,
     )
 
     class Meta:

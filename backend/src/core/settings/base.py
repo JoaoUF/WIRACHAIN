@@ -138,6 +138,31 @@ AUTHENTICATION_BACKENDS = [
     "guardian.backends.ObjectPermissionBackend",
 ]
 
+# LOGGING
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "simple": {"format": "%(levelname)s %(message)s"},
+    },
+    "handlers": {
+        "console": {"level": "DEBUG", "class": "logging.StreamHandler", "formatter": "simple"},
+    },
+    "loggers": {
+        "cities_light": {
+            "handlers": ["console"],
+            "propagate": True,
+            "level": "DEBUG",
+        },
+        "django": {
+            "handlers": ["console"],
+            "propagate": True,
+            "level": "DEBUG",
+        },
+    },
+}
+
 # DJANGO REST FRAMEWORK
 REST_FRAMEWORK = {
     "DEFAULT_FILTER_BACKENDS": [

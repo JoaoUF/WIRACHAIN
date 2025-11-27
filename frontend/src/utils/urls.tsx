@@ -6,6 +6,10 @@ export const ENDPOINT_URL = {
   DISEASE: "diseases",
   TEST: "tests",
   SPECIALITY: "specialities",
+  COUNTRY: "countries",
+  REGION: "regions",
+  SUBREGION: "subregions",
+  CITY: "cities",
 } as const;
 
 export type ModelKey = keyof typeof ENDPOINT_URL;

@@ -24,6 +24,7 @@ class TestView(viewsets.ModelViewSet):
     serializer_class = TestSerializer
     permission_classes = [IsAuthenticated]
     throttle_classes = [UserRateThrottle]
+    filterset_fields = ["id"]
     search_fields = ["name"]
 
     def get_queryset(self):

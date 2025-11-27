@@ -1,6 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
-import { authApi, diseaseApi, specialityApi, testApi, userApi } from "./api";
+import {
+  authApi,
+  cityApi,
+  countryApi,
+  diseaseApi,
+  regionApi,
+  specialityApi,
+  subRegionApi,
+  testApi,
+  userApi,
+} from "./api";
 import { ErrorMiddleware } from "./middleware";
 
 export const store = configureStore({
@@ -10,6 +20,10 @@ export const store = configureStore({
     [diseaseApi.reducerPath]: diseaseApi.reducer,
     [testApi.reducerPath]: testApi.reducer,
     [specialityApi.reducerPath]: specialityApi.reducer,
+    [countryApi.reducerPath]: countryApi.reducer,
+    [regionApi.reducerPath]: regionApi.reducer,
+    [subRegionApi.reducerPath]: subRegionApi.reducer,
+    [cityApi.reducerPath]: cityApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -18,6 +32,10 @@ export const store = configureStore({
       diseaseApi.middleware,
       testApi.middleware,
       specialityApi.middleware,
+      countryApi.middleware,
+      regionApi.middleware,
+      subRegionApi.middleware,
+      cityApi.middleware,
       ErrorMiddleware
     ),
 });
@@ -38,14 +56,23 @@ export {
   useDeleteSpecialityMutation,
   useDeleteTestMutation,
   useDeleteUserMutation,
+  useGetAllCitiesQuery,
+  useGetAllCountriesQuery,
   useGetAllDiseasesQuery,
+  useGetAllRegionsQuery,
   useGetAllSpecialitiesQuery,
+  useGetAllSubRegionQuery,
   useGetAllTestsQuery,
   useGetAllUsersQuery,
+  useGetCityQuery,
+  useGetCountryQuery,
   useGetDiseaseQuery,
+  useGetRegionQuery,
   useGetSpecialityQuery,
+  useGetSubRegionQuery,
   useGetTestQuery,
   useGetUserQuery,
+  useLazyGetAllCountriesQuery,
   useLoginMutation,
   useLogoutMutation,
   usePatchDiseaseMutation,

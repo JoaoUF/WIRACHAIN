@@ -1,39 +1,65 @@
 from drf_spectacular.utils import extend_schema_view, extend_schema
-from cities_light.contrib.restframework3 import (
-    CityModelViewSet,
-    CountryModelViewSet,
-    RegionModelViewSet,
-    SubRegionModelViewSet,
+from rest_framework.viewsets import ReadOnlyModelViewSet
+from cities_light.models import Country, Region, City, SubRegion
+from ..serializers import (
+    CustomSubRegionSerializer,
+    CustomCitySerializer,
+    CustomCountrySerializer,
+    CustomRegionSerializer,
 )
 
 
 @extend_schema_view(
-    list=extend_schema(tags=["Cities"], summary="List all cities"),
-    retrieve=extend_schema(tags=["Cities"], summary="Retrieve a city"),
+    list=extend_schema(tags=["Cities light"], summary="List all countries"),
+    retrieve=extend_schema(tags=["Cities light"], summary="Retrieve a country"),
 )
-class CustomCityModelViewSet(CityModelViewSet):
-    pass
+class CustomCountryModelViewSet(ReadOnlyModelViewSet):
+    queryset = Country.objects.only(
+        "id",
+        "name",
+        "code2",
+        "phone",
+    )
+    serializer_class = CustomCountrySerializer
 
 
 @extend_schema_view(
-    list=extend_schema(tags=["Countries"], summary="List all countries"),
-    retrieve=extend_schema(tags=["Countries"], summary="Retrieve a country"),
+    list=extend_schema(tags=["Cities light"], summary="List all regions"),
+    retrieve=extend_schema(tags=["Cities light"], summary="Retrieve a region"),
 )
-class CustomCountryModelViewSet(CountryModelViewSet):
-    pass
+class CustomRegionModelViewSet(ReadOnlyModelViewSet):
+    queryset = Region.objects.only(
+        "id",
+        "name",
+    )
+    serializer_class = CustomRegionSerializer
+    filterset_fields = ["country"]
+    search_fields = ["name"]
 
 
 @extend_schema_view(
-    list=extend_schema(tags=["Regions"], summary="List all regions"),
-    retrieve=extend_schema(tags=["Regions"], summary="Retrieve a region"),
+    list=extend_schema(tags=["Cities light"], summary="List all subregions"),
+    retrieve=extend_schema(tags=["Cities light"], summary="Retrieve a subregion"),
 )
-class CustomRegionModelViewSet(RegionModelViewSet):
-    pass
+class CustomSubRegionModelViewSet(ReadOnlyModelViewSet):
+    queryset = SubRegion.objects.only(
+        "id",
+        "name",
+    )
+    serializer_class = CustomSubRegionSerializer
+    filterset_fields = ["region"]
+    search_fields = ["name"]
 
 
 @extend_schema_view(
-    list=extend_schema(tags=["SubRegions"], summary="List all subregions"),
-    retrieve=extend_schema(tags=["SubRegions"], summary="Retrieve a subregion"),
+    list=extend_schema(tags=["Cities light"], summary="List all cities"),
+    retrieve=extend_schema(tags=["Cities light"], summary="Retrieve a city"),
 )
-class CustomSubRegionModelViewSet(SubRegionModelViewSet):
-    pass
+class CustomCityModelViewSet(ReadOnlyModelViewSet):
+    queryset = City.objects.only(
+        "id",
+        "name",
+    )
+    serializer_class = CustomCitySerializer
+    filterset_fields = ["subregion", "region"]
+    search_fields = ["name"]

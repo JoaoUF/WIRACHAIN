@@ -12,14 +12,23 @@ An alternative to the project shown before on my thesis.
 - [ ] add django-health-check in stage
 
 - [ ] add refresh token logic in frontend
-- [ ] fix github actions
 - [ ] create a general modal context for frontend
+- [ ] fix github actions
+- [ ] add custompermission for diferent types of enterprises
+- [ ] use phone extension of the countries api in the frontend
+- [ ] remove migration of liht cities from server-entrypoint in production
+- [ ] add country select component
 
 ## NEXT PROJECT CONSIDERATIONS:
 
 - [ ] next time setting roles use textchoices
 - [ ] use personalize loggin
 - [ ] add version api
+- [ ] multiple data base architecture([link](https://freedium.cfd/https://medium.com/@yogeshkrishnanseeniraj/mastering-multiple-databases-in-django-a-complete-guide-to-configuration-and-best-practices-e5e6faba180d))
+
+## QUESTIONS:
+
+- [ ] does django logger ([handlers](https://docs.djangoproject.com/en/5.2/topics/logging/#handlers)) can send messages through web sockets to other services e.g. AWS cloud watch?
 
 ## REFERENCES
 

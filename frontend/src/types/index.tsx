@@ -10,6 +10,20 @@ export type {
   verifyEmailRequest,
 } from "./Authentication";
 export type {
+  AllCityRequest,
+  AllCityResponse,
+  BaseCity,
+  CityRequest,
+  CityResponse,
+} from "./City";
+export type {
+  AllCountryRequest,
+  AllCountryResponse,
+  BaseCountry,
+  CountryRequest,
+  CountryResponse,
+} from "./Country";
+export type {
   AllDiseasesRequest,
   AllDiseasesResponse,
   DiseaseBasic,
@@ -17,12 +31,26 @@ export type {
   DiseaseResponse,
 } from "./Disease";
 export type {
+  AllRegionRequest,
+  AllRegionResponse,
+  BaseRegion,
+  RegionRequest,
+  RegionResponse,
+} from "./Region";
+export type {
   AllSpecialityRequest,
   AllSpecialityResponse,
   SpecialityBasic,
   SpecialityRequest,
   SpecialityResponse,
 } from "./Speciality";
+export type {
+  AllSubRegionRequest,
+  AllSubRegionResponse,
+  BaseSubRegion,
+  SubRegionRequest,
+  SubRegionResponse,
+} from "./SubRegion";
 export type {
   AllTestRequest,
   AllTestResponse,

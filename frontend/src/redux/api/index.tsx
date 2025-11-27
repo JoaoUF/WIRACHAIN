@@ -7,6 +7,13 @@ export {
   useResendEmailMutation,
   useVerifyEmailMutation,
 } from "./AuthAPI";
+export { cityApi, useGetAllCitiesQuery, useGetCityQuery } from "./CityAPI";
+export {
+  countryApi,
+  useGetAllCountriesQuery,
+  useGetCountryQuery,
+  useLazyGetAllCountriesQuery,
+} from "./CountryAPI";
 export {
   diseaseApi,
   useAddDiseaseMutation,
@@ -18,6 +25,11 @@ export {
   useUpdateDiseaseMutation,
 } from "./DiseaseAPI";
 export {
+  regionApi,
+  useGetAllRegionsQuery,
+  useGetRegionQuery,
+} from "./RegionAPI";
+export {
   specialityApi,
   useAddSpecialityMutation,
   useDeleteSpecialityMutation,
@@ -27,6 +39,11 @@ export {
   useUpdateBulkSpecialityMutation,
   useUpdateSpecialityMutation,
 } from "./SpecialityAPI";
+export {
+  subRegionApi,
+  useGetAllSubRegionQuery,
+  useGetSubRegionQuery,
+} from "./SubRegionAPI";
 export {
   testApi,
   useAddTestMutation,

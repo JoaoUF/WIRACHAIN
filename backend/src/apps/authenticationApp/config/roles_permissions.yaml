@@ -19,7 +19,7 @@ roles:
   ENTERPRISE_BASIC:
     - app: authenticationApp
       model: CustomUser
-      perms: [view, add, view_enterprise_roles]
+      perms: [add]
     - app: medicalApp
       model: Disease
       perms: [add]
@@ -28,6 +28,9 @@ roles:
       perms: [add]
     - app: medicalApp
       model: Speciality
+      perms: [add]
+    - app: medicalApp
+      model: Clinic
       perms: [add]
     - app: authenticationApp
       model: CustomUser
@@ -35,7 +38,7 @@ roles:
   ENTERPRISE_PREMIUM:
     - app: authenticationApp
       model: CustomUser
-      perms: [view, add, view_enterprise_roles]
+      perms: [add]
     - app: medicalApp
       model: Disease
       perms: [add]
@@ -44,6 +47,9 @@ roles:
       perms: [add]
     - app: medicalApp
       model: Speciality
+      perms: [add]
+    - app: medicalApp
+      model: Clinic
       perms: [add]
     - app: authenticationApp
       model: CustomUser
@@ -51,7 +57,7 @@ roles:
   ENTERPRISE_PROFESSIONAL:
     - app: authenticationApp
       model: CustomUser
-      perms: [view, add, view_enterprise_roles]
+      perms: [add]
     - app: medicalApp
       model: Disease
       perms: [add]
@@ -60,6 +66,9 @@ roles:
       perms: [add]
     - app: medicalApp
       model: Speciality
+      perms: [add]
+    - app: medicalApp
+      model: Clinic
       perms: [add]
     - app: authenticationApp
       model: CustomUser
