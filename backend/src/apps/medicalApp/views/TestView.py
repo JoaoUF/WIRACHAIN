@@ -30,7 +30,9 @@ class TestView(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         enterprise_id = getattr(user, "id", None)
-        base_qs = Test.objects.filter(Q(enterprise_user=enterprise_id) & Q(status=Test.ACTIVE_STATUS)).only(
+        base_qs = Test.objects.filter(
+            Q(enterprise_user=enterprise_id) & Q(status=Test.ACTIVE_STATUS)
+        ).only(
             "id",
             "name",
             "description",
@@ -61,7 +63,9 @@ class TestView(viewsets.ModelViewSet):
     def _ensure_obj_perm_or_403(self, user, perm_codename: str, obj):
         if user.has_perm(perm_codename, obj):
             return
-        raise PermissionDenied("You do not have permission to perform this action on the requested object.")
+        raise PermissionDenied(
+            "You do not have permission to perform this action on the requested object."
+        )
 
     def retrieve(self, request, *args, **kwargs):
         obj = self.get_object()
@@ -97,7 +101,11 @@ class TestView(viewsets.ModelViewSet):
         ids = serializer.validated_data["ids"]  # type: ignore
 
         updatable_qs = self.get_queryset().filter(id__in=ids)
-        updatable_ids = [o.id for o in updatable_qs if request.user.has_perm("medicalApp.change_test", o)]
+        updatable_ids = [
+            o.id
+            for o in updatable_qs
+            if request.user.has_perm("medicalApp.change_test", o)
+        ]
         requested_ids = set(ids)
         not_allowed = requested_ids - set(updatable_ids)
 
@@ -110,5 +118,7 @@ class TestView(viewsets.ModelViewSet):
                 status=status.HTTP_403_FORBIDDEN,
             )
 
-        self.get_queryset().filter(id__in=updatable_ids).update(status=Test.INACTIVE_STATUS)
+        self.get_queryset().filter(id__in=updatable_ids).update(
+            status=Test.INACTIVE_STATUS
+        )
         return Response(status=status.HTTP_200_OK)

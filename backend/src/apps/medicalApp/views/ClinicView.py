@@ -41,9 +41,9 @@ class ClinicView(viewsets.ModelViewSet):
                 "phone",
                 "address",
                 "enterprise_user",
-                "city__name",
-                "region__name",
-                "country__name",
+                "city",
+                "region",
+                "country",
             )
         )
 

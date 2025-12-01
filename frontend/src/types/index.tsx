@@ -17,6 +17,12 @@ export type {
   CityResponse,
 } from "./City";
 export type {
+  AllClinicRequest,
+  AllClinicResponse,
+  ClinicRequest,
+  ClinicResponse,
+} from "./Clinic";
+export type {
   AllCountryRequest,
   AllCountryResponse,
   BaseCountry,

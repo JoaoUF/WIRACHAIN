@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   authApi,
   cityApi,
+  clinicApi,
   countryApi,
   diseaseApi,
   regionApi,
@@ -24,6 +25,7 @@ export const store = configureStore({
     [regionApi.reducerPath]: regionApi.reducer,
     [subRegionApi.reducerPath]: subRegionApi.reducer,
     [cityApi.reducerPath]: cityApi.reducer,
+    [clinicApi.reducerPath]: clinicApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -36,6 +38,7 @@ export const store = configureStore({
       regionApi.middleware,
       subRegionApi.middleware,
       cityApi.middleware,
+      clinicApi.middleware,
       ErrorMiddleware
     ),
 });
@@ -48,15 +51,18 @@ export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
 export const useAppSelector = useSelector.withTypes<RootState>();
 
 export {
+  useAddClinicMutation,
   useAddDiseaseMutation,
   useAddSpecialityMutation,
   useAddTestMutation,
   useAddUserMutation,
+  useDeleteClinicMutation,
   useDeleteDiseaseMutation,
   useDeleteSpecialityMutation,
   useDeleteTestMutation,
   useDeleteUserMutation,
   useGetAllCitiesQuery,
+  useGetAllClinicsQuery,
   useGetAllCountriesQuery,
   useGetAllDiseasesQuery,
   useGetAllRegionsQuery,
@@ -65,6 +71,7 @@ export {
   useGetAllTestsQuery,
   useGetAllUsersQuery,
   useGetCityQuery,
+  useGetClinicQuery,
   useGetCountryQuery,
   useGetDiseaseQuery,
   useGetRegionQuery,
@@ -79,11 +86,14 @@ export {
   usePatchSpecialityMutation,
   usePatchTestMutation,
   usePatchUserMutation,
+  usePathClinicMutation,
   useRegisterMutation,
   useResendEmailMutation,
+  useUpdateBulkClinicMutation,
   useUpdateBulkDiseaseMutation,
   useUpdateBulkSpecialityMutation,
   useUpdateBulkTestMutation,
+  useUpdateClinicMutation,
   useUpdateDiseaseMutation,
   useUpdateSpecialityMutation,
   useUpdateTestMutation,

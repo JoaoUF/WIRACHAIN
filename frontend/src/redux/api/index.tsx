@@ -9,6 +9,16 @@ export {
 } from "./AuthAPI";
 export { cityApi, useGetAllCitiesQuery, useGetCityQuery } from "./CityAPI";
 export {
+  clinicApi,
+  useAddClinicMutation,
+  useDeleteClinicMutation,
+  useGetAllClinicsQuery,
+  useGetClinicQuery,
+  usePathClinicMutation,
+  useUpdateBulkClinicMutation,
+  useUpdateClinicMutation,
+} from "./ClinicAPI";
+export {
   countryApi,
   useGetAllCountriesQuery,
   useGetCountryQuery,

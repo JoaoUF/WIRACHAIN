@@ -3,7 +3,12 @@
  * - useDebouncedValue: returns a debounced version of a value
  * - useDebouncedCallback: returns a debounced function with cancel
  *
- * Both are generic, small, and dependency-free (no external libs).
+ * Both are generic and dependency-free.
+ *
+ * NOTE: the callback generic uses `any` for the parameter list to avoid a
+ * problematic constraint with `unknown[]` when callers provide concrete
+ * parameter types (e.g. `(val: string) => void`). This is safe for this hook:
+ * it only proxies arguments to the original function.
  */
 
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -22,11 +27,9 @@ export function useDebouncedValue<T>(
   const leadingRef = useRef<boolean>(leading);
 
   useEffect(() => {
-    // Leading behaviour: if leading is true and this is the first update, set immediately
     if (leadingRef.current) {
       setDebouncedValue(value);
       leadingRef.current = false;
-      // still set up a timer to accept subsequent trailing behaviour
       if (timerRef.current) window.clearTimeout(timerRef.current);
       timerRef.current = window.setTimeout(() => {
         timerRef.current = null;
@@ -51,7 +54,6 @@ export function useDebouncedValue<T>(
     };
   }, [value, delay]);
 
-  // cancel function for consumers
   const cancel = useCallback(() => {
     if (timerRef.current) {
       window.clearTimeout(timerRef.current);
@@ -63,10 +65,14 @@ export function useDebouncedValue<T>(
 }
 
 /**
- * Returns a debounced function with the same signature as fn.
+ * Returns a debounced function mirroring the signature of `fn`.
  * Use .cancel() to cancel pending invocation.
+ *
+ * IMPORTANT: the generic constraint uses `any` for the args list so callers can
+ * pass concrete function types such as `(val: string) => void` without TS errors.
  */
-export function useDebouncedCallback<T extends (...args: unknown[]) => unknown>(
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function useDebouncedCallback<T extends (...args: any[]) => any>(
   fn: T,
   delay = 500
 ) {
@@ -90,7 +96,8 @@ export function useDebouncedCallback<T extends (...args: unknown[]) => unknown>(
       }
       timerRef.current = window.setTimeout(() => {
         timerRef.current = null;
-        fnRef.current(...args);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (fnRef.current as unknown as (...a: any[]) => any)(...args);
       }, delay);
     },
     [delay]
