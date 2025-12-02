@@ -1,4 +1,4 @@
-from medicalApp.serializers.ClinicSerializer import ClinicSerializer
+from medicalApp.serializers.ClinicSerializer import ClinicSerializer, ClinicListSerializer, ClinicDetailSerializer
 from medicalApp.serializers.ClinicDoctorSerializer import ClinicDoctorSerializer
 from medicalApp.serializers.DoctorSpecialitySerializer import DoctorSpecialitySerializer
 from medicalApp.serializers.ClinicSpecialitySerializer import ClinicSpecialitySerializer

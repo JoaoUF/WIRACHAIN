@@ -25,6 +25,7 @@ An alternative to the project shown before on my thesis.
 - [ ] use personalize loggin
 - [ ] add version api
 - [ ] multiple data base architecture([link](https://freedium.cfd/https://medium.com/@yogeshkrishnanseeniraj/mastering-multiple-databases-in-django-a-complete-guide-to-configuration-and-best-practices-e5e6faba180d))
+- [ ] use @api_view for total each line control
 
 ## QUESTIONS:
 

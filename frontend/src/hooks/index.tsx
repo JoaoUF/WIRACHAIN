@@ -1,4 +1,5 @@
 export { useAuth } from "./useAuth";
+export { useClinicManager } from "./useClinicManager";
 export { useDebouncedCallback, useDebouncedValue } from "./useDebounce";
 export { useDiseaseManager } from "./useDiseaseManager";
 export { useLocalStorageEmail } from "./useLocalStorageEmail";

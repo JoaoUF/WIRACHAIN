@@ -1,5 +1,5 @@
 from ..models import Clinic
-from ..serializers import ClinicSerializer, BulkDeleteSerializer
+from ..serializers import ClinicSerializer, BulkDeleteSerializer, ClinicDetailSerializer, ClinicListSerializer
 from rest_framework import status, viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.throttling import UserRateThrottle
@@ -24,16 +24,27 @@ class ClinicView(viewsets.ModelViewSet):
     serializer_class = ClinicSerializer
     permission_classes = [IsAuthenticated]
     throttle_classes = [UserRateThrottle]
-    filterset_fields = ["city", "region", "country"]
-    search_fields = ["name"]
+    filterset_fields = ["city__name", "region__name", "country__name"]
+    search_fields = ["name", "email"]
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            return ClinicListSerializer
+        return ClinicDetailSerializer
 
     def get_queryset(self):
         user = self.request.user
         enterprise_id = getattr(user, "id", None)
-        base_qs = (
-            Clinic.objects.filter(Q(enterprise_user=enterprise_id) & Q(status=Clinic.ACTIVE_STATUS))
-            .select_related("city", "region", "country")
-            .only(
+        base_qs = Clinic.objects.filter(
+            Q(enterprise_user=enterprise_id) & Q(status=Clinic.ACTIVE_STATUS)
+        ).select_related("city", "region", "country")
+
+        # posible error for not geting region (which is selected 2 lines aboved)???
+        if getattr(self, "action", None) == "list":
+            base_qs = base_qs.only("id", "name", "email", "country", "region")
+
+        if getattr(self, "action", None) == "retrieve":
+            base_qs = base_qs.only(
                 "id",
                 "name",
                 "email",
@@ -45,7 +56,6 @@ class ClinicView(viewsets.ModelViewSet):
                 "region",
                 "country",
             )
-        )
 
         return get_objects_for_user(
             user,

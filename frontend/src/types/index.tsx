@@ -21,6 +21,7 @@ export type {
   AllClinicResponse,
   ClinicRequest,
   ClinicResponse,
+  TableClinicResponse,
 } from "./Clinic";
 export type {
   AllCountryRequest,

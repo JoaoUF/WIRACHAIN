@@ -53,3 +53,34 @@ class ClinicSerializer(serializers.ModelSerializer):
             "country",
             "enterprise_user",
         ]
+
+
+class ClinicListSerializer(serializers.ModelSerializer):
+    region = RelatedIdDisplayField(queryset=Region.objects.all(), allow_null=True, required=False)
+    country = RelatedIdDisplayField(queryset=Country.objects.all(), allow_null=True, required=False)
+    """
+    Lightweight serializer used for list endpoints (table).
+    Only include the fields needed by your UI table to minimize payload.
+    """
+
+    phone = PhoneNumberField()
+
+    class Meta:
+        model = Clinic
+        fields = [
+            "id",
+            "name",
+            "email",
+            "country",
+            "region",
+        ]
+
+
+class ClinicDetailSerializer(ClinicSerializer):
+    """
+    Full serializer used for retrieve/create/update.
+    Inherits fields and behavior from ClinicBaseSerializer.
+    """
+
+    class Meta(ClinicSerializer.Meta):
+        fields = ClinicSerializer.Meta.fields
