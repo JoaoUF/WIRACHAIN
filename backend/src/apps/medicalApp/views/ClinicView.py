@@ -59,7 +59,7 @@ class ClinicView(viewsets.ModelViewSet):
 
         return get_objects_for_user(
             user,
-            "medicalApp.view_test",
+            "medicalApp.view_clinic",
             klass=base_qs,
             use_groups=True,
             any_perm=False,

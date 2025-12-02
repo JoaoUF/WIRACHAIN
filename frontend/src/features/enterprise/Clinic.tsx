@@ -16,6 +16,7 @@ import {
 import type { UUID } from "crypto";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { ClinicTable } from "../../componenets/ClinicTable";
 import { useClinicManager } from "../../hooks";
 import { ROUTES } from "../../routers/routes";
 
@@ -23,7 +24,18 @@ const { Title } = Typography;
 const { useBreakpoint } = Grid;
 
 function Clinic() {
-  const { searchText, setSearchText, updateBulkClinic } = useClinicManager();
+  const {
+    searchText,
+    setSearchText,
+    updateBulkClinic,
+    clinicData,
+    isFetching,
+    isLoading,
+    currentPage,
+    setCurrentPage,
+    pageSize,
+    setPageSize,
+  } = useClinicManager();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const navigate = useNavigate();
   const screens = useBreakpoint();
@@ -220,20 +232,19 @@ function Clinic() {
         {/* End Bulk Actions */}
 
         <div className="overflow-x-auto">
-          {/* <TestTable
-            data={testsData?.results || []}
+          <ClinicTable
+            data={clinicData?.results || []}
             loading={isLoading || isFetching}
             currentPage={currentPage}
             pageSize={pageSize}
-            total={testsData?.count || 0}
-            onEdit={handleEdit}
+            total={clinicData?.count || 0}
             onPageChange={(page, size) => {
               setCurrentPage(page);
               setPageSize(size);
             }}
             selectedRowKeys={selectedRowKeys}
             onSelectChange={setSelectedRowKeys}
-          /> */}
+          />
         </div>
       </Card>
     </div>
