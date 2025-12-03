@@ -1,10 +1,11 @@
+from django_extensions.db.models import ActivatorModel
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from .Clinic import Clinic
 from utils import Model
 
 
-class ClinicSchedule(Model):
+class ClinicSchedule(Model, ActivatorModel):
     class WeekDay(models.IntegerChoices):
         MONDAY = 1, _("Monday")
         TUESDAY = 2, _("Tuesday")
@@ -21,7 +22,6 @@ class ClinicSchedule(Model):
 
     class Meta:
         db_table = "MED_CLINIC_SCHEDULE"
-        unique_together = ("clinic", "day_of_week")
         ordering = ["clinic", "day_of_week"]
         verbose_name = _("Clinic Schedule")
         verbose_name_plural = _("Clinic Schedules")

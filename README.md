@@ -10,6 +10,7 @@ An alternative to the project shown before on my thesis.
 - [ ] whitenoise library for static content????
 - [ ] async endpoints????
 - [ ] add django-health-check in stage
+- [ ] add django_prometheus????
 
 - [ ] add refresh token logic in frontend
 - [ ] create a general modal context for frontend
@@ -69,6 +70,10 @@ An alternative to the project shown before on my thesis.
 ### QUALITY REFERENCES:
 
 - https://www.freecodecamp.org/news/how-to-measure-django-code-quality-using-sonarqube-pytest-and-coverage/
+
+### DEPLOYMENT:
+
+- https://freedium.cfd/https://medium.com/@jinalpatel001212/how-to-configure-a-production-server-for-a-python-web-app-step-by-step-guide-f320c32e0e20
 
 ### FUTURE REFERENCES:
 
