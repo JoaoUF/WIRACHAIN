@@ -19,6 +19,8 @@ An alternative to the project shown before on my thesis.
 - [ ] use phone extension of the countries api in the frontend
 - [ ] remove migration of liht cities from server-entrypoint in production
 - [ ] add country select component
+- [ ] add a personalize exception handler in django-rest-framework
+- [ ] modify search text in tables
 
 ## NEXT PROJECT CONSIDERATIONS:
 

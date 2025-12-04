@@ -13,11 +13,10 @@ class ClinicScheduleSerializer(serializers.ModelSerializer):
             "id",
             "clinic",
             "day_of_week",
-            "day_of_week_display",
             "open_time",
             "close_time",
         ]
-        read_only_fields = ["id", "day_of_week_display"]
+        read_only_fields = ["id"]
 
     def get_day_of_week_display(self, obj):
         return obj.get_day_of_week_display()

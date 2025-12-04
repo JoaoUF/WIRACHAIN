@@ -35,7 +35,6 @@ class ClinicScheduleView(viewsets.ModelViewSet):
                 "id",
                 "clinic",
                 "day_of_week",
-                "day_of_week_display",
                 "open_time",
                 "close_time",
             )

@@ -19,6 +19,18 @@ export {
   useUpdateClinicMutation,
 } from "./ClinicAPI";
 export {
+  clinicScheduleApi,
+  useAddClinicScheduleMutation,
+  useCreateBulkClinicScheduleMutation,
+  useDeleteBulkClinicScheduleMutation,
+  useDeleteClinicScheduleMutation,
+  useGetAllClinicSchedulesQuery,
+  useGetClinicScheduleQuery,
+  usePatchClinicScheduleMutation,
+  useUpdateBulkClinicScheduleMutation,
+  useUpdateClinicScheduleMutation,
+} from "./ClinicScheduleAPI";
+export {
   countryApi,
   useGetAllCountriesQuery,
   useGetCountryQuery,
