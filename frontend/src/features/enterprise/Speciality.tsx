@@ -2,23 +2,13 @@ import {
   CheckCircleOutlined,
   DeleteOutlined,
   PlusOutlined,
-  SearchOutlined,
 } from "@ant-design/icons";
-import {
-  Button,
-  Card,
-  Divider,
-  Form,
-  Grid,
-  Input,
-  Popconfirm,
-  Typography,
-} from "antd";
+import { Button, Card, Divider, Grid, Popconfirm, Typography } from "antd";
 import type { UUID } from "crypto";
 import { useState } from "react";
 import { SpecialityTable } from "../../componenets";
-import { SpecialityFormModal } from "../../forms";
-import { useSpecialityManager } from "../../hooks";
+import { SpecialityForm } from "../../forms";
+import { useModal, useSpecialityManager } from "../../hooks";
 import type { SpecialityBasic } from "../../types";
 
 const { Title } = Typography;
@@ -32,57 +22,44 @@ export default function Speciality() {
     currentPage,
     setCurrentPage,
     pageSize,
-    setPageSize,
-    searchText,
     setSearchText,
-    isModalOpen,
-    setIsModalOpen,
-    editingSpeciality,
-    setEditingSpeciality,
+    setPageSize,
     addSpeciality,
     updateSpeciality,
     updateBulkSpeciality,
     addState,
     updateState,
-    refetch,
   } = useSpecialityManager();
 
-  const [form] = Form.useForm();
+  const { open } = useModal();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const screens = useBreakpoint();
 
   const handleEdit = (record: SpecialityBasic) => {
-    setEditingSpeciality(record);
-    form.setFieldsValue(record);
-    setIsModalOpen(true);
+    open({
+      title: "Edit Speciality",
+      create: false,
+      component: SpecialityForm,
+      props: { initialValues: record },
+      onFinish: async (values) => {
+        await updateSpeciality({ id: record.id, ...values }).unwrap();
+      },
+      modalProps: { width: "min(600px, 96%)" },
+      onFinishState: updateState.isLoading,
+    });
   };
 
   const handleAdd = () => {
-    setEditingSpeciality(null);
-    form.resetFields();
-    setIsModalOpen(true);
-  };
-
-  const handleDone = () => {
-    setIsModalOpen(false);
-    form.resetFields();
-    setEditingSpeciality(null);
-    refetch?.();
-  };
-
-  const handleSubmit = async (values: {
-    name: string;
-    description: string;
-  }) => {
-    const payload = {
-      ...values,
-      ...(editingSpeciality?.id && { id: editingSpeciality.id }),
-    };
-    if (editingSpeciality) {
-      await updateSpeciality(payload).unwrap().then(handleDone);
-    } else {
-      await addSpeciality(payload).unwrap().then(handleDone);
-    }
+    open({
+      title: "Add Speciality",
+      create: true,
+      component: SpecialityForm,
+      onFinish: async (values) => {
+        await addSpeciality(values).unwrap();
+      },
+      modalProps: { width: "min(600px, 96%)" },
+      onFinishState: addState.isLoading,
+    });
   };
 
   const handleBulkStatusChange = async () => {
@@ -155,59 +132,7 @@ export default function Speciality() {
             </div>
           </div>
 
-          <div
-            style={{
-              flex: screens.sm ? "1 1 auto" : "1 1 100%",
-              display: "flex",
-              justifyContent: screens.sm ? "center" : "stretch",
-              paddingLeft: screens.sm ? 8 : 0,
-              paddingRight: screens.sm ? 8 : 0,
-              minWidth: 0,
-            }}
-          >
-            <Input
-              placeholder="Search specialities..."
-              prefix={<SearchOutlined style={{ color: "#2f54eb" }} />}
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-              style={{
-                width: screens.sm ? "50%" : "100%",
-                maxWidth: "100%",
-                minWidth: 0,
-                borderRadius: 8,
-                height: screens.xs ? 36 : 36,
-                background: "#fbfcff",
-                border: "1px solid #e6e7f5",
-              }}
-              allowClear
-              size="small"
-            />
-          </div>
-
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-end",
-              width: screens.sm ? "auto" : "100%",
-              marginTop: screens.sm ? 0 : 8,
-            }}
-          >
-            <Button
-              type="primary"
-              icon={<PlusOutlined />}
-              onClick={handleAdd}
-              size="middle"
-              style={{
-                backgroundColor: "#2f54eb",
-                width: screens.sm ? "auto" : "100%",
-                borderRadius: 8,
-              }}
-              aria-label="Add"
-            >
-              Add
-            </Button>
-          </div>
+          <div style={{ flex: screens.sm ? "1 1 auto" : "1 1 100%" }} />
         </div>
         {/* End Header */}
 
@@ -234,6 +159,22 @@ export default function Speciality() {
             maxWidth: "100%",
           }}
         >
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Button
+              type="primary"
+              icon={<PlusOutlined />}
+              onClick={handleAdd}
+              size="small"
+              style={{
+                backgroundColor: "#2f54eb",
+                width: screens.sm ? "min-content" : "100%",
+              }}
+              aria-label="Add"
+            >
+              Add
+            </Button>
+          </div>
+
           <Popconfirm
             title="Delete selected specialities"
             disabled={selectedRowKeys.length === 0}
@@ -245,7 +186,6 @@ export default function Speciality() {
             <Button
               type="default"
               danger
-              block
               disabled={selectedRowKeys.length === 0}
               icon={<DeleteOutlined />}
               size={"small"}
@@ -258,13 +198,9 @@ export default function Speciality() {
           </Popconfirm>
           <div
             style={{
+              marginLeft: screens.sm ? "auto" : 0,
               color: "#787a99",
               fontSize: 13,
-              fontWeight: 400,
-              minWidth: 68,
-              textAlign: screens.sm ? "right" : "left",
-              paddingTop: 3,
-              marginLeft: screens.sm ? "auto" : 0,
             }}
           >
             {selectedRowKeys.length > 0
@@ -288,22 +224,10 @@ export default function Speciality() {
             }}
             selectedRowKeys={selectedRowKeys}
             onSelectChange={setSelectedRowKeys}
+            onSearchChange={(v) => setSearchText(v ?? "")}
           />
         </div>
       </Card>
-
-      <SpecialityFormModal
-        open={isModalOpen}
-        onCancel={() => {
-          setIsModalOpen(false);
-          form.resetFields();
-          setEditingSpeciality(null);
-        }}
-        onFinish={handleSubmit}
-        loading={addState.isLoading || updateState.isLoading}
-        editingSpeciality={editingSpeciality}
-        form={form}
-      />
     </div>
   );
 }

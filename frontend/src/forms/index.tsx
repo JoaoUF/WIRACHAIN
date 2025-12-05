@@ -1,4 +1,4 @@
-export { DiseaseFormModal } from "./DiseaseFormModal";
+export { DiseaseForm } from "./DiseaseForm";
 export { LoginForm } from "./LoginForm";
-export { SpecialityFormModal } from "./SpecialityFormModal";
+export { SpecialityForm } from "./SpecialityForm";
 export { TestForm } from "./TestForm";

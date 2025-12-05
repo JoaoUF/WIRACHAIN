@@ -1,11 +1,14 @@
 import { Button, Form, Input, Space } from "antd";
 import { useEffect } from "react";
-import type { FormProps, TestBasic } from "../types";
+import type { DiseaseBasic, FormProps } from "../types";
 
 const { TextArea } = Input;
 
-export function TestForm({ onFinish, initialValues }: FormProps<TestBasic>) {
-  const [form] = Form.useForm<TestBasic>();
+export function DiseaseForm({
+  onFinish,
+  initialValues,
+}: FormProps<DiseaseBasic>) {
+  const [form] = Form.useForm<DiseaseBasic>();
 
   useEffect(() => {
     if (initialValues) {
@@ -19,8 +22,8 @@ export function TestForm({ onFinish, initialValues }: FormProps<TestBasic>) {
   return (
     <Form
       form={form}
-      onFinish={onFinish}
       layout="vertical"
+      onFinish={onFinish}
       autoComplete="off"
       className="mt-4"
       clearOnDestroy
@@ -29,12 +32,12 @@ export function TestForm({ onFinish, initialValues }: FormProps<TestBasic>) {
         label="Name"
         name="name"
         rules={[
-          { required: true, message: "Please enter the test name" },
+          { required: true, message: "Please enter the disease name" },
           { min: 2, message: "Name must be at least 2 characters" },
           { max: 100, message: "Name must not exceed 100 characters" },
         ]}
       >
-        <Input placeholder="e.g., Complete Blood Count" size="large" />
+        <Input placeholder="e.g., Type 2 Diabetes" size="large" />
       </Form.Item>
 
       <Form.Item
@@ -47,7 +50,7 @@ export function TestForm({ onFinish, initialValues }: FormProps<TestBasic>) {
         ]}
       >
         <TextArea
-          placeholder="Enter a detailed description..."
+          placeholder="Enter a detailed description of the disease..."
           rows={4}
           showCount
           maxLength={500}

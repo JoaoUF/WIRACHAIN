@@ -2,23 +2,13 @@ import {
   CheckCircleOutlined,
   DeleteOutlined,
   PlusOutlined,
-  SearchOutlined,
 } from "@ant-design/icons";
-import {
-  Button,
-  Card,
-  Divider,
-  Form,
-  Grid,
-  Input,
-  Popconfirm,
-  Typography,
-} from "antd";
+import { Button, Card, Divider, Grid, Popconfirm, Typography } from "antd";
 import type { UUID } from "crypto";
 import { useState } from "react";
 import { DiseaseTable } from "../../componenets";
-import { DiseaseFormModal } from "../../forms";
-import { useDiseaseManager } from "../../hooks";
+import { DiseaseForm } from "../../forms";
+import { useDiseaseManager, useModal } from "../../hooks";
 import type { DiseaseBasic } from "../../types";
 
 const { Title } = Typography;
@@ -33,53 +23,43 @@ export default function Disease() {
     setCurrentPage,
     pageSize,
     setPageSize,
-    searchText,
     setSearchText,
-    isModalOpen,
-    setIsModalOpen,
-    editingDisease,
-    setEditingDisease,
     addDisease,
     updateDisease,
     updateBulkDisease,
     addState,
     updateState,
   } = useDiseaseManager();
-  const [form] = Form.useForm();
+
+  const { open } = useModal();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const screens = useBreakpoint();
 
   const handleEdit = (record: DiseaseBasic) => {
-    setEditingDisease(record);
-    form.setFieldsValue(record);
-    setIsModalOpen(true);
-  };
-
-  const handleSubmit = async (values: {
-    name: string;
-    description: string;
-  }) => {
-    const diseaseData = {
-      ...values,
-      ...(editingDisease?.id && { id: editingDisease.id }),
-    };
-    if (editingDisease) {
-      await updateDisease(diseaseData).unwrap().then(handleDone);
-    } else {
-      await addDisease(diseaseData).unwrap().then(handleDone);
-    }
+    open({
+      title: "Edit Disease",
+      create: false,
+      component: DiseaseForm,
+      props: { initialValues: record },
+      onFinish: async (values) => {
+        await updateDisease({ id: record.id, ...values }).unwrap();
+      },
+      modalProps: { width: "min(600px, 96%)" },
+      onFinishState: updateState.isLoading,
+    });
   };
 
   const handleAdd = () => {
-    setEditingDisease(null);
-    form.resetFields();
-    setIsModalOpen(true);
-  };
-
-  const handleDone = () => {
-    setIsModalOpen(false);
-    form.resetFields();
-    setEditingDisease(null);
+    open({
+      title: "Add Disease",
+      create: true,
+      component: DiseaseForm,
+      onFinish: async (values) => {
+        await addDisease(values).unwrap();
+      },
+      modalProps: { width: "min(600px, 96%)" },
+      onFinishState: addState.isLoading,
+    });
   };
 
   const handleBulkStatusChange = async () => {
@@ -113,8 +93,7 @@ export default function Disease() {
           },
         }}
       >
-        {/* --- Header: title left, flexible search center, add right (desktop).
-              Mobile: stacked title / search / add */}
+        {/* Header */}
         <div
           style={{
             display: "flex",
@@ -126,7 +105,6 @@ export default function Disease() {
             flexWrap: "wrap",
           }}
         >
-          {/* Left: compact title */}
           <div
             style={{
               display: "flex",
@@ -154,62 +132,7 @@ export default function Disease() {
             </div>
           </div>
 
-          {/* Center / Middle: flexible search on desktop; full width on mobile */}
-          <div
-            style={{
-              flex: screens.sm ? "1 1 auto" : "1 1 100%",
-              display: "flex",
-              justifyContent: screens.sm ? "center" : "stretch",
-              paddingLeft: screens.sm ? 8 : 0,
-              paddingRight: screens.sm ? 8 : 0,
-              minWidth: 0,
-            }}
-          >
-            <Input
-              placeholder="Search diseases..."
-              prefix={<SearchOutlined style={{ color: "#2f54eb" }} />}
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-              style={{
-                // width: screens.sm ? 320 : "100%",
-                width: screens.sm ? "50%" : "100%",
-                maxWidth: "100%",
-                minWidth: 0,
-                borderRadius: 8,
-                height: screens.xs ? 36 : 36,
-                background: "#fbfcff",
-                border: "1px solid #e6e7f5",
-              }}
-              allowClear
-              size="small"
-            />
-          </div>
-
-          {/* Right: Add button — icon circle on desktop, full-width labeled on mobile */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-end",
-              width: screens.sm ? "auto" : "100%",
-              marginTop: screens.sm ? 0 : 8,
-            }}
-          >
-            <Button
-              type="primary"
-              icon={<PlusOutlined />}
-              onClick={handleAdd}
-              size="middle"
-              style={{
-                backgroundColor: "#2f54eb",
-                width: screens.sm ? "auto" : "100%",
-                borderRadius: 8,
-              }}
-              aria-label="Add"
-            >
-              Add
-            </Button>
-          </div>
+          <div style={{ flex: screens.sm ? "1 1 auto" : "1 1 100%" }} />
         </div>
         {/* --- End Header --- */}
 
@@ -220,7 +143,7 @@ export default function Disease() {
           }}
         />
 
-        {/* --- Bulk Actions: single place for all devices (no duplication in header) */}
+        {/* Bulk Actions block */}
         <div
           style={{
             display: "flex",
@@ -236,6 +159,22 @@ export default function Disease() {
             maxWidth: "100%",
           }}
         >
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Button
+              type="primary"
+              icon={<PlusOutlined />}
+              onClick={handleAdd}
+              size="small"
+              style={{
+                backgroundColor: "#2f54eb",
+                width: screens.sm ? "min-content" : "100%",
+              }}
+              aria-label="Add"
+            >
+              Add
+            </Button>
+          </div>
+
           <Popconfirm
             title="Delete selected diseases"
             disabled={selectedRowKeys.length === 0}
@@ -260,13 +199,9 @@ export default function Disease() {
           </Popconfirm>
           <div
             style={{
+              marginLeft: screens.sm ? "auto" : 0,
               color: "#787a99",
               fontSize: 13,
-              fontWeight: 400,
-              minWidth: 68,
-              textAlign: screens.sm ? "right" : "left",
-              paddingTop: 3,
-              marginLeft: screens.sm ? "auto" : 0,
             }}
           >
             {selectedRowKeys.length > 0
@@ -290,21 +225,10 @@ export default function Disease() {
             }}
             selectedRowKeys={selectedRowKeys}
             onSelectChange={setSelectedRowKeys}
+            onSearchChange={(v) => setSearchText(v ?? "")}
           />
         </div>
       </Card>
-      <DiseaseFormModal
-        open={isModalOpen}
-        onCancel={() => {
-          setIsModalOpen(false);
-          form.resetFields();
-          setEditingDisease(null);
-        }}
-        onFinish={handleSubmit}
-        loading={addState.isLoading || updateState.isLoading}
-        editingDisease={editingDisease}
-        form={form}
-      />
     </div>
   );
 }

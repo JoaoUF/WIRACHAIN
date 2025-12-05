@@ -11,16 +11,13 @@ An alternative to the project shown before on my thesis.
 - [ ] async endpoints????
 - [ ] add django-health-check in stage
 - [ ] add django_prometheus????
+- [ ] remove migration of liht cities from server-entrypoint in production
 
 - [ ] add refresh token logic in frontend
-- [ ] create a general modal context for frontend
 - [ ] fix github actions
 - [ ] add custompermission for diferent types of enterprises
 - [ ] use phone extension of the countries api in the frontend
-- [ ] remove migration of liht cities from server-entrypoint in production
-- [ ] add country select component
 - [ ] add a personalize exception handler in django-rest-framework
-- [ ] modify search text in tables
 - [ ] check validate messages for drf message handler on ant response([link](https://ant.design/components/form?theme=light#validatemessages))
 
 ## NEXT PROJECT CONSIDERATIONS:

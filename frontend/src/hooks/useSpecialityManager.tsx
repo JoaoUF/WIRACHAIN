@@ -7,28 +7,21 @@ import {
   useUpdateBulkSpecialityMutation,
   useUpdateSpecialityMutation,
 } from "../redux";
-import type { AllSpecialityRequest, SpecialityBasic } from "../types";
-import { useDebouncedValue } from "./useDebounce";
+import type { AllSpecialityRequest } from "../types";
 
 export function useSpecialityManager() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [searchText, setSearchText] = useState("");
-  const { value: debouncedSearch } = useDebouncedValue(searchText, {
-    delay: 500,
-  });
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingSpeciality, setEditingSpeciality] =
-    useState<SpecialityBasic | null>(null);
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [debouncedSearch]);
+  }, [searchText]);
 
   const specialityQueries: AllSpecialityRequest = {
     limit: pageSize,
     offset: (currentPage - 1) * pageSize,
-    search: debouncedSearch || undefined,
+    search: searchText || undefined,
   };
 
   const {
@@ -55,10 +48,6 @@ export function useSpecialityManager() {
     setPageSize,
     searchText,
     setSearchText,
-    isModalOpen,
-    setIsModalOpen,
-    editingSpeciality,
-    setEditingSpeciality,
     addSpeciality,
     updateSpeciality,
     deleteSpeciality,

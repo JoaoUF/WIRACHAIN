@@ -1,6 +1,8 @@
-import { Empty, Table } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
+import { Button, Empty, Input, Space, Table, type InputRef } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
-import React from "react";
+import type { FilterDropdownProps } from "antd/es/table/interface";
+import React, { useCallback, useRef } from "react";
 import type { DiseaseBasic } from "../types";
 
 interface DiseaseTableProps {
@@ -13,7 +15,21 @@ interface DiseaseTableProps {
   onEdit: (record: DiseaseBasic) => void;
   onPageChange: (page: number, size: number) => void;
   onSelectChange: (selected: React.Key[]) => void;
+  onSearchChange?: (value: string | undefined) => void;
 }
+
+const IGNORED_SELECTORS = [
+  "a",
+  "button",
+  "input",
+  "textarea",
+  "select",
+  ".ant-checkbox",
+  ".ant-checkbox-input",
+  ".ant-table-selection-column",
+  ".ant-btn",
+  ".anticon",
+];
 
 export function DiseaseTable({
   data,
@@ -25,13 +41,102 @@ export function DiseaseTable({
   onEdit,
   onPageChange,
   onSelectChange,
+  onSearchChange,
 }: DiseaseTableProps) {
+  const searchInput = useRef<InputRef>(null);
+
+  const handleSearch = useCallback(
+    (selectedKeys: string[], confirm: FilterDropdownProps["confirm"]) => {
+      confirm();
+      const val = selectedKeys[0];
+      onSearchChange?.(val || undefined);
+    },
+    [onSearchChange]
+  );
+
+  const handleReset = useCallback(
+    (clearFilters?: () => void) => {
+      clearFilters?.();
+      onSearchChange?.(undefined);
+    },
+    [onSearchChange]
+  );
+
+  const getNameColumnFilterProps = useCallback(
+    (dataIndex: keyof DiseaseBasic) => ({
+      filterDropdown: ({
+        setSelectedKeys,
+        selectedKeys,
+        confirm,
+        clearFilters,
+        close,
+      }: FilterDropdownProps) => (
+        <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
+          <Input
+            ref={searchInput}
+            placeholder={`Search ${String(dataIndex)}`}
+            value={selectedKeys[0] as string | undefined}
+            onChange={(e) =>
+              setSelectedKeys(e.target.value ? [e.target.value] : [])
+            }
+            onPressEnter={() => handleSearch(selectedKeys as string[], confirm)}
+            style={{ marginBottom: 8, display: "block" }}
+          />
+          <Space>
+            <Button
+              type="primary"
+              onClick={() => handleSearch(selectedKeys as string[], confirm)}
+              icon={<SearchOutlined />}
+              size="small"
+              style={{ width: 90 }}
+            >
+              Search
+            </Button>
+            <Button
+              onClick={() => handleReset(clearFilters)}
+              size="small"
+              style={{ width: 90 }}
+            >
+              Reset
+            </Button>
+            <Button
+              type="link"
+              size="small"
+              onClick={() => {
+                confirm({ closeDropdown: false });
+                const val = (selectedKeys as string[])[0];
+                onSearchChange?.(val || undefined);
+              }}
+            >
+              Filter
+            </Button>
+            <Button type="link" size="small" onClick={() => close()}>
+              close
+            </Button>
+          </Space>
+        </div>
+      ),
+      filterIcon: (filtered: boolean) => (
+        <SearchOutlined style={{ color: filtered ? "#1677ff" : undefined }} />
+      ),
+      filterDropdownProps: {
+        onOpenChange(open: boolean) {
+          if (open) {
+            setTimeout(() => searchInput.current?.select(), 100);
+          }
+        },
+      },
+    }),
+    [handleSearch, handleReset, onSearchChange]
+  );
+
   const columns: ColumnsType<DiseaseBasic> = [
     {
       title: "Name",
       dataIndex: "name",
       key: "name",
       ellipsis: true,
+      ...getNameColumnFilterProps("name"),
       render: (_text: string, record: DiseaseBasic) => (
         <span className="text-gray-600">{record.name}</span>
       ),
@@ -60,71 +165,36 @@ export function DiseaseTable({
     onPageChange(nextPage, nextPageSize);
   };
 
-  /**
-   * onRow click/focus handler:
-   * - returns props for the row element (className, tabIndex, onClick, onKeyDown)
-   * - ignores clicks coming from interactive elements like checkboxes, buttons, links, inputs, etc.
-   */
-  const onRow = (record: DiseaseBasic) => {
-    return {
+  const onRow = useCallback(
+    (record: DiseaseBasic) => ({
       className: "clickable-row",
-      tabIndex: 0, // make row focusable
+      tabIndex: 0,
       onClick: (event: React.MouseEvent) => {
         const target = event.target as HTMLElement | null;
         if (!target) {
           onEdit(record);
           return;
         }
-
-        // Ignore clicks that originate from common interactive controls inside a row
-        const ignoredSelectors = [
-          "a",
-          "button",
-          "input",
-          "textarea",
-          "select",
-          ".ant-checkbox",
-          ".ant-checkbox-input",
-          ".ant-table-selection-column",
-          ".ant-btn",
-          ".anticon",
-        ];
-
-        for (const sel of ignoredSelectors) {
+        for (const sel of IGNORED_SELECTORS) {
           if (target.closest(sel)) return;
         }
-
         onEdit(record);
       },
       onKeyDown: (event: React.KeyboardEvent) => {
-        // Allow Enter or Space to trigger edit when row is focused
         if (event.key === "Enter" || event.key === " ") {
           const target = event.target as HTMLElement | null;
-          // Prevent triggering when event originates from interactive children
-          const ignoredSelectors = [
-            "a",
-            "button",
-            "input",
-            "textarea",
-            "select",
-            ".ant-checkbox",
-            ".ant-checkbox-input",
-            ".ant-table-selection-column",
-            ".ant-btn",
-            ".anticon",
-          ];
           if (target) {
-            for (const sel of ignoredSelectors) {
+            for (const sel of IGNORED_SELECTORS) {
               if (target.closest(sel)) return;
             }
           }
-          // Avoid default space scroll behavior
           event.preventDefault();
           onEdit(record);
         }
       },
-    };
-  };
+    }),
+    [onEdit]
+  );
 
   return (
     <Table

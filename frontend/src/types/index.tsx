@@ -44,6 +44,7 @@ export type {
   DiseaseRequest,
   DiseaseResponse,
 } from "./Disease";
+export type { FormProps } from "./Forms";
 export type {
   AllRegionRequest,
   AllRegionResponse,

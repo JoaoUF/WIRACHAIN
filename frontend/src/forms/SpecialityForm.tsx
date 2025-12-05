@@ -1,11 +1,14 @@
 import { Button, Form, Input, Space } from "antd";
 import { useEffect } from "react";
-import type { FormProps, TestBasic } from "../types";
+import type { FormProps, SpecialityBasic } from "../types";
 
 const { TextArea } = Input;
 
-export function TestForm({ onFinish, initialValues }: FormProps<TestBasic>) {
-  const [form] = Form.useForm<TestBasic>();
+export function SpecialityForm({
+  onFinish,
+  initialValues,
+}: FormProps<SpecialityBasic>) {
+  const [form] = Form.useForm<SpecialityBasic>();
 
   useEffect(() => {
     if (initialValues) {
@@ -19,8 +22,8 @@ export function TestForm({ onFinish, initialValues }: FormProps<TestBasic>) {
   return (
     <Form
       form={form}
-      onFinish={onFinish}
       layout="vertical"
+      onFinish={onFinish}
       autoComplete="off"
       className="mt-4"
       clearOnDestroy
@@ -29,12 +32,12 @@ export function TestForm({ onFinish, initialValues }: FormProps<TestBasic>) {
         label="Name"
         name="name"
         rules={[
-          { required: true, message: "Please enter the test name" },
+          { required: true, message: "Please enter the speciality name" },
           { min: 2, message: "Name must be at least 2 characters" },
           { max: 100, message: "Name must not exceed 100 characters" },
         ]}
       >
-        <Input placeholder="e.g., Complete Blood Count" size="large" />
+        <Input placeholder="e.g., Cardiology" size="large" />
       </Form.Item>
 
       <Form.Item

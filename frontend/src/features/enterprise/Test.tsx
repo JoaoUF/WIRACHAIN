@@ -29,7 +29,6 @@ export default function Test() {
     updateBulkTest,
     addState,
     updateState,
-    updateBulkTestState,
   } = useTestManager();
 
   const { open } = useModal();
@@ -179,7 +178,6 @@ export default function Test() {
               Delete
             </Button>
           </Popconfirm>
-
           <div
             style={{
               marginLeft: screens.sm ? "auto" : 0,
@@ -197,7 +195,7 @@ export default function Test() {
         <div className="overflow-x-auto">
           <TestTable
             data={testsData?.results || []}
-            loading={isLoading || isFetching || updateBulkTestState.isLoading}
+            loading={isLoading || isFetching}
             currentPage={currentPage}
             pageSize={pageSize}
             total={testsData?.count || 0}
