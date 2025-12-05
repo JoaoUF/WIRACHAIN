@@ -17,8 +17,8 @@ An alternative to the project shown before on my thesis.
 - [ ] fix github actions
 - [ ] add custompermission for diferent types of enterprises
 - [ ] use phone extension of the countries api in the frontend
-- [ ] add a personalize exception handler in django-rest-framework
-- [ ] check validate messages for drf message handler on ant response([link](https://ant.design/components/form?theme=light#validatemessages))
+- [ ] add diferent messages for drf exceptions
+- [ ] add diferent messages for throlles
 
 ## NEXT PROJECT CONSIDERATIONS:
 

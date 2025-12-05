@@ -5,12 +5,15 @@ import sys
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 APPS_DIR = os.path.join(BASE_DIR, "apps")
+COMMONS_DIR = os.path.join(BASE_DIR, "commons")
 ENV_DIR = os.path.join(BASE_DIR, "environments")
 
 if APPS_DIR not in sys.path:
     sys.path.insert(0, APPS_DIR)
 if ENV_DIR not in sys.path:
     sys.path.insert(0, ENV_DIR)
+if COMMONS_DIR not in sys.path:
+    sys.path.insert(0, COMMONS_DIR)
 
 # APPS
 DJANGO_APPS = [
@@ -69,7 +72,9 @@ THIRD_PARTY_MIDDLEWARE = [
     "allauth.account.middleware.AccountMiddleware",
 ]
 
-PERSONAL_MIDDLEWARE = []
+PERSONAL_MIDDLEWARE = [
+    "commons.middleware.exception_middleware.ExceptionMiddleware",
+]
 
 MIDDLEWARE = DJANGO_MIDDLEWARE + THIRD_PARTY_MIDDLEWARE + PERSONAL_MIDDLEWARE
 
@@ -191,6 +196,7 @@ REST_FRAMEWORK = {
         "user": "1000/hour",
         "auth": "1/s",
     },
+    "EXCEPTION_HANDLER": "commons.exceptions.drf_exception_handler.custom_exception_handler",
 }
 
 # SIMPLE-JWT
