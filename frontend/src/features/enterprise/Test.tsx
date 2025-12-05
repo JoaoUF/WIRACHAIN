@@ -2,23 +2,13 @@ import {
   CheckCircleOutlined,
   DeleteOutlined,
   PlusOutlined,
-  SearchOutlined,
 } from "@ant-design/icons";
-import {
-  Button,
-  Card,
-  Divider,
-  Form,
-  Grid,
-  Input,
-  Popconfirm,
-  Typography,
-} from "antd";
+import { Button, Card, Divider, Grid, Popconfirm, Typography } from "antd";
 import type { UUID } from "crypto";
 import { useState } from "react";
 import { TestTable } from "../../componenets";
-import { TestFormModal } from "../../forms";
-import { useTestManager } from "../../hooks";
+import { TestForm } from "../../forms";
+import { useModal, useTestManager } from "../../hooks";
 import type { TestBasic } from "../../types";
 
 const { Title } = Typography;
@@ -33,54 +23,44 @@ export default function Test() {
     setCurrentPage,
     pageSize,
     setPageSize,
-    searchText,
     setSearchText,
-    isModalOpen,
-    setIsModalOpen,
-    editingTest,
-    setEditingTest,
     addTest,
     updateTest,
     updateBulkTest,
     addState,
     updateState,
+    updateBulkTestState,
   } = useTestManager();
 
-  const [form] = Form.useForm();
+  const { open } = useModal();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const screens = useBreakpoint();
 
   const handleEdit = (record: TestBasic) => {
-    setEditingTest(record);
-    form.setFieldsValue(record);
-    setIsModalOpen(true);
-  };
-
-  const handleSubmit = async (values: {
-    name: string;
-    description: string;
-  }) => {
-    const payload = {
-      ...values,
-      ...(editingTest?.id && { id: editingTest.id }),
-    };
-    if (editingTest) {
-      await updateTest(payload).unwrap().then(handleDone);
-    } else {
-      await addTest(payload).unwrap().then(handleDone);
-    }
+    open({
+      title: "Edit Test",
+      create: false,
+      component: TestForm,
+      props: { initialValues: record },
+      onFinish: async (values) => {
+        await updateTest({ id: record.id, ...values }).unwrap();
+      },
+      modalProps: { width: "min(600px, 96%)" },
+      onFinishState: updateState.isLoading,
+    });
   };
 
   const handleAdd = () => {
-    setEditingTest(null);
-    form.resetFields();
-    setIsModalOpen(true);
-  };
-
-  const handleDone = () => {
-    setIsModalOpen(false);
-    form.resetFields();
-    setEditingTest(null);
+    open({
+      title: "Add Test",
+      create: true,
+      component: TestForm,
+      onFinish: async (values) => {
+        await addTest(values).unwrap();
+      },
+      modalProps: { width: "min(600px, 96%)" },
+      onFinishState: addState.isLoading,
+    });
   };
 
   const handleBulkStatusChange = async () => {
@@ -88,9 +68,7 @@ export default function Test() {
       list_ids: selectedRowKeys as UUID[],
     })
       .unwrap()
-      .then(() => {
-        setSelectedRowKeys([]);
-      });
+      .then(() => setSelectedRowKeys([]));
   };
 
   return (
@@ -118,32 +96,19 @@ export default function Test() {
         <div
           style={{
             display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
             gap: 12,
+            alignItems: "center",
             justifyContent: "space-between",
             marginBottom: screens.sm ? 18 : 12,
             flexWrap: "wrap",
           }}
         >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              minWidth: 160,
-            }}
-          >
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <CheckCircleOutlined style={{ color: "#52c41a", fontSize: 20 }} />
             <div>
               <Title
                 level={4}
-                style={{
-                  color: "#2f54eb",
-                  margin: 0,
-                  fontSize: 18,
-                  lineHeight: 1.1,
-                }}
+                style={{ color: "#2f54eb", margin: 0, fontSize: 18 }}
               >
                 Tests
               </Title>
@@ -153,59 +118,7 @@ export default function Test() {
             </div>
           </div>
 
-          <div
-            style={{
-              flex: screens.sm ? "1 1 auto" : "1 1 100%",
-              display: "flex",
-              justifyContent: screens.sm ? "center" : "stretch",
-              paddingLeft: screens.sm ? 8 : 0,
-              paddingRight: screens.sm ? 8 : 0,
-              minWidth: 0,
-            }}
-          >
-            <Input
-              placeholder="Search tests..."
-              prefix={<SearchOutlined style={{ color: "#2f54eb" }} />}
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-              style={{
-                width: screens.sm ? "50%" : "100%",
-                maxWidth: "100%",
-                minWidth: 0,
-                borderRadius: 8,
-                height: screens.xs ? 36 : 36,
-                background: "#fbfcff",
-                border: "1px solid #e6e7f5",
-              }}
-              allowClear
-              size="small"
-            />
-          </div>
-
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-end",
-              width: screens.sm ? "auto" : "100%",
-              marginTop: screens.sm ? 0 : 8,
-            }}
-          >
-            <Button
-              type="primary"
-              icon={<PlusOutlined />}
-              onClick={handleAdd}
-              size="middle"
-              style={{
-                backgroundColor: "#2f54eb",
-                width: screens.sm ? "auto" : "100%",
-                borderRadius: 8,
-              }}
-              aria-label="Add"
-            >
-              Add
-            </Button>
-          </div>
+          <div style={{ flex: screens.sm ? "1 1 auto" : "1 1 100%" }} />
         </div>
         {/* End Header */}
 
@@ -216,7 +129,7 @@ export default function Test() {
           }}
         />
 
-        {/* Bulk Actions block */}
+        {/* Bulk Actions */}
         <div
           style={{
             display: "flex",
@@ -229,9 +142,24 @@ export default function Test() {
             padding: screens.sm ? "12px 14px" : "8px 6px",
             border: "1px solid #e6e7f5",
             width: "100%",
-            maxWidth: "100%",
           }}
         >
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Button
+              type="primary"
+              icon={<PlusOutlined />}
+              onClick={handleAdd}
+              size="small"
+              style={{
+                backgroundColor: "#2f54eb",
+                width: screens.sm ? "min-content" : "100%",
+              }}
+              aria-label="Add"
+            >
+              Add
+            </Button>
+          </div>
+
           <Popconfirm
             title="Delete selected tests"
             disabled={selectedRowKeys.length === 0}
@@ -243,26 +171,20 @@ export default function Test() {
             <Button
               type="default"
               danger
-              block
               disabled={selectedRowKeys.length === 0}
               icon={<DeleteOutlined />}
               size={"small"}
-              style={{
-                width: screens.sm ? "min-content" : "100%",
-              }}
+              style={{ width: screens.sm ? "min-content" : "100%" }}
             >
               Delete
             </Button>
           </Popconfirm>
+
           <div
             style={{
+              marginLeft: screens.sm ? "auto" : 0,
               color: "#787a99",
               fontSize: 13,
-              fontWeight: 400,
-              minWidth: 68,
-              textAlign: screens.sm ? "right" : "left",
-              paddingTop: 3,
-              marginLeft: screens.sm ? "auto" : 0,
             }}
           >
             {selectedRowKeys.length > 0
@@ -270,12 +192,12 @@ export default function Test() {
               : ""}
           </div>
         </div>
-        {/* End Bulk Actions */}
 
+        {/* Table */}
         <div className="overflow-x-auto">
           <TestTable
             data={testsData?.results || []}
-            loading={isLoading || isFetching}
+            loading={isLoading || isFetching || updateBulkTestState.isLoading}
             currentPage={currentPage}
             pageSize={pageSize}
             total={testsData?.count || 0}
@@ -286,22 +208,10 @@ export default function Test() {
             }}
             selectedRowKeys={selectedRowKeys}
             onSelectChange={setSelectedRowKeys}
+            onSearchChange={(v) => setSearchText(v ?? "")}
           />
         </div>
       </Card>
-
-      <TestFormModal
-        open={isModalOpen}
-        onCancel={() => {
-          setIsModalOpen(false);
-          form.resetFields();
-          setEditingTest(null);
-        }}
-        onFinish={handleSubmit}
-        loading={addState.isLoading || updateState.isLoading}
-        editingTest={editingTest}
-        form={form}
-      />
     </div>
   );
 }

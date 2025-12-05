@@ -21,6 +21,7 @@ An alternative to the project shown before on my thesis.
 - [ ] add country select component
 - [ ] add a personalize exception handler in django-rest-framework
 - [ ] modify search text in tables
+- [ ] check validate messages for drf message handler on ant response([link](https://ant.design/components/form?theme=light#validatemessages))
 
 ## NEXT PROJECT CONSIDERATIONS:
 

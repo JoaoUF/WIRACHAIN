@@ -5,6 +5,7 @@ export { useDiseaseManager } from "./useDiseaseManager";
 export { useLocalStorageEmail } from "./useLocalStorageEmail";
 export { useLogin } from "./useLogin";
 export { useLogout } from "./useLogout";
+export { useModal } from "./useModal";
 export { useSpecialityManager } from "./useSpecialityManager";
 export { useTestManager } from "./useTestManager";
 export { useVerifyEmail } from "./useVerifyEmail";
