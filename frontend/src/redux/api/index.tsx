@@ -83,5 +83,6 @@ export {
   useGetUserQuery,
   usePatchUserMutation,
   userApi,
+  useUpdateBulkUsersMutation,
   useUpdateUserMutation,
 } from "./UserAPI";

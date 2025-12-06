@@ -4,6 +4,7 @@ import type { Pagination, PaginationWrapper, Search } from "./Extras";
 export type UserQueries = {
   gender: string;
   is_active: boolean;
+  document_value: string;
 };
 
 export interface UserForm {

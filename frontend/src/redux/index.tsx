@@ -104,6 +104,7 @@ export {
   useUpdateBulkDiseaseMutation,
   useUpdateBulkSpecialityMutation,
   useUpdateBulkTestMutation,
+  useUpdateBulkUsersMutation,
   useUpdateClinicMutation,
   useUpdateClinicScheduleMutation,
   useUpdateDiseaseMutation,

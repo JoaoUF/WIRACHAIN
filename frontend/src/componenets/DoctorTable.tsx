@@ -1,17 +1,16 @@
-import { Empty } from "antd";
-import type { ColumnsType, TableProps } from "antd/es/table";
-import Table from "antd/es/table";
+import { Empty, Table, type TableProps } from "antd";
+import type { ColumnsType } from "antd/es/table";
 import { useCallback } from "react";
-import type { TableClinicResponse } from "./../types";
+import type { UserBasic } from "../types/User";
 
-interface ClinicTableProps {
-  data: TableClinicResponse[];
+interface DoctorTableProps {
+  data: UserBasic[];
   loading: boolean;
   currentPage: number;
   pageSize: number;
   total: number;
   selectedRowKeys: React.Key[];
-  onEdit: (record: TableClinicResponse) => void;
+  onEdit: (record: UserBasic) => void;
   onPageChange: (page: number, size: number) => void;
   onSelectChange: (selected: React.Key[]) => void;
   onSearchChange?: (value: string | undefined) => void;
@@ -30,7 +29,7 @@ const IGNORED_SELECTORS = [
   ".anticon",
 ];
 
-export function ClinicTable({
+export function DoctorTable({
   data,
   loading,
   currentPage,
@@ -40,43 +39,46 @@ export function ClinicTable({
   onEdit,
   onPageChange,
   onSelectChange,
-}: ClinicTableProps) {
-  const columns: ColumnsType<TableClinicResponse> = [
+}: DoctorTableProps) {
+  const columns: ColumnsType<UserBasic> = [
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
+      title: "Full Name",
+      dataIndex: "fullname",
+      key: "fullname",
       ellipsis: true,
-      render: (_text: string, record: TableClinicResponse) => (
-        <span className="text-gray-600">{record.name}</span>
+      render: (_text: string, record: UserBasic) => (
+        <span className="text-gray-600">
+          {record.first_name} {record.last_name}
+        </span>
       ),
     },
     {
-      title: "Mail",
+      title: "Email",
       dataIndex: "email",
       key: "email",
       ellipsis: true,
-      render: (text: string) => (
-        <span className="text-gray-600">{text || "No description"}</span>
-      ),
+      render: (text: string) => <span className="text-gray-600">{text}</span>,
     },
     {
-      title: "Country",
-      dataIndex: "country",
-      key: "country",
+      title: "Gender",
+      dataIndex: "gender",
+      key: "gender",
       ellipsis: true,
-      render: (_text: string, record: TableClinicResponse) => (
-        <span className="text-gray-600">{record.country.name}</span>
-      ),
+      render: (text: string) => <span className="text-gray-600">{text}</span>,
     },
     {
-      title: "Region",
-      dataIndex: "region",
-      key: "region",
+      title: "Document",
+      dataIndex: "document_value",
+      key: "document_value",
       ellipsis: true,
-      render: (_text: string, record: TableClinicResponse) => (
-        <span className="text-gray-600">{record.region.name}</span>
-      ),
+      render: (text: string) => <span className="text-gray-600">{text}</span>,
+    },
+    {
+      title: "Status",
+      dataIndex: "is_active",
+      key: "is_active",
+      ellipsis: true,
+      render: (text: string) => <span className="text-gray-600">{text}</span>,
     },
   ];
 
@@ -85,16 +87,14 @@ export function ClinicTable({
     onChange: onSelectChange,
   };
 
-  const handleTableChange: TableProps<TableClinicResponse>["onChange"] = (
-    pagination
-  ) => {
+  const handleTableChange: TableProps<UserBasic>["onChange"] = (pagination) => {
     const nextPage = pagination?.current ?? 1;
     const nextPageSize = pagination?.pageSize ?? pageSize;
     onPageChange(nextPage, nextPageSize);
   };
 
   const onRow = useCallback(
-    (record: TableClinicResponse) => ({
+    (record: UserBasic) => ({
       className: "clickable-row",
       tabIndex: 0,
       onClick: (event: React.MouseEvent) => {
@@ -135,11 +135,11 @@ export function ClinicTable({
       size="small"
       pagination={{
         current: currentPage,
-        pageSize: pageSize,
+        pageSize,
         total,
         onChange: onPageChange,
         showSizeChanger: true,
-        showTotal: (tot) => `Total ${tot} clinics`,
+        showTotal: (tot) => `Total ${tot} tests`,
         align: "center",
         position: ["bottomCenter"],
         pageSizeOptions: ["10", "20", "50", "100"],

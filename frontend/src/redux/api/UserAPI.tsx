@@ -1,19 +1,20 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import type { UUID } from "crypto";
 import {
   type AllUsersRequest,
   type AllUsersResponse,
   type UserRequest,
   type UserResponse,
 } from "../../types";
-import { API_URL, ENDPOINT_URL } from "../../utils/urls";
+import { ENDPOINT_URL } from "../../utils/urls";
+import { customBaseQuery } from "./baseQuery";
 
 const USER_PATH = ENDPOINT_URL.USER;
 
 export const userApi = createApi({
   reducerPath: "userApi",
-  baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
+  baseQuery: customBaseQuery,
   tagTypes: ["User"],
-
   endpoints: (builder) => ({
     getAllUsers: builder.query<AllUsersResponse, AllUsersRequest>({
       query: (params) => {
@@ -78,6 +79,20 @@ export const userApi = createApi({
       }),
       invalidatesTags: (__result, __error, id) => [{ type: "User", id }],
     }),
+
+    updateBulkUsers: builder.mutation<null, UUID[]>({
+      query: (ids) => ({
+        url: `${USER_PATH}/update_bulk/`,
+        method: "PUT",
+        body: {
+          ids: ids,
+        },
+      }),
+      invalidatesTags: (_result, _error, ids) => [
+        ...ids.map((id) => ({ type: "User" as const, id })),
+        { type: "User" as const, id: "LIST" },
+      ],
+    }),
   }),
 });
 
@@ -88,4 +103,5 @@ export const {
   useUpdateUserMutation,
   usePatchUserMutation,
   useDeleteUserMutation,
+  useUpdateBulkUsersMutation,
 } = userApi;

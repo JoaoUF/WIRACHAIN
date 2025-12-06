@@ -3,9 +3,13 @@ import { AuthProvider } from "../contexts";
 import {
   ActivateAccount,
   Appointment,
-  Clinic,
+  ClinicDetail,
+  ClinicManipulate,
+  ClinicPanel,
   Disease,
-  Doctor,
+  DoctorDetail,
+  DoctorManipulate,
+  DoctorPanel,
   ForgotPassword,
   Landing,
   Login,
@@ -88,13 +92,55 @@ const router = createBrowserRouter([
       {
         path: ROUTES.CLINIC,
         element: (
-          <RoleGuard allowedRoles={ENTERPRISE_ROLES} element={<Clinic />} />
+          <RoleGuard
+            allowedRoles={ENTERPRISE_ROLES}
+            element={<ClinicPanel />}
+          />
+        ),
+      },
+      {
+        path: `${ROUTES.CLINIC_DETAIL}/:id`,
+        element: (
+          <RoleGuard
+            allowedRoles={ENTERPRISE_ROLES}
+            element={<ClinicDetail />}
+          />
+        ),
+      },
+      {
+        path: `${ROUTES.CLINIC_MANIPULATE}/:id?`,
+        element: (
+          <RoleGuard
+            allowedRoles={ENTERPRISE_ROLES}
+            element={<ClinicManipulate />}
+          />
         ),
       },
       {
         path: ROUTES.DOCTOR,
         element: (
-          <RoleGuard allowedRoles={ENTERPRISE_ROLES} element={<Doctor />} />
+          <RoleGuard
+            allowedRoles={ENTERPRISE_ROLES}
+            element={<DoctorPanel />}
+          />
+        ),
+      },
+      {
+        path: `${ROUTES.DOCTOR_DETAIL}/:id`,
+        element: (
+          <RoleGuard
+            allowedRoles={ENTERPRISE_ROLES}
+            element={<DoctorDetail />}
+          />
+        ),
+      },
+      {
+        path: `${ROUTES.DOCTOR_MANIPULATE}/:id?`,
+        element: (
+          <RoleGuard
+            allowedRoles={ENTERPRISE_ROLES}
+            element={<DoctorManipulate />}
+          />
         ),
       },
       {

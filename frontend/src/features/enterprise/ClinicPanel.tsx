@@ -2,31 +2,21 @@ import {
   CheckCircleOutlined,
   DeleteOutlined,
   PlusOutlined,
-  SearchOutlined,
 } from "@ant-design/icons";
-import {
-  Button,
-  Card,
-  Divider,
-  Grid,
-  Input,
-  Popconfirm,
-  Typography,
-} from "antd";
+import { Button, Card, Divider, Grid, Popconfirm, Typography } from "antd";
 import type { UUID } from "crypto";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { ClinicTable } from "../../componenets/ClinicTable";
 import { useClinicManager } from "../../hooks";
 import { ROUTES } from "../../routers/routes";
+import type { TableClinicResponse } from "../../types";
 
 const { Title } = Typography;
 const { useBreakpoint } = Grid;
 
-function Clinic() {
+function ClinicPanel() {
   const {
-    searchText,
-    setSearchText,
     updateBulkClinic,
     clinicData,
     isFetching,
@@ -49,6 +39,10 @@ function Clinic() {
         setSelectedRowKeys([]);
       });
   };
+
+  function handleEdit(record: TableClinicResponse): void {
+    navigate(`${ROUTES.CLINIC_MANIPULATE}/${record.id}`);
+  }
 
   return (
     <div className="w-full">
@@ -110,61 +104,7 @@ function Clinic() {
             </div>
           </div>
 
-          <div
-            style={{
-              flex: screens.sm ? "1 1 auto" : "1 1 100%",
-              display: "flex",
-              justifyContent: screens.sm ? "center" : "stretch",
-              paddingLeft: screens.sm ? 8 : 0,
-              paddingRight: screens.sm ? 8 : 0,
-              minWidth: 0,
-            }}
-          >
-            <Input
-              placeholder="Search clinics..."
-              prefix={<SearchOutlined style={{ color: "#2f54eb" }} />}
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-              style={{
-                width: screens.sm ? "50%" : "100%",
-                maxWidth: "100%",
-                minWidth: 0,
-                borderRadius: 8,
-                height: screens.xs ? 36 : 36,
-                background: "#fbfcff",
-                border: "1px solid #e6e7f5",
-              }}
-              allowClear
-              size="small"
-            />
-          </div>
-
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-end",
-              width: screens.sm ? "auto" : "100%",
-              marginTop: screens.sm ? 0 : 8,
-            }}
-          >
-            <Button
-              type="primary"
-              icon={<PlusOutlined />}
-              onClick={() => {
-                navigate(ROUTES.DASHBOARD);
-              }}
-              size="middle"
-              style={{
-                backgroundColor: "#2f54eb",
-                width: screens.sm ? "auto" : "100%",
-                borderRadius: 8,
-              }}
-              aria-label="Add"
-            >
-              Add
-            </Button>
-          </div>
+          <div style={{ flex: screens.sm ? "1 1 auto" : "1 1 100%" }} />
         </div>
         {/* End Header */}
 
@@ -191,6 +131,28 @@ function Clinic() {
             maxWidth: "100%",
           }}
         >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <Button
+              type="primary"
+              icon={<PlusOutlined />}
+              onClick={() => {
+                navigate(ROUTES.CLINIC_MANIPULATE);
+              }}
+              size="small"
+              style={{
+                backgroundColor: "#2f54eb",
+                width: screens.sm ? "min-content" : "100%",
+              }}
+              aria-label="Add"
+            >
+              Add
+            </Button>
+          </div>
           <Popconfirm
             title="Delete selected tests"
             disabled={selectedRowKeys.length === 0}
@@ -238,6 +200,7 @@ function Clinic() {
             currentPage={currentPage}
             pageSize={pageSize}
             total={clinicData?.count || 0}
+            onEdit={handleEdit}
             onPageChange={(page, size) => {
               setCurrentPage(page);
               setPageSize(size);
@@ -251,4 +214,4 @@ function Clinic() {
   );
 }
 
-export default Clinic;
+export default ClinicPanel;

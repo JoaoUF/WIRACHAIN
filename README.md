@@ -4,6 +4,8 @@ An alternative to the project shown before on my thesis.
 
 ## TO-DO LIST:
 
+### WHAT WILL DO IN PRODUCTION:
+
 - [ ] add sentry-sdk in stage (optional)
 - [ ] add personalize cache to the backend (cache that support db replication)
 - [ ] add csp in django (django-csp library)
@@ -13,12 +15,19 @@ An alternative to the project shown before on my thesis.
 - [ ] add django_prometheus????
 - [ ] remove migration of liht cities from server-entrypoint in production
 
+### WHAT I MIGHT DO FOR IMPROVEMENT:
+
 - [ ] add refresh token logic in frontend
 - [ ] fix github actions
 - [ ] add custompermission for diferent types of enterprises
 - [ ] use phone extension of the countries api in the frontend
 - [ ] add diferent messages for drf exceptions
 - [ ] add diferent messages for throlles
+- [ ] add stast of performance on doctors detail
+
+### WHAT I NEED TO DO:
+
+- [ ] check doctor table filters
 
 ## NEXT PROJECT CONSIDERATIONS:
 
@@ -27,6 +36,8 @@ An alternative to the project shown before on my thesis.
 - [ ] add version api
 - [ ] multiple data base architecture([link](https://freedium.cfd/https://medium.com/@yogeshkrishnanseeniraj/mastering-multiple-databases-in-django-a-complete-guide-to-configuration-and-best-practices-e5e6faba180d))
 - [ ] use @api_view for total each line control
+- [ ] use a common app for (commands, validators, abstrac models, ...) django
+- [ ] single export type in react
 
 ## QUESTIONS:
 
