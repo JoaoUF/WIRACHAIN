@@ -5,7 +5,6 @@ from ..models import ClinicSchedule, Clinic
 
 class ClinicScheduleSerializer(serializers.ModelSerializer):
     clinic = serializers.PrimaryKeyRelatedField(queryset=Clinic.objects.all())
-    day_of_week_display = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = ClinicSchedule

@@ -46,12 +46,10 @@ export default function CountrySelect({
 
   // search state and debounced search value
   const [searchText, setSearchText] = useState("");
-  const { value: debouncedSearch, cancel: cancelDebounce } = useDebouncedValue(
-    searchText,
-    {
+  const { value: debouncedSearch, cancel: cancelDebouncedSearch } =
+    useDebouncedValue(searchText, {
       delay: 300,
-    }
-  );
+    });
 
   // optional: ensure first page loads when dropdown opens.
   const initialLoadRef = useRef(false);
@@ -85,8 +83,7 @@ export default function CountrySelect({
     offsetRef.current = 0;
     requestedOffsetsRef.current.clear();
 
-    // request first page
-    requestedOffsetsRef.current.add(0);
+    // request first page (requestPage will mark the offset)
     requestPage(0);
   }, [debouncedSearch, requestPage]);
 
@@ -99,7 +96,6 @@ export default function CountrySelect({
       setTotal(null);
       offsetRef.current = 0;
       requestedOffsetsRef.current.clear();
-      requestedOffsetsRef.current.add(0);
       requestPage(0);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -148,15 +144,16 @@ export default function CountrySelect({
     }
   };
 
+  // debounced onSearch callback (so typing in the Select's search field is debounced)
   const { callback: debouncedOnSearch, cancel: cancelSearchCallback } =
     useDebouncedCallback((val: string) => setSearchText(val), 300);
 
   useEffect(() => {
     return () => {
-      cancelDebounce();
+      cancelDebouncedSearch();
       cancelSearchCallback();
     };
-  }, [cancelDebounce, cancelSearchCallback]);
+  }, [cancelDebouncedSearch, cancelSearchCallback]);
 
   const dropdownRender = (menu: React.ReactNode) => (
     <div>
@@ -175,12 +172,11 @@ export default function CountrySelect({
   // open handler: trigger initial load when dropdown opens (if nothing loaded yet)
   const handleDropdownVisibleChange = (open: boolean) => {
     if (open && options.length === 0 && !requestedOffsetsRef.current.has(0)) {
-      requestedOffsetsRef.current.add(0);
       requestPage(0);
     }
     // preserve any onDropdownVisibleChange passed in props
-    if (typeof rest.onDropdownVisibleChange === "function") {
-      rest.onDropdownVisibleChange(open);
+    if (typeof rest.onOpenChange === "function") {
+      rest.onOpenChange(open);
     }
   };
 
@@ -193,16 +189,16 @@ export default function CountrySelect({
       showSearch
       placeholder={placeholder}
       filterOption={false} // server-side search
-      onSearch={debouncedOnSearch}
+      onSearch={(v) => debouncedOnSearch(v)}
       onPopupScroll={handlePopupScroll}
-      dropdownRender={dropdownRender}
+      popupRender={dropdownRender}
       options={selectOptions}
       notFoundContent={
         isFetching && options.length === 0 ? <Spin size="small" /> : null
       }
       value={value ?? undefined}
       onChange={handleChange}
-      onDropdownVisibleChange={handleDropdownVisibleChange}
+      onOpenChange={handleDropdownVisibleChange}
       {...rest}
     />
   );

@@ -49,4 +49,8 @@ export const subRegionApi = createApi({
   }),
 });
 
-export const { useGetAllSubRegionQuery, useGetSubRegionQuery } = subRegionApi;
+export const {
+  useGetAllSubRegionQuery,
+  useLazyGetAllSubRegionQuery,
+  useGetSubRegionQuery,
+} = subRegionApi;

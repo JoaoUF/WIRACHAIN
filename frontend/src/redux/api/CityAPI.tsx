@@ -49,4 +49,8 @@ export const cityApi = createApi({
   }),
 });
 
-export const { useGetAllCitiesQuery, useGetCityQuery } = cityApi;
+export const {
+  useGetAllCitiesQuery,
+  useLazyGetAllCitiesQuery,
+  useGetCityQuery,
+} = cityApi;

@@ -14,7 +14,6 @@ export type ClinicBasic = {
   website_url: string;
   phone: string;
   address: string;
-  enterprise_user: number;
 };
 
 export type TableClinicResponse = {
@@ -57,7 +56,3 @@ export type AllClinicRequest = Partial<Pagination> &
   Partial<ClinicQueries>;
 
 export type AllClinicResponse = PaginationWrapper<TableClinicResponse>;
-
-export type ClinicForm = Partial<ClinicRequest> & {
-  country_code: string;
-};

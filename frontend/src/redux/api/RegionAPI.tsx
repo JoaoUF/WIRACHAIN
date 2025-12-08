@@ -49,4 +49,8 @@ export const regionApi = createApi({
   }),
 });
 
-export const { useGetAllRegionsQuery, useGetRegionQuery } = regionApi;
+export const {
+  useGetAllRegionsQuery,
+  useLazyGetAllRegionsQuery,
+  useGetRegionQuery,
+} = regionApi;
