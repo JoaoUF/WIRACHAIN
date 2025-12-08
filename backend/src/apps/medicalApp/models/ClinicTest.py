@@ -1,3 +1,4 @@
+from django_extensions.db.models import ActivatorModel
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from .Test import Test
@@ -5,7 +6,7 @@ from .Clinic import Clinic
 from utils import Model
 
 
-class ClinicTest(Model):
+class ClinicTest(Model, ActivatorModel):
     clinic = models.ForeignKey(
         Clinic,
         on_delete=models.CASCADE,

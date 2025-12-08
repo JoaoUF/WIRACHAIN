@@ -36,6 +36,12 @@ export {
   useUpdateClinicScheduleMutation,
 } from "./ClinicScheduleAPI";
 export {
+  clinicSpecialityApi,
+  useAddBulkClinicSpecialitiesMutation,
+  useDeleteBulkClinicSpecialitiesMutation,
+  useGetAllClinicSpecialitiesQuery,
+} from "./ClinicSpecialityAPI";
+export {
   countryApi,
   useGetAllCountriesQuery,
   useGetCountryQuery,
@@ -61,6 +67,7 @@ export {
   specialityApi,
   useAddSpecialityMutation,
   useDeleteSpecialityMutation,
+  useGetAllSpecialitiesPerClinicQuery,
   useGetAllSpecialitiesQuery,
   useGetSpecialityQuery,
   usePatchSpecialityMutation,

@@ -112,6 +112,15 @@ export const specialityApi = createApi({
         { type: "Speciality", id: "LIST" },
       ],
     }),
+
+    getAllSpecialitiesPerClinic: builder.query<AllSpecialityResponse, UUID>({
+      query: (id) => ({
+        url: `${SPECIALITY_PATH}/?clinic=${String(
+          id
+        )}&include_inactive_speciality=true/`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -123,4 +132,5 @@ export const {
   usePatchSpecialityMutation,
   useUpdateBulkSpecialityMutation,
   useDeleteSpecialityMutation,
+  useGetAllSpecialitiesPerClinicQuery,
 } = specialityApi;

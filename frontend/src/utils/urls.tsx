@@ -11,6 +11,7 @@ export const ENDPOINT_URL = {
   REGION: "regions",
   SUBREGION: "subregions",
   CITY: "cities",
+  CLINIC_SPECIALITY: "clinic-specialities",
 } as const;
 
 export type ModelKey = keyof typeof ENDPOINT_URL;

@@ -1,4 +1,4 @@
-from ..models import Speciality
+from ..models import Speciality, ClinicSpeciality
 from ..serializers import SpecialitySerializer, BulkDeleteSerializer
 from drf_spectacular.utils import extend_schema_view, extend_schema
 from rest_framework import status, viewsets
@@ -8,7 +8,7 @@ from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.throttling import UserRateThrottle
 from guardian.shortcuts import assign_perm, get_objects_for_user
-from django.db.models import Q
+from django.db.models import Q, OuterRef, Exists, Subquery
 
 
 @extend_schema_view(
@@ -111,3 +111,87 @@ class SpecialityView(viewsets.ModelViewSet):
 
         self.get_queryset().filter(id__in=updatable_ids).update(status=Speciality.INACTIVE_STATUS)
         return Response(status=status.HTTP_200_OK)
+
+    @extend_schema(
+        tags=["Speciality"],
+        request=None,
+        responses={200: SpecialitySerializer(many=True)},
+        summary="Specialities available for a clinic",
+        description=(
+            "Return specialities that are NOT currently active for the provided clinic. "
+            "If a specialy is associated with the clinic but inactive, it will be returned and "
+            "annotated with the clinicspeciality id so the frontend can re-activate it."
+        ),
+    )
+    @action(detail=False, methods=["get"], url_path="available-for-clinic")
+    def available_for_clinic(self, request):
+        user = request.user
+        clinic_id = request.query_params.get("clinic")
+        if not clinic_id:
+            return Response({"detail": "Missing required query parameter: clinic"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Base Speciality queryset scoped to the user's enterprise and optionally to active specialities
+        enterprise_id = getattr(user, "id", None)
+        include_inactive_speciality = request.query_params.get("include_inactive_speciality", "false").lower() in (
+            "1",
+            "true",
+            "yes",
+        )
+
+        base_qs = Speciality.objects.filter(Q(enterprise_user=enterprise_id))
+        if not include_inactive_speciality:
+            base_qs = base_qs.filter(status=Speciality.ACTIVE_STATUS)
+
+        # Subqueries to detect a ClinicSpeciality relation for this clinic
+        active_cs_q = ClinicSpeciality.objects.filter(
+            clinic_id=clinic_id, speciality_id=OuterRef("pk"), status=ClinicSpeciality.ACTIVE_STATUS
+        )
+        inactive_cs_q = ClinicSpeciality.objects.filter(
+            clinic_id=clinic_id, speciality_id=OuterRef("pk"), status=ClinicSpeciality.INACTIVE_STATUS
+        )
+
+        # Annotate whether an active clinicspeciality exists; annotate an inactive clinicspeciality id if present
+        qs = base_qs.annotate(
+            has_active=Exists(active_cs_q),
+            inactive_clinic_speciality_id=Subquery(inactive_cs_q.values("id")[:1]),
+        ).filter(
+            has_active=False
+        )  # exclude specialities that are already active in the clinic
+
+        # Apply object-level view permissions
+        qs = get_objects_for_user(
+            user,
+            "medicalApp.view_speciality",
+            klass=qs,
+            use_groups=True,
+            any_perm=False,
+            with_superuser=True,
+            accept_global_perms=True,
+        )
+
+        # Optional search handled by DRF filter backends if configured; otherwise allow basic name filter
+        q_search = request.query_params.get("search")
+        if q_search:
+            qs = qs.filter(name__icontains=q_search)
+
+        # Pagination
+        page = self.paginate_queryset(qs)
+        if page is not None:
+            serializer = SpecialitySerializer(page, many=True, context={"request": request})
+            data = serializer.data
+            # attach clinicspeciality metadata for each row where applicable
+            for idx, obj in enumerate(page):
+                cs_id = getattr(obj, "inactive_clinic_speciality_id", None)
+                data[idx]["clinic_speciality"] = (
+                    {"id": cs_id, "status": ClinicSpeciality.INACTIVE_STATUS} if cs_id else None
+                )
+            return self.get_paginated_response(data)
+
+        serializer = SpecialitySerializer(qs, many=True, context={"request": request})
+        data = serializer.data
+        for idx, obj in enumerate(qs):
+            cs_id = getattr(obj, "inactive_clinic_speciality_id", None)
+            data[idx]["clinic_speciality"] = (
+                {"id": cs_id, "status": ClinicSpeciality.INACTIVE_STATUS} if cs_id else None
+            )
+        return Response(serializer.data, status=status.HTTP_200_OK)

@@ -15,5 +15,4 @@ from drf_spectacular.utils import extend_schema_view, extend_schema
 class ClinicTestView(viewsets.ModelViewSet):
     queryset = ClinicTest.objects.all()
     serializer_class = ClinicTestSerializer
-    # permission_classes = [permissions.IsAuthenticated]
     filterset_fields = ["clinic", "test"]

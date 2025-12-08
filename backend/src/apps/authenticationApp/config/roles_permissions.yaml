@@ -35,6 +35,9 @@ roles:
     - app: medicalApp
       model: ClinicSchedule
       perms: [add]
+    - app: medicalApp
+      model: ClinicSpeciality
+      perms: [add]
     - app: authenticationApp
       model: CustomUser
       perms: [add]
@@ -57,6 +60,9 @@ roles:
     - app: medicalApp
       model: ClinicSchedule
       perms: [add]
+    - app: medicalApp
+      model: ClinicSpeciality
+      perms: [add]
     - app: authenticationApp
       model: CustomUser
       perms: [add]
@@ -78,6 +84,9 @@ roles:
       perms: [add]
     - app: medicalApp
       model: ClinicSchedule
+      perms: [add]
+    - app: medicalApp
+      model: ClinicSpeciality
       perms: [add]
     - app: authenticationApp
       model: CustomUser

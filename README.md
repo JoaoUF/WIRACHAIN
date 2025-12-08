@@ -38,6 +38,7 @@ An alternative to the project shown before on my thesis.
 - [ ] use @api_view for total each line control
 - [ ] use a common app for (commands, validators, abstrac models, ...) django
 - [ ] single export type in react
+- [ ] think of the endpoints i will need (planning)
 
 ## QUESTIONS:
 

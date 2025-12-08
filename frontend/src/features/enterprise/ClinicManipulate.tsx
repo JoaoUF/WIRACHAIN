@@ -20,6 +20,9 @@ function ClinicManipulate() {
 
   const onFinish = async (record: ClinicRequest) => {
     await addClinic(record).unwrap();
+    // .then((response) => {
+    //   id = response.id;
+    // });
   };
 
   useEffect(() => {
