@@ -113,13 +113,22 @@ export const specialityApi = createApi({
       ],
     }),
 
-    getAllSpecialitiesPerClinic: builder.query<AllSpecialityResponse, UUID>({
-      query: (id) => ({
-        url: `${SPECIALITY_PATH}/?clinic=${String(
-          id
-        )}&include_inactive_speciality=true/`,
-        method: "GET",
-      }),
+    getAllSpecialitiesPerClinic: builder.query<
+      AllSpecialityResponse,
+      AllSpecialityRequest
+    >({
+      query: (params) => {
+        const filteredParams = Object.fromEntries(
+          Object.entries(params).filter(
+            ([, value]) => value !== undefined && value !== "" && value !== null
+          )
+        );
+        const queryString = new URLSearchParams(
+          filteredParams as Record<string, string>
+        ).toString();
+
+        return `${SPECIALITY_PATH}/available_for_clinic/?${queryString}`;
+      },
     }),
   }),
 });

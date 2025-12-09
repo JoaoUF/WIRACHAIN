@@ -24,7 +24,7 @@ type CitySelectProps = Omit<SelectProps<number>, "options" | "onSearch"> & {
 
 const DEFAULT_PAGE_SIZE = 200;
 
-export default function CitySelect({
+export function CitySelect({
   countryId,
   regionId,
   placeholder = "Select a city",
@@ -117,3 +117,5 @@ export default function CitySelect({
     />
   );
 }
+
+export default CitySelect;

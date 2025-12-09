@@ -23,7 +23,7 @@ type CountrySelectProps = Omit<SelectProps<number>, "options" | "onSearch"> & {
 const DEFAULT_PAGE_SIZE = 25;
 const SCROLL_THRESHOLD_PX = 50;
 
-export default function CountrySelect({
+export function CountrySelect({
   pageSize = DEFAULT_PAGE_SIZE,
   placeholder = "Select a country",
   value,
@@ -203,3 +203,5 @@ export default function CountrySelect({
     />
   );
 }
+
+export default CountrySelect;

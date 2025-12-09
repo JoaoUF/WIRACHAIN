@@ -28,7 +28,7 @@ type RegionSelectProps = Omit<SelectProps<number>, "options" | "onSearch"> & {
 
 const DEFAULT_PAGE_SIZE = 100;
 
-export default function RegionSelect({
+export function RegionSelect({
   countryId,
   placeholder = "Select a region",
   value,
@@ -115,3 +115,5 @@ export default function RegionSelect({
     />
   );
 }
+
+export default RegionSelect;

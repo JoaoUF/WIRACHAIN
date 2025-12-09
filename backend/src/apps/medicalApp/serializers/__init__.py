@@ -7,7 +7,11 @@ from medicalApp.serializers.SpecialitySerializer import SpecialitySerializer
 from medicalApp.serializers.TestSerializer import TestSerializer
 from medicalApp.serializers.DiseaseSerializer import DiseaseSerializer
 from medicalApp.serializers.ClinicScheduleSerializer import ClinicScheduleSerializer
-from medicalApp.serializers.ExtrasSerializer import BulkDeleteSerializer, BulkUpdateSerializer
+from medicalApp.serializers.ExtrasSerializer import (
+    BulkDeleteSerializer,
+    BulkUpdateSerializer,
+    ClinicBulkCreateSerializer,
+)
 from medicalApp.serializers.LightCitiesSerializers import (
     CustomCitySerializer,
     CustomCountrySerializer,

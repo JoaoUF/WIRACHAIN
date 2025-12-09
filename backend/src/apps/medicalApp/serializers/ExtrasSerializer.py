@@ -17,3 +17,12 @@ class BulkUpdateSerializer(serializers.Serializer):
         help_text=_("List of Disease UUIDs to update"),
     )
     status = serializers.IntegerField(help_text=_("New status value"))
+
+
+class ClinicBulkCreateSerializer(serializers.Serializer):
+    clinic = serializers.UUIDField()
+    ids = serializers.ListField(
+        child=serializers.UUIDField(),
+        allow_empty=False,
+        help_text=_("List of Disease UUIDs to update"),
+    )

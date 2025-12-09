@@ -4,8 +4,8 @@ from rest_framework.throttling import UserRateThrottle
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from ..models import ClinicSpeciality
-from ..serializers import ClinicSpecialitySerializer, BulkDeleteSerializer
+from ..models import ClinicSpeciality, Clinic, Speciality
+from ..serializers import ClinicSpecialitySerializer, BulkDeleteSerializer, ClinicBulkCreateSerializer
 from drf_spectacular.utils import extend_schema_view, extend_schema
 from guardian.shortcuts import assign_perm, get_objects_for_user
 from django.db import transaction
@@ -83,11 +83,11 @@ class ClinicSpecialityView(viewsets.ModelViewSet):
 
     @extend_schema(
         tags=["Clinic Speciality"],
-        request=ClinicSpecialitySerializer(many=True),
+        request=ClinicBulkCreateSerializer,
         responses={201: ClinicSpecialitySerializer(many=True), 400: "Bad Request", 403: "Forbidden"},
-        summary="Bulk create or reactivate clinic specialities",
+        summary="Bulk create or reactivate clinic specialities by clinicId and speciality ids",
         description=(
-            "Create multiple ClinicSpeciality objects in a single request. "
+            "Create multiple ClinicSpeciality objects for a clinic using a list of speciality IDs. "
             "If a (clinic, speciality) already exists but is inactive, it will be set to active. "
             "If it exists and is active, it will be returned as-is."
         ),
@@ -98,33 +98,57 @@ class ClinicSpecialityView(viewsets.ModelViewSet):
         if not user.has_perm("medicalApp.add_clinicspeciality"):
             raise PermissionDenied("You do not have permission to create ClinicSpeciality objects.")
 
-        serializer = ClinicSpecialitySerializer(data=request.data, many=True)
+        # validate payload
+        serializer = self.ClinicBulkCreateSerializer(data=request.data)  # type: ignore
         serializer.is_valid(raise_exception=True)
-        items = serializer.validated_data  # list of dicts with 'clinic' and 'speciality' (models)
+        payload = serializer.validated_data
+        clinic_id = payload["clinic"]
+        speciality_ids = payload["ids"]
+
+        # fetch clinic
+        try:
+            clinic = Clinic.objects.get(pk=clinic_id)
+        except Clinic.DoesNotExist:
+            return Response({"detail": f"Clinic with id {clinic_id} not found."}, status=status.HTTP_400_BAD_REQUEST)
+
+        # fetch specialities and check missing ones
+        specialities_qs = Speciality.objects.filter(pk__in=speciality_ids)
+        found_ids = set(str(s.pk) for s in specialities_qs)
+        requested_ids = set(str(i) for i in speciality_ids)
+        missing = requested_ids - found_ids
+        if missing:
+            return Response(
+                {"detail": "Some specialities were not found.", "missing_ids": list(missing)},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        specialities = list(specialities_qs)
 
         created_or_updated = []
 
-        # Wrap in transaction to reduce partial-saves in case of error
+        # Use transaction to avoid partial state on error
         with transaction.atomic():
-            for item in items:  # type: ignore
-                clinic = item["clinic"]
-                speciality = item["speciality"]
+            # Prefetch existing ClinicSpeciality for this clinic and these specialities
+            existing_map = {
+                (cs.speciality_id): cs  # type: ignore
+                for cs in ClinicSpeciality.objects.filter(clinic=clinic, speciality__in=specialities)
+            }
 
-                # Try to get existing record (regardless of status)
-                obj = ClinicSpeciality.objects.filter(clinic=clinic, speciality=speciality).first()
+            for speciality in specialities:
+                obj = existing_map.get(speciality.pk)
                 if obj:
-                    # If it exists but is inactive, reactivate
+                    # If exists but inactive, reactivate
                     if getattr(obj, "status", None) == ClinicSpeciality.INACTIVE_STATUS:
                         obj.status = ClinicSpeciality.ACTIVE_STATUS
-                        obj.save()
-                    # if active, leave as-is
+                        obj.save(update_fields=["status"])
+                    # append existing (active or reactivated)
                     created_or_updated.append(obj)
                 else:
-                    # Create new one and assign perms afterward
+                    # create new one
                     new_obj = ClinicSpeciality.objects.create(clinic=clinic, speciality=speciality)
                     created_or_updated.append(new_obj)
 
-        # Assign object permissions to owners for each created/reactivated instance
+        # Assign object permissions to owners for each created/reactivated instance (only to user owner)
         for inst in created_or_updated:
             owner = getattr(inst, "enterprise_user", None) or getattr(
                 getattr(inst, "clinic", None), "enterprise_user", None

@@ -3,9 +3,8 @@ import type { UUID } from "crypto";
 import type {
   AllClinicSpecialityRequest,
   AllClinicSpecialityResponse,
-  ClinicSpecialityRequest,
   ClinicSpecialityResponse,
-} from "../../types/ClinicSpeciality";
+} from "../../types/";
 import { ENDPOINT_URL } from "../../utils/urls";
 import { customBaseQuery } from "./baseQuery";
 
@@ -39,7 +38,7 @@ export const clinicSpecialityApi = createApi({
 
     addBulkClinicSpecialities: builder.mutation<
       ClinicSpecialityResponse[],
-      ClinicSpecialityRequest[]
+      UUID[]
     >({
       query: (data) => ({
         url: `${CLINIC_SPECIALITY_PATH}/create_bulk/`,

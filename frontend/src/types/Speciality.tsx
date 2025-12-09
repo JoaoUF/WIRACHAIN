@@ -1,13 +1,20 @@
 import type { UUID } from "crypto";
 import type { Pagination, PaginationWrapper, Search } from "./Extras";
 
+export type SpecialityQueries = {
+  clinic: UUID;
+  include_inactive_speciality: boolean;
+};
+
 export type SpecialityBasic = {
   id: UUID;
   name: string;
   description: string;
 };
 
-export type AllSpecialityRequest = Partial<Pagination> & Partial<Search>;
+export type AllSpecialityRequest = Partial<Pagination> &
+  Partial<Search> &
+  Partial<SpecialityQueries>;
 
 export type AllSpecialityResponse = PaginationWrapper<SpecialityBasic>;
 

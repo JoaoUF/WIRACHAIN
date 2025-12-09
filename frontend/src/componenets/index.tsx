@@ -1,6 +1,10 @@
 export { AuthLoading } from "./AuthLoading";
+export { CitySelect } from "./CitySelect";
 export { ClinicTable } from "./ClinicTable";
+export { CountrySelect } from "./CountrySelect";
 export { DiseaseTable } from "./DiseaseTable";
 export { DoctorTable } from "./DoctorTable";
+export { RegionSelect } from "./RegionSelect";
 export { SpecialityTable } from "./SpecialityTable";
 export { TestTable } from "./TestTable";
+export { TransferClinicSpeciality } from "./TransferClinicSpeciality";
