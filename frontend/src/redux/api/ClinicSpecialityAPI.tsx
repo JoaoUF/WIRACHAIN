@@ -38,12 +38,15 @@ export const clinicSpecialityApi = createApi({
 
     addBulkClinicSpecialities: builder.mutation<
       ClinicSpecialityResponse[],
-      UUID[]
+      { clinic: UUID; ids: UUID[] }
     >({
-      query: (data) => ({
+      query: (params) => ({
         url: `${CLINIC_SPECIALITY_PATH}/create_bulk/`,
         method: "POST",
-        body: data,
+        body: {
+          clinic: params.clinic,
+          ids: params.ids,
+        },
       }),
     }),
 

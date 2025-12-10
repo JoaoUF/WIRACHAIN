@@ -29,6 +29,7 @@ function ClinicPanel() {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const navigate = useNavigate();
   const screens = useBreakpoint();
+  console.log(clinicData);
 
   const handleBulkStatusChange = async () => {
     await updateBulkClinic({

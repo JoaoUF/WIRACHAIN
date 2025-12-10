@@ -99,11 +99,11 @@ class ClinicSpecialityView(viewsets.ModelViewSet):
             raise PermissionDenied("You do not have permission to create ClinicSpeciality objects.")
 
         # validate payload
-        serializer = self.ClinicBulkCreateSerializer(data=request.data)  # type: ignore
+        serializer = ClinicBulkCreateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         payload = serializer.validated_data
-        clinic_id = payload["clinic"]
-        speciality_ids = payload["ids"]
+        clinic_id = payload["clinic"]  # type: ignore
+        speciality_ids = payload["ids"]  # type: ignore
 
         # fetch clinic
         try:

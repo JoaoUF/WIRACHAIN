@@ -106,7 +106,7 @@ export function TransferClinicSpeciality({
       if (direction === "right") {
         // adding specialities: send speciality ids (UUIDs) to addBulk
         const toAdd = moveKeys.map((k) => k as unknown as UUID);
-        await addBulk(toAdd).unwrap();
+        await addBulk({ clinic: idClinic as UUID, ids: toAdd }).unwrap();
       } else {
         // removing specialities: map speciality ids to clinicSpeciality ids
         const toDeleteClinicSpecIds = (moveKeys || [])
@@ -126,7 +126,7 @@ export function TransferClinicSpeciality({
   };
 
   return (
-    <Card>
+    <Card variant="borderless" className="flex justify-center items-center">
       <div style={{ minHeight: 160 }}>
         {loading ? (
           <div style={{ textAlign: "center", padding: 24 }}>

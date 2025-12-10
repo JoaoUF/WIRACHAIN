@@ -22,7 +22,8 @@ from ..throttles import AuthThrottle
     )
 )
 class LoginView(DjRestAuthLoginView):
-    throttle_classes = [AuthThrottle]
+    # throttle_classes = [AuthThrottle]
+    throttle_classes = []
     pass
 
 

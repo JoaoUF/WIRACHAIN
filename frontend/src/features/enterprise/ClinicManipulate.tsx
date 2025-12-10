@@ -27,6 +27,7 @@ function ClinicManipulate() {
   const [clinicId, setClinicId] = useState<string | null>(id ?? null);
 
   const onFinish = async (record: ClinicRequest) => {
+    console.log(record);
     // unwrap result and try to read the created/updated clinic id
     const res = await addClinic(record).unwrap();
     // expect the response contains an `id` field (UUID/string)

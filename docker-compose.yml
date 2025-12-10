@@ -139,5 +139,7 @@ volumes:
 networks:
   pg_net:
 # docker compose down
+# docker compose stop
+# docker compose restart
 # docker compose down -v
 # docker compose up --build -d
