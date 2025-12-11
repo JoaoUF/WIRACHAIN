@@ -24,6 +24,14 @@ export type {
   TableClinicResponse,
 } from "./Clinic";
 export type {
+  AllClinicDoctorRequest,
+  AllClinicDoctorResponse,
+  ClinicDoctorBasic,
+  ClinicDoctorQueries,
+  ClinicDoctorRequest,
+  ClinicDoctorResponse,
+} from "./ClinicDoctor";
+export type {
   AllClinicScheduleRequest,
   AllClinicScheduleResponse,
   ClinicScheduleBasic,
@@ -38,6 +46,14 @@ export type {
   ClinicSpecialityRequest,
   ClinicSpecialityResponse,
 } from "./ClinicSpeciality";
+export type {
+  AllClinicTestReponse,
+  AllClinicTestRequest,
+  ClinicTestBasic,
+  ClinicTestQueries,
+  ClinicTestRequest,
+  ClinicTestResponse,
+} from "./ClinicTest";
 export type {
   AllCountryRequest,
   AllCountryResponse,

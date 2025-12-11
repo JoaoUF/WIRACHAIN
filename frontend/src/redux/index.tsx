@@ -4,8 +4,10 @@ import {
   authApi,
   cityApi,
   clinicApi,
+  clinicDoctorApi,
   clinicScheduleApi,
   clinicSpecialityApi,
+  clinicTestApi,
   countryApi,
   diseaseApi,
   regionApi,
@@ -30,6 +32,8 @@ export const store = configureStore({
     [clinicApi.reducerPath]: clinicApi.reducer,
     [clinicScheduleApi.reducerPath]: clinicScheduleApi.reducer,
     [clinicSpecialityApi.reducerPath]: clinicSpecialityApi.reducer,
+    [clinicTestApi.reducerPath]: clinicTestApi.reducer,
+    [clinicDoctorApi.reducerPath]: clinicDoctorApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -45,6 +49,8 @@ export const store = configureStore({
       clinicApi.middleware,
       clinicScheduleApi.middleware,
       clinicSpecialityApi.middleware,
+      clinicTestApi.middleware,
+      clinicDoctorApi.middleware,
       ErrorMiddleware
     ),
 });
@@ -57,7 +63,9 @@ export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
 export const useAppSelector = useSelector.withTypes<RootState>();
 
 export {
+  useAddBulkClinicDoctorMutation,
   useAddBulkClinicSpecialitiesMutation,
+  useAddBulkClinicTestMutation,
   useAddClinicMutation,
   useAddClinicScheduleMutation,
   useAddDiseaseMutation,
@@ -65,8 +73,10 @@ export {
   useAddTestMutation,
   useAddUserMutation,
   useCreateBulkClinicScheduleMutation,
+  useDeleteBulkClinicDoctorMutation,
   useDeleteBulkClinicScheduleMutation,
   useDeleteBulkClinicSpecialitiesMutation,
+  useDeleteBulkClinicTestMutation,
   useDeleteClinicMutation,
   useDeleteClinicScheduleMutation,
   useDeleteDiseaseMutation,
@@ -74,9 +84,11 @@ export {
   useDeleteTestMutation,
   useDeleteUserMutation,
   useGetAllCitiesQuery,
+  useGetAllClinicDoctorsQuery,
   useGetAllClinicSchedulesQuery,
   useGetAllClinicSpecialitiesQuery,
   useGetAllClinicsQuery,
+  useGetAllClinicTestsQuery,
   useGetAllCountriesQuery,
   useGetAllDiseasesQuery,
   useGetAllRegionsQuery,

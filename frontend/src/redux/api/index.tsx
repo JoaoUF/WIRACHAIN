@@ -24,6 +24,12 @@ export {
   useUpdateClinicMutation,
 } from "./ClinicAPI";
 export {
+  clinicDoctorApi,
+  useAddBulkClinicDoctorMutation,
+  useDeleteBulkClinicDoctorMutation,
+  useGetAllClinicDoctorsQuery,
+} from "./ClinicDoctorAPI";
+export {
   clinicScheduleApi,
   useAddClinicScheduleMutation,
   useCreateBulkClinicScheduleMutation,
@@ -41,6 +47,12 @@ export {
   useDeleteBulkClinicSpecialitiesMutation,
   useGetAllClinicSpecialitiesQuery,
 } from "./ClinicSpecialityAPI";
+export {
+  clinicTestApi,
+  useAddBulkClinicTestMutation,
+  useDeleteBulkClinicTestMutation,
+  useGetAllClinicTestsQuery,
+} from "./ClinicTestAPI";
 export {
   countryApi,
   useGetAllCountriesQuery,

@@ -32,42 +32,6 @@ class ClinicView(viewsets.ModelViewSet):
             return ClinicListSerializer
         return ClinicDetailSerializer
 
-    # def get_queryset(self):
-    #     user = self.request.user
-    #     enterprise_id = getattr(user, "id", None)
-    #     base_qs = Clinic.objects.filter(Q(enterprise_user=enterprise_id) & Q(status=Clinic.ACTIVE_STATUS))
-    #     action = getattr(self, "action", None)
-
-    #     if action == "list":
-    #         base_qs = base_qs.select_related("country", "region")
-    #         .only("id", "name", "email", "country", "region")
-    #     elif action == "retrieve":
-    #         base_qs = base_qs.select_related("city", "region", "country")
-    #         .only(
-    #             "id",
-    #             "name",
-    #             "email",
-    #             "website_url",
-    #             "phone",
-    #             "address",
-    #             "enterprise_user",
-    #             "city",
-    #             "region",
-    #             "country",
-    #         )
-    #     else:
-    #         base_qs = base_qs.select_related("city", "region", "country")
-
-    #     return get_objects_for_user(
-    #         user,
-    #         "medicalApp.view_clinic",
-    #         klass=base_qs,
-    #         use_groups=True,
-    #         any_perm=False,
-    #         with_superuser=True,
-    #         accept_global_perms=True,
-    #     )
-
     def get_queryset(self):
         user = self.request.user
         if not user or not user.is_authenticated:
