@@ -11,7 +11,6 @@ ARG ENV_TYPE=development
 ENV ENV_TYPE=$ENV_TYPE
 
 RUN pip install --upgrade pip
-RUN pip install gunicorn
 ADD ./backend/src/requirements/base.txt $APP_HOME
 ADD ./backend/src/requirements/${ENV_TYPE}.txt $APP_HOME
 RUN pip install -r ${ENV_TYPE}.txt

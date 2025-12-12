@@ -1,0 +1,52 @@
+version: "3.8"
+
+services:
+  postgres-master:
+    ports:
+      - "5432:5432"
+
+  postgres-first-replica:
+    ports:
+      - "5433:5432"
+    depends_on:
+      - postgres-master
+
+  redis:
+    ports:
+      - "6379:6379"
+
+  rabbitmq:
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  web:
+    container_name: wirachain_django
+    entrypoint:
+      [
+        "sh",
+        "-c",
+        "/app/docker/backend/wait-for-dbs.sh && exec /app/docker/backend/server-entrypoint.sh",
+      ]
+    restart: unless-stopped
+    volumes:
+      - static_volume:/app/backend/src/mediafields
+      - ./backend/htmlcov:/app/backend/htmlcov
+    env_file:
+      - ./backend/src/environments/.env.development
+    environment:
+      - ENV_TYPE=development
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres-master
+      - postgres-first-replica
+
+  celery:
+    command: celery -A core worker --loglevel=info
+    volumes:
+      - .:/app
+    env_file:
+      - ./backend/src/environments/.env.development
+    environment:
+      - ENV_TYPE=development

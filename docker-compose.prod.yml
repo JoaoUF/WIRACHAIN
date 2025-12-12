@@ -1,0 +1,65 @@
+version: "3.8"
+
+services:
+  postgres-master:
+    env_file:
+      - ./backend/src/environments/.env.production
+
+  postgres-first-replica:
+    env_file:
+      - ./backend/src/environments/.env.production
+
+  redis:
+    restart: unless-stopped
+
+  rabbitmq:
+    env_file:
+      - ./backend/src/environments/.env.production
+    restart: unless-stopped
+
+  web:
+    container_name: wirachain_django
+    build:
+      context: .
+      dockerfile: ./docker/backend/Dockerfile
+      args:
+        - ENV_TYPE=production
+    env_file:
+      - ./backend/src/environments/.env.production
+    environment:
+      - ENV_TYPE=production
+      - USE_GUNICORN=1
+      - GUNICORN_WORKERS=4
+      - GUNICORN_TIMEOUT=30
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    volumes:
+      - static_volume:/app/backend/src/mediafields
+    depends_on:
+      - postgres-master
+      - postgres-first-replica
+
+  celery:
+    build:
+      context: .
+      dockerfile: ./docker/backend/Dockerfile
+      args:
+        - ENV_TYPE=production
+    command: celery -A core worker --loglevel=info
+    working_dir: /app/backend/src
+    env_file:
+      - ./backend/src/environments/.env.production
+    environment:
+      - ENV_TYPE=production
+      - DJANGO_SETTINGS_MODULE=core.settings.development
+    restart: unless-stopped
+
+  frontend:
+    env_file:
+      - ./backend/src/environments/.env.production
+    environment:
+      VITE_API_URL: "https://api.yourdomain.example/api/v1/"
+    ports:
+      - "80:80"
+    restart: unless-stopped

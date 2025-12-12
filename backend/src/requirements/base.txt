@@ -17,3 +17,4 @@ django-celery-email==3.0.0
 django-cors-headers==4.9.0
 django-guardian==3.2.0
 argon2-cffi==25.1.0
+gunicorn==23.0.0

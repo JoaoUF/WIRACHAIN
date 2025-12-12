@@ -2,6 +2,24 @@
 
 An alternative to the project shown before on my thesis.
 
+# DOCKER COMPOSE COMMANDS
+
+"""
+docker compose down
+docker compose stop
+docker compose restart
+docker compose down -v
+
+// development
+docker compose up -d --build
+
+// production
+docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+
+docker compose -f docker-compose.yml -f docker-compose.prod.yml --env-file ./backend/src/environments/.env.production up -d --build
+
+"""
+
 ## TO-DO LIST:
 
 ### WHAT WILL DO IN PRODUCTION:
