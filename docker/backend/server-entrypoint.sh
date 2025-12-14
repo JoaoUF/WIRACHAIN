@@ -71,10 +71,6 @@ do
     sleep 2
 done
 
-# Decide whether to use gunicorn.
-# Priority: USE_GUNICORN env var (non-empty) -> use gunicorn
-# Fallback: ENV_TYPE=production will use gunicorn
-# Otherwise use manage.py runserver (development)
 SHOULD_USE_GUNICORN=0
 if [ -n "$USE_GUNICORN" ]; then
   SHOULD_USE_GUNICORN=1
@@ -85,7 +81,6 @@ fi
 if [ "$SHOULD_USE_GUNICORN" -eq 1 ]; then
   # compute default workers if not supplied: 2 * CPUs + 1
   if [ -z "$GUNICORN_WORKERS" ]; then
-    # fallback safe default if nproc not available
     if command -v nproc > /dev/null; then
       GUNICORN_WORKERS=$(( $(nproc) * 2 + 1 ))
     else
@@ -93,17 +88,18 @@ if [ "$SHOULD_USE_GUNICORN" -eq 1 ]; then
     fi
   fi
 
-  GUNICORN_CMD="gunicorn core.wsgi:application -b ${GUNICORN_BIND} -w ${GUNICORN_WORKERS} --timeout ${GUNICORN_TIMEOUT} --log-level info --access-logfile -"
+  echo "Starting gunicorn with workers=${GUNICORN_WORKERS} bind=${GUNICORN_BIND}"
+  # Build args array
+  GUNICORN_ARGS="--bind ${GUNICORN_BIND} --workers ${GUNICORN_WORKERS} --timeout ${GUNICORN_TIMEOUT} --log-level info --access-logfile -"
   if [ "${GUNICORN_MAX_REQUESTS}" != "0" ]; then
-    GUNICORN_CMD="${GUNICORN_CMD} --max-requests ${GUNICORN_MAX_REQUESTS}"
+    GUNICORN_ARGS="${GUNICORN_ARGS} --max-requests ${GUNICORN_MAX_REQUESTS}"
   fi
-  # enable reload if requested (only use in local dev)
   if [ "${GUNICORN_RELOAD}" = "true" ]; then
-    GUNICORN_CMD="${GUNICORN_CMD} --reload"
+    GUNICORN_ARGS="${GUNICORN_ARGS} --reload"
   fi
 
-  echo "Starting gunicorn: ${GUNICORN_CMD}"
-  exec ${GUNICORN_CMD}
+  # Exec gunicorn directly so failures/errors are shown in container logs
+  exec gunicorn core.wsgi.production:application ${GUNICORN_ARGS}
 else
   echo "Starting Django development server with settings ${DJANGO_SETTINGS_MODULE}..."
   exec python manage.py runserver 0.0.0.0:8000

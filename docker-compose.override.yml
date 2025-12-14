@@ -50,3 +50,7 @@ services:
       - ./backend/src/environments/.env.development
     environment:
       - ENV_TYPE=development
+
+  frontend:
+    ports:
+      - "3000:80"

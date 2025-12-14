@@ -52,14 +52,15 @@ services:
       - ./backend/src/environments/.env.production
     environment:
       - ENV_TYPE=production
-      - DJANGO_SETTINGS_MODULE=core.settings.development
+      - DJANGO_SETTINGS_MODULE=core.settings.production
     restart: unless-stopped
 
   frontend:
     env_file:
       - ./backend/src/environments/.env.production
     environment:
-      VITE_API_URL: "https://api.yourdomain.example/api/v1/"
+      VITE_API_URL: "http://localhost:8000/api/v1/"
+      # VITE_API_URL: "https://api.yourdomain.example/api/v1/"
     ports:
-      - "80:80"
+      - "3000:80"
     restart: unless-stopped

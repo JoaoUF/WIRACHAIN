@@ -56,7 +56,10 @@ docker compose -f docker-compose.yml -f docker-compose.prod.yml --env-file ./bac
 - [ ] use @api_view for total each line control
 - [ ] use a common app for (commands, validators, abstrac models, ...) django
 - [ ] single export type in react
-- [ ] think of the endpoints i will need (planning)
+- [ ] design the application the UI and the DB
+- [ ] create an organization for every layer (backend, frontend, docker)
+- [ ] add a read me to every layer
+- [ ] create a foler with the enviroments as a on the first level
 
 ## QUESTIONS:
 
