@@ -28,7 +28,6 @@ docker compose -f docker-compose.yml -f docker-compose.prod.yml --env-file ./bac
 - [ ] add personalize cache to the backend (cache that support db replication)
 - [ ] add csp in django (django-csp library)
 - [ ] whitenoise library for static content????
-- [ ] async endpoints????
 - [ ] add django-health-check in stage
 - [ ] add django_prometheus????
 - [ ] remove migration of liht cities from server-entrypoint in production
@@ -49,6 +48,7 @@ docker compose -f docker-compose.yml -f docker-compose.prod.yml --env-file ./bac
 
 ## NEXT PROJECT CONSIDERATIONS:
 
+- [ ] async endpoints
 - [ ] next time setting roles use textchoices
 - [ ] use personalize loggin
 - [ ] add version api
@@ -60,6 +60,8 @@ docker compose -f docker-compose.yml -f docker-compose.prod.yml --env-file ./bac
 - [ ] create an organization for every layer (backend, frontend, docker)
 - [ ] add a read me to every layer
 - [ ] create a foler with the enviroments as a on the first level
+- [ ] integrate a complete && personalize audit module ([link](https://freedium-mirror.cfd/https://medium.com/@yogeshkrishnanseeniraj/building-a-full-audit-log-system-in-django-saas-async-event-based-tamper-proof-logs-86d2ae3fb99e))
+- [ ] create a notification system module ([link](https://freedium-mirror.cfd/https://medium.com/@yogeshkrishnanseeniraj/real-time-notifications-at-scale-django-websockets-redis-pub-sub-s3-event-pipelines-191a9305299b))
 
 ## QUESTIONS:
 

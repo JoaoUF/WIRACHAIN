@@ -24,6 +24,12 @@ services:
       dockerfile: ./docker/backend/Dockerfile
       args:
         - ENV_TYPE=production
+    entrypoint:
+      [
+        "sh",
+        "-c",
+        "/app/docker/backend/wait-for-dbs.sh && exec /app/docker/backend/server-entrypoint.sh",
+      ]
     env_file:
       - ./backend/src/environments/.env.production
     environment:
