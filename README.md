@@ -62,6 +62,7 @@ docker compose -f docker-compose.yml -f docker-compose.prod.yml --env-file ./bac
 - [ ] create a foler with the enviroments as a on the first level
 - [ ] integrate a complete && personalize audit module ([link](https://freedium-mirror.cfd/https://medium.com/@yogeshkrishnanseeniraj/building-a-full-audit-log-system-in-django-saas-async-event-based-tamper-proof-logs-86d2ae3fb99e))
 - [ ] create a notification system module ([link](https://freedium-mirror.cfd/https://medium.com/@yogeshkrishnanseeniraj/real-time-notifications-at-scale-django-websockets-redis-pub-sub-s3-event-pipelines-191a9305299b))
+- [ ] follow code principles??
 
 ## QUESTIONS:
 
